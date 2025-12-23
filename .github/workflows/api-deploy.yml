@@ -1,0 +1,52 @@
+# ===========================================
+# Shifr Asia API - Deploy to Render (FREE)
+# ===========================================
+# Triggers on push to main branch when apps/api changes
+# Render free tier: 750 hours/month
+
+name: Deploy API to Render
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - '.github/workflows/api-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
+
+      - name: Deployment notification
+        run: echo "Deployed to Render successfully!"
+
+# ===========================================
+# Alternative: Railway Deployment
+# ===========================================
+# Uncomment below if using Railway instead of Render
+#
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#
+#       - name: Install Railway CLI
+#         run: npm install -g @railway/cli
+#
+#       - name: Deploy to Railway
+#         run: railway up --service shifr-api
+#         env:
+#           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

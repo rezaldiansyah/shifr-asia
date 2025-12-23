@@ -1,0 +1,123 @@
+<?php
+
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TemplateController;
+use App\Http\Controllers\Api\StoreController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\PublicStoreController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\BusinessCardController;
+use App\Http\Controllers\Api\PublicCardController;
+use App\Http\Controllers\Api\SectionController;
+use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\DomainController;
+use App\Http\Controllers\Api\PaymentController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes - Shifr Asia
+|--------------------------------------------------------------------------
+*/
+
+// Public routes
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+// Templates (public - for preview)
+Route::get('/templates', [TemplateController::class, 'index']);
+Route::get('/templates/{template}', [TemplateController::class, 'show']);
+
+// Public store (for store frontend)
+Route::get('/stores/{slug}', [PublicStoreController::class, 'show']);
+Route::get('/stores/subdomain/{subdomain}', [PublicStoreController::class, 'showBySubdomain']);
+Route::get('/stores/domain/{domain}', [PublicStoreController::class, 'showByDomain']);
+
+// Public order routes (for buyers)
+Route::post('/orders', [OrderController::class, 'store']);
+Route::get('/orders/track/{orderNumber}', [OrderController::class, 'showByOrderNumber']);
+
+// Public business card routes
+Route::get('/cards/{slug}', [PublicCardController::class, 'show']);
+Route::get('/cards/{slug}/vcard', [PublicCardController::class, 'vcard']);
+Route::get('/cards/{slug}/qr', [PublicCardController::class, 'qrCode']);
+
+// Public subscription tiers (for pricing page)
+Route::get('/subscription/tiers', [SubscriptionController::class, 'tiers']);
+
+// Protected routes (require authentication)
+Route::middleware('auth:sanctum')->group(function () {
+    // Auth
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::put('/user', [AuthController::class, 'updateProfile']);
+
+    // Store
+    Route::get('/store', [StoreController::class, 'show']);
+    Route::post('/store', [StoreController::class, 'store']);
+    Route::put('/store', [StoreController::class, 'update']);
+
+    // Products
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::get('/products/{product}', [ProductController::class, 'show']);
+    Route::put('/products/{product}', [ProductController::class, 'update']);
+    Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+    Route::post('/products/{product}/images', [ProductController::class, 'uploadImages']);
+    Route::delete('/products/{product}/images', [ProductController::class, 'removeImage']);
+
+    // Orders (for sellers)
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{order}', [OrderController::class, 'show']);
+    Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus']);
+
+    // Business Cards
+    Route::get('/business-cards', [BusinessCardController::class, 'index']);
+    Route::post('/business-cards', [BusinessCardController::class, 'store']);
+    Route::get('/business-cards/{businessCard}', [BusinessCardController::class, 'show']);
+    Route::put('/business-cards/{businessCard}', [BusinessCardController::class, 'update']);
+    Route::delete('/business-cards/{businessCard}', [BusinessCardController::class, 'destroy']);
+    Route::post('/business-cards/{businessCard}/photo', [BusinessCardController::class, 'uploadPhoto']);
+    Route::get('/business-cards/{businessCard}/qr', [BusinessCardController::class, 'qrCode']);
+
+    // Website Builder - Sections
+    Route::get('/section-types', [SectionController::class, 'types']);
+    Route::get('/store/sections', [SectionController::class, 'show']);
+    Route::put('/store/sections', [SectionController::class, 'update']);
+    Route::post('/store/sections', [SectionController::class, 'addSection']);
+    Route::delete('/store/sections/{sectionId}', [SectionController::class, 'deleteSection']);
+    Route::post('/store/sections/reorder', [SectionController::class, 'reorder']);
+    Route::get('/store/preview', [SectionController::class, 'preview']);
+
+    // Domain Management
+    Route::get('/domain', [DomainController::class, 'show']);
+    Route::put('/domain/subdomain', [DomainController::class, 'updateSubdomain']);
+    Route::put('/domain/custom', [DomainController::class, 'setCustomDomain']);
+    Route::post('/domain/verify', [DomainController::class, 'verifyDomain']);
+    Route::delete('/domain/custom', [DomainController::class, 'removeCustomDomain']);
+
+    // Subscription (authenticated routes only)
+    Route::get('/subscription', [SubscriptionController::class, 'show']);
+    Route::get('/subscription/usage', [SubscriptionController::class, 'usage']);
+    Route::post('/subscription/trial', [SubscriptionController::class, 'startTrial']);
+    Route::put('/subscription/tier', [SubscriptionController::class, 'changeTier']);
+
+    // Payment (authenticated routes)
+    Route::post('/payment/checkout', [PaymentController::class, 'checkout']);
+    Route::get('/payment/callback', [PaymentController::class, 'callback']);
+    Route::get('/payment/history', [PaymentController::class, 'history']);
+});
+
+// Payment webhook (public, no auth required)
+Route::post('/payment/webhook', [PaymentController::class, 'webhook']);
+
+// Health check
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'app' => 'Shifr Asia API',
+        'version' => '1.0.0',
+    ]);
+});
+

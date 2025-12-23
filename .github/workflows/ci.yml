@@ -1,0 +1,105 @@
+# ===========================================
+# Shifr Asia - CI/Testing Workflow
+# ===========================================
+# Runs on all pull requests and pushes
+
+name: CI - Tests & Linting
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+jobs:
+  # API Tests
+  api-tests:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: shifr_test
+          POSTGRES_USER: shifr
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo, pdo_pgsql, pgsql, bcmath, zip
+          coverage: none
+
+      - name: Install Composer dependencies
+        working-directory: ./apps/api
+        run: composer install --no-progress --prefer-dist
+
+      - name: Copy env file
+        working-directory: ./apps/api
+        run: cp .env.example .env
+
+      - name: Generate app key
+        working-directory: ./apps/api
+        run: php artisan key:generate
+
+      - name: Run migrations
+        working-directory: ./apps/api
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: shifr_test
+          DB_USERNAME: shifr
+          DB_PASSWORD: password
+        run: php artisan migrate --force
+
+      - name: Run tests
+        working-directory: ./apps/api
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: shifr_test
+          DB_USERNAME: shifr
+          DB_PASSWORD: password
+        run: php artisan test
+
+  # Frontend Linting & Build
+  frontend-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint --workspace=apps/web-shifr || true
+
+      - name: Type check
+        run: npm run type-check --workspace=apps/web-shifr || true
+
+      - name: Build
+        run: npm run build --workspace=apps/web-shifr
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8000/api

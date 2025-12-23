@@ -1,0 +1,41 @@
+# Dependencies
+/vendor
+/node_modules
+
+# Development files
+.env
+.env.local
+.env.*.local
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Testing
+/tests
+phpunit.xml
+.phpunit.cache
+
+# Logs and cache (will be generated)
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+docker-compose*
+Dockerfile*
+
+# Other
+.editorconfig
+.styleci.yml
