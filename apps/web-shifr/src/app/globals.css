@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+/* Shifr Asia Design System */
+:root {
+  /* Color Palette */
+  --color-main: #374da0;
+  --color-second: #2cbbbc;
+  --color-third: #327eac;
+  --color-fourth: #f3f4f5;
+  --color-fifth: #ffffff;
+
+  /* Semantic Colors */
+  --background: #f3f4f5;
+  --foreground: #1f2937;
+  --card: #ffffff;
+  --card-foreground: #374151;
+
+  /* State Colors */
+  --color-main-hover: #2d3f85;
+  --color-second-hover: #25a0a1;
+  --color-third-hover: #2a6a91;
+}
+
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-main: #374da0;
+  --color-main-hover: #2d3f85;
+  --color-second: #2cbbbc;
+  --color-second-hover: #25a0a1;
+  --color-third: #327eac;
+  --color-third-hover: #2a6a91;
+  --color-fourth: #f3f4f5;
+  --color-fifth: #ffffff;
+
+  /* Fonts */
+  --font-heading: var(--font-ubuntu);
+  --font-body: var(--font-poppins);
+}
+
+body {
+  background: var(--color-fourth);
+  color: var(--foreground);
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+
+/* Heading styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-ubuntu), 'Ubuntu', sans-serif;
+  font-weight: 700;
+}
+
+/* Gradient utilities */
+.gradient-primary {
+  background: linear-gradient(135deg, #374da0 0%, #2cbbbc 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, #2cbbbc 0%, #327eac 100%);
+}
+
+/* Animations */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* Mobile Menu */
+.mobile-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  animation: fade-in 0.2s ease-out;
+}
+
+.mobile-sidebar {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+/* Touch-friendly sizing */
+@media (max-width: 768px) {
+
+  button,
+  a {
+    min-height: 44px;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    font-size: 16px;
+    /* Prevent iOS zoom */
+  }
+}
+
+/* Loading spinner */
+.spinner {
+  animation: spin 1s linear infinite;
+}
