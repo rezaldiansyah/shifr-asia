@@ -1,6 +1,12 @@
+'use client';
+
 import Link from "next/link";
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-fourth">
       {/* Navigation */}
@@ -10,17 +16,18 @@ export default function Home() {
             Shifr Asia
           </h1>
           <div className="flex items-center gap-4">
+            <LanguageSwitcher variant="toggle" />
             <Link
               href="/login"
               className="text-gray-600 hover:text-main transition font-medium"
             >
-              Masuk
+              {t('auth.login')}
             </Link>
             <Link
               href="/register"
               className="bg-main hover:bg-main-hover text-white px-5 py-2 rounded-lg font-medium transition"
             >
-              Daftar Gratis
+              {t('cta.registerFree')}
             </Link>
           </div>
         </div>
