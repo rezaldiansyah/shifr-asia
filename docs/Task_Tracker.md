@@ -1,100 +1,88 @@
 # Shifr Asia - Task Tracker
-**Last Updated:** 19 Desember 2024, 20:23 WIB
+**Last Updated:** 24 Desember 2024, 21:13 WIB
 
 ---
 
 ## 📍 Current Status
 | Item | Status |
 |------|--------|
-| **Current Sprint** | Sprint 1 ✅ COMPLETE |
-| **Next Sprint** | Sprint 2: Product Management 🔜 |
-| **API Status** | ✅ Running (localhost:8000) |
-| **Frontend Status** | ✅ Ready (localhost:3000) |
+| **Current Sprint** | Sprint 12: Customization & High Value 🔄 |
+| **Production** | ✅ LIVE (shifr.asia) |
+| **API Status** | ✅ Running (shifr-api.onrender.com) |
+| **Frontend Status** | ✅ Running (shifr.asia) |
+| **Database** | ✅ Supabase (18 tables) |
 
 ---
 
-## ✅ Sprint 0: Foundation - COMPLETE
-- [x] Monorepo setup (Turborepo)
-- [x] Laravel 11 API
-- [x] Next.js 14 frontend (web-shifr, web-bizup)
-- [x] Database schema design
-- [x] Shared packages structure
+## ✅ COMPLETED SPRINTS
+
+### Sprint 0-10 ✅ COMPLETE
+- Foundation, Auth, Products, Orders, Business Card, Website Builder
+- Subscription UI, Multi-language, Domain System, Mayar Payment, CI/CD
+
+### Sprint 11: Production Deploy ✅ COMPLETE (24 Des 2024)
+- [x] GitHub repository setup
+- [x] Supabase database + migrations
+- [x] Render backend deployment
+- [x] Vercel frontend deployment
+- [x] Custom domain (shifr.asia) via Cloudflare
+- [x] Landing page redesign (9 sections, PAS+BAB)
+- [x] Framer Motion animations
+- [x] Multi-language (ID/EN)
+- [x] Dripsender WhatsApp integration (code ready)
 
 ---
 
-## ✅ Sprint 1: Authentication - COMPLETE
+## 🔄 Sprint 12: Customization & High Value Features
 
-### Backend ✅
-- [x] User model + Sanctum
-- [x] register, login, logout, user, updateProfile
-- [x] API routes ready & tested
-- [x] 12 database migrations executed
+### Phase 1: Store Customization ✅ COMPLETE
+- [x] Theme color picker (Backend + Frontend)
+- [x] Banner URL for store
+- [x] Social links (IG, TikTok, Shopee, Tokopedia, Facebook)
+- [x] Working hours with open/closed badge
+- [x] Dashboard settings UI card
+- [x] Public stores use customization (both templates)
 
-### Frontend ✅
-- [x] Register page
-- [x] Login page
-- [x] Auth context/middleware
-- [x] Dashboard shell (sidebar + header)
-- [x] Route protection
+### Phase 2: Link-in-Bio ⏳ PENDING
+- [ ] Create `links` table + migration
+- [ ] Create LinkController API
+- [ ] Create dashboard Links management page
+- [ ] Create public Bio page (/bio/[slug])
 
----
+### Phase 3: Promo/Discount Codes ⏳ PENDING
+- [ ] Create `promos` table + migration
+- [ ] Create PromoController API
+- [ ] Create dashboard Promos page
+- [ ] Integrate promo validation in checkout
 
-## 🔜 Sprint 2: Product Management - NEXT
-
-### Backend (To Do)
-- [ ] Store model + controller
-- [ ] Product model + controller
-- [ ] Product variants (size/color)
-- [ ] Image upload API
-
-### Frontend (To Do)
-- [ ] Store settings page
-- [ ] Products list page
-- [ ] Product create/edit form
-- [ ] Image upload component
-- [ ] Variant management UI
+### Phase 4: Simple Analytics ⏳ PENDING
+- [ ] Create `analytics_events` table
+- [ ] Create AnalyticsController API
+- [ ] Add tracking to public store pages
+- [ ] Create analytics dashboard
 
 ---
 
-## 🔗 Pages Ready
-| Route | Description | Status |
-|-------|-------------|--------|
-| `/` | Landing page | ✅ |
-| `/register` | Form pendaftaran | ✅ |
-| `/login` | Form login | ✅ |
-| `/dashboard` | Dashboard merchant | ✅ |
-| `/dashboard/products` | List produk | 🔜 Sprint 2 |
-| `/dashboard/store` | Settings toko | 🔜 Sprint 2 |
+## ⏳ Sprint 13: Final Testing (PENDING)
+- [ ] Full acceptance test scenarios
+- [ ] End-to-end order flow test
+- [ ] Multi-device testing
+- [ ] Performance optimization
 
 ---
 
-## 📡 API Endpoints
-
-### ✅ Ready (Sprint 1)
-```
-POST /api/register
-POST /api/login
-POST /api/logout
-GET  /api/user
-PUT  /api/user
-GET  /api/health
-```
-
-### 🔜 Planned (Sprint 2)
-```
-GET    /api/store
-POST   /api/store
-PUT    /api/store
-GET    /api/products
-POST   /api/products
-GET    /api/products/{id}
-PUT    /api/products/{id}
-DELETE /api/products/{id}
-```
+## 🔧 Pending Action Items
+| Item | Owner | Priority |
+|------|-------|----------|
+| Add Dripsender API Key | User | HIGH |
+| Test WhatsApp notifications | User | HIGH |
+| Test order flow end-to-end | User | MEDIUM |
+| Set up Cloudflare R2 (storage) | Future | LOW |
+| Set up Resend (email) | Future | LOW |
 
 ---
 
 ## 📚 Documentation
 - [PRD](./PRD.md) - Full product requirements
 - [Progress Notes](./Progress_Notes.md) - Detailed progress & context
-- [MoM](./MoM_Brainstorming.md) - Meeting notes
+- [Acceptance Tests](./AcceptanceTestScenarios.md) - Test scenarios

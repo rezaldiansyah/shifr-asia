@@ -63,15 +63,19 @@ Membangun platform e-commerce yang membantu UMKM Indonesia & Asia untuk scale bi
 ### 4.1 Shifr.asia - E-commerce Builder
 
 #### Core Features
-| # | Feature | Description | Priority |
-|---|---------|-------------|----------|
-| 1 | **Mini-store builder** | Link-in-bio dengan produk | P0 |
-| 2 | **Catalog + Variants** | Produk dengan size/color | P0 |
-| 3 | **WA Checkout** | Order otomatis ke WhatsApp | P0 |
-| 4 | **Payment Gateway** | QRIS, VA, E-wallet (Mayar/Duitku) | P0 |
-| 5 | **Simple Website Builder** | Section-based editor | P1 |
-| 6 | **Custom Domain** | *.shifr.asia atau domain sendiri | P1 |
-| 7 | **Multi-language** | Indonesia + English | P1 |
+| # | Feature | Description | Priority | Status |
+|---|---------|-------------|----------|--------|
+| 1 | **Mini-store builder** | Link-in-bio dengan produk | P0 | ✅ Done |
+| 2 | **Catalog + Variants** | Produk dengan size/color | P0 | ✅ Done |
+| 3 | **WA Checkout** | Order otomatis ke WhatsApp | P0 | ✅ Done |
+| 4 | **Payment Gateway** | QRIS, VA, E-wallet (Mayar/Duitku) | P0 | ✅ Done |
+| 5 | **Simple Website Builder** | Section-based editor | P1 | ✅ Done |
+| 6 | **Custom Domain** | *.shifr.asia atau domain sendiri | P1 | ✅ Done |
+| 7 | **Multi-language** | Indonesia + English | P1 | ✅ Done |
+| 8 | **Store Customization** | Theme color, banner, social links, jam operasional | P1 | ✅ Done |
+| 9 | **Link-in-Bio Page** | Public page seperti Linktree | P2 | ⏳ Pending |
+| 10 | **Promo/Discount Codes** | Kode diskon untuk marketing | P2 | ⏳ Pending |
+| 11 | **Simple Analytics** | Views, clicks, orders tracking | P2 | ⏳ Pending |
 
 #### Out of MVP Scope
 - ❌ Digital product delivery

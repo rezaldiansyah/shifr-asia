@@ -1106,6 +1106,113 @@ Full regression on all modules before launch.
 
 ---
 
+## Module 12: Store Customization (Sprint 12)
+
+### ATS-CUSTOM-001: Theme Color Picker
+| Field | Value |
+|-------|-------|
+| **Priority** | P1 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Login to dashboard
+2. Navigate to `/dashboard/store`
+3. Find "Warna Tema" section
+4. Use color picker to select new color
+5. Click save
+
+**Expected Results:**
+- [ ] Color picker displays correctly
+- [ ] Hex code input syncs with picker
+- [ ] Public store header uses new color
+- [ ] Profile avatar gradient uses theme color
+
+---
+
+### ATS-CUSTOM-002: Banner URL
+| Field | Value |
+|-------|-------|
+| **Priority** | P1 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Go to store settings
+2. Enter banner image URL
+3. Save changes
+4. View public store
+
+**Expected Results:**
+- [ ] Banner displays at top of store (Instagram template)
+- [ ] Banner as hero background (Company Profile template)
+- [ ] Image loads correctly
+- [ ] Fallback to gradient if no banner
+
+---
+
+### ATS-CUSTOM-003: Social Links
+| Field | Value |
+|-------|-------|
+| **Priority** | P1 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Go to store settings
+2. Enter Instagram URL
+3. Enter Shopee URL
+4. Save changes
+5. View public store
+
+**Expected Results:**
+- [ ] Social links icons appear in profile section
+- [ ] Each link opens correct URL in new tab
+- [ ] Icons only show for filled links
+
+---
+
+### ATS-CUSTOM-004: Working Hours
+| Field | Value |
+|-------|-------|
+| **Priority** | P1 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Go to store settings
+2. Set Monday-Friday: Open 09:00-17:00
+3. Set Saturday-Sunday: Closed
+4. Save changes
+5. View public store during open hours
+6. View public store during closed hours
+
+**Expected Results:**
+- [ ] "🟢 Buka" badge during open hours
+- [ ] "⚪ Tutup" badge during closed hours
+- [ ] Working hours form saves correctly
+- [ ] Time inputs work properly
+
+---
+
+### ATS-CUSTOM-005: Public Store Theme Integration
+| Field | Value |
+|-------|-------|
+| **Priority** | P0 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Set custom theme color (e.g., #e91e63)
+2. Set banner URL
+3. Add Instagram + Shopee links
+4. Set working hours
+5. View public store
+
+**Expected Results:**
+- [ ] Header background uses theme color
+- [ ] Avatar uses theme color gradient
+- [ ] Banner displays correctly
+- [ ] Social links visible and clickable
+- [ ] Open/Closed badge reflects current time
+
+---
+
 ## Test Data Requirements
 
 | Data | Quantity |
