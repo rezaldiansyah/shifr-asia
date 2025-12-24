@@ -179,25 +179,68 @@ export const translations: Translations = {
     'cta.registerNow': { id: 'Daftar Sekarang - Gratis!', en: 'Register Now - Free!' },
     'cta.registerFree': { id: 'Daftar Gratis', en: 'Register Free' },
 
-    // Landing Page - Hero
-    'landing.hero.title1': { id: 'Jualan Lebih Mudah,', en: 'Sell Easier,' },
-    'landing.hero.title2': { id: 'Lebih Profesional', en: 'More Professional' },
-    'landing.hero.subtitle': { id: 'Platform e-commerce yang membantu UMKM Indonesia untuk scale bisnis dengan mudah, profesional, dan penuh amanah.', en: 'E-commerce platform that helps Indonesian SMEs scale their business easily, professionally, and with trust.' },
-    'landing.hero.cta1': { id: 'Mulai Gratis Sekarang', en: 'Start Free Now' },
-    'landing.hero.cta2': { id: 'Pelajari Lebih Lanjut', en: 'Learn More' },
+    // Landing Page - Hero (PAS - Problem Hook)
+    'landing.hero.badge': { id: '🎁 Gratis 3 Bulan Pertama', en: '🎁 Free for First 3 Months' },
+    'landing.hero.title': { id: 'Masih Jualan Pakai Chat Biasa?', en: 'Still Selling via Regular Chat?' },
+    'landing.hero.subtitle': { id: 'Chat hilang, order berantakan, customer bingung. Saatnya punya toko online profesional sendiri.', en: 'Chats get lost, orders are messy, customers confused. Time to have your own professional online store.' },
+    'landing.hero.cta1': { id: 'Buat Toko Gratis', en: 'Create Free Store' },
+    'landing.hero.cta2': { id: 'Lihat Demo', en: 'See Demo' },
 
-    // Landing Page - Features
-    'landing.features.title': { id: 'Fitur Unggulan', en: 'Key Features' },
-    'landing.features.catalog.title': { id: 'Katalog Produk', en: 'Product Catalog' },
-    'landing.features.catalog.desc': { id: 'Upload produk dengan mudah. Lengkap dengan variant ukuran dan warna.', en: 'Upload products easily. Complete with size and color variants.' },
-    'landing.features.whatsapp.title': { id: 'WhatsApp Checkout', en: 'WhatsApp Checkout' },
-    'landing.features.whatsapp.desc': { id: 'Order otomatis ke WhatsApp. Tidak perlu sistem cart yang rumit.', en: 'Automatic order to WhatsApp. No complicated cart system needed.' },
-    'landing.features.payment.title': { id: 'Payment Gateway', en: 'Payment Gateway' },
-    'landing.features.payment.desc': { id: 'Terima pembayaran via QRIS, VA Bank, dan E-wallet dengan mudah.', en: 'Accept payments via QRIS, Bank VA, and E-wallet easily.' },
+    // Landing Page - Pain Points (Agitate)
+    'landing.pain.title': { id: 'Apakah Ini yang Kamu Rasakan?', en: 'Does This Sound Familiar?' },
+    'landing.pain.chat.title': { id: 'Chat Berantakan', en: 'Messy Chats' },
+    'landing.pain.chat.desc': { id: 'Order via DM/WA tercampur chat biasa, sering kelewat', en: 'Orders via DM/WA mixed with regular chats, often missed' },
+    'landing.pain.fee.title': { id: 'Fee Marketplace Mahal', en: 'Expensive Marketplace Fees' },
+    'landing.pain.fee.desc': { id: 'Untung tipis habis dipotong komisi 5-15%', en: 'Thin profits eaten up by 5-15% commission' },
+    'landing.pain.pro.title': { id: 'Terlihat Kurang Profesional', en: 'Looks Unprofessional' },
+    'landing.pain.pro.desc': { id: 'Jualan di IG/WA saja, belum punya "toko resmi"', en: 'Only selling on IG/WA, no "official store" yet' },
+    'landing.pain.manual.title': { id: 'Repot Rekap Manual', en: 'Manual Recording Hassle' },
+    'landing.pain.manual.desc': { id: 'Hitung stok & omzet pakai Excel/kertas', en: 'Counting stock & revenue with Excel/paper' },
+
+    // Landing Page - Before-After (BAB Transformation)
+    'landing.transform.title': { id: 'Bayangkan Bisnis Kamu Seperti Ini...', en: 'Imagine Your Business Like This...' },
+    'landing.transform.before': { id: 'Sebelum', en: 'Before' },
+    'landing.transform.after': { id: 'Sesudah', en: 'After' },
+    'landing.transform.item1.before': { id: 'Chat order berantakan', en: 'Messy order chats' },
+    'landing.transform.item1.after': { id: 'Semua order tercatat otomatis', en: 'All orders recorded automatically' },
+    'landing.transform.item2.before': { id: 'Kirim katalog manual', en: 'Sending catalog manually' },
+    'landing.transform.item2.after': { id: 'Toko online 24/7', en: '24/7 online store' },
+    'landing.transform.item3.before': { id: 'Terlihat amatir', en: 'Looks amateur' },
+    'landing.transform.item3.after': { id: 'Brand profesional', en: 'Professional brand' },
+    'landing.transform.item4.before': { id: 'Rekap pakai Excel', en: 'Recording with Excel' },
+    'landing.transform.item4.after': { id: 'Dashboard real-time', en: 'Real-time dashboard' },
+
+    // Landing Page - Solution (Features)
+    'landing.solution.title': { id: 'Solusinya: Shifr Asia', en: 'The Solution: Shifr Asia' },
+    'landing.solution.subtitle': { id: 'Platform all-in-one untuk UMKM Indonesia', en: 'All-in-one platform for Indonesian SMEs' },
+    'landing.solution.store.title': { id: 'Toko Online Instan', en: 'Instant Online Store' },
+    'landing.solution.store.desc': { id: 'Buat dalam 5 menit, tanpa coding', en: 'Create in 5 minutes, no coding' },
+    'landing.solution.wa.title': { id: 'WhatsApp Checkout', en: 'WhatsApp Checkout' },
+    'landing.solution.wa.desc': { id: 'Customer order langsung ke WA kamu', en: 'Customers order directly to your WA' },
+    'landing.solution.domain.title': { id: 'Subdomain Gratis', en: 'Free Subdomain' },
+    'landing.solution.domain.desc': { id: 'namatoko.shifr.asia - terlihat profesional', en: 'yourstore.shifr.asia - looks professional' },
+    'landing.solution.dashboard.title': { id: 'Dashboard Lengkap', en: 'Complete Dashboard' },
+    'landing.solution.dashboard.desc': { id: 'Pantau order, stok, omzet real-time', en: 'Monitor orders, stock, revenue real-time' },
+
+    // Landing Page - Other Services  
+    'landing.services.title': { id: 'Ekosistem Lengkap untuk Bisnis Digital', en: 'Complete Ecosystem for Digital Business' },
+    'landing.services.store.title': { id: 'Toko Online', en: 'Online Store' },
+    'landing.services.store.desc': { id: 'Buat toko profesional dalam hitungan menit', en: 'Create professional store in minutes' },
+    'landing.services.card.title': { id: 'Digital Business Card', en: 'Digital Business Card' },
+    'landing.services.card.desc': { id: 'Kartu nama digital yang interaktif', en: 'Interactive digital business card' },
+    'landing.services.academy.title': { id: 'Shifr Academy', en: 'Shifr Academy' },
+    'landing.services.academy.desc': { id: 'Belajar bisnis digital dari ahlinya', en: 'Learn digital business from experts' },
+    'landing.services.marketing.title': { id: 'Digital Marketing', en: 'Digital Marketing' },
+    'landing.services.marketing.desc': { id: 'Jasa iklan & promosi untuk bisnis kamu', en: 'Ads & promotion services for your business' },
+    'landing.services.active': { id: 'Aktif', en: 'Active' },
+    'landing.services.soon': { id: 'Segera Hadir', en: 'Coming Soon' },
+
+    // Landing Page - Social Proof
+    'landing.social.text': { id: '🚀 Bergabung dengan 50+ UMKM Early Adopters', en: '🚀 Join 50+ SME Early Adopters' },
 
     // Landing Page - Pricing
-    'landing.pricing.title': { id: 'Paket Harga', en: 'Pricing Plans' },
-    'landing.pricing.subtitle': { id: 'Pilih paket yang sesuai dengan kebutuhan bisnis Anda. Mulai gratis, upgrade kapan saja.', en: 'Choose the plan that fits your business. Start free, upgrade anytime.' },
+    'landing.pricing.title': { id: 'Investasi untuk Bisnis Profesional', en: 'Investment for Professional Business' },
+    'landing.pricing.subtitle': { id: 'Lebih murah dari secangkir kopi per hari ☕', en: 'Cheaper than a cup of coffee per day ☕' },
     'landing.pricing.starter.name': { id: 'Starter', en: 'Starter' },
     'landing.pricing.starter.desc': { id: 'Untuk memulai bisnis online', en: 'To start your online business' },
     'landing.pricing.growth.name': { id: 'Growth', en: 'Growth' },
@@ -217,10 +260,21 @@ export const translations: Translations = {
     'landing.pricing.startNow': { id: 'Mulai Sekarang', en: 'Start Now' },
     'landing.pricing.freeNote': { id: '🎉 Gratis 3 bulan pertama untuk semua paket. Tanpa kartu kredit.', en: '🎉 Free for the first 3 months for all plans. No credit card required.' },
 
-    // Landing Page - CTA Section
-    'landing.cta.title': { id: 'Siap Memulai Bisnis Online?', en: 'Ready to Start Your Online Business?' },
-    'landing.cta.subtitle': { id: 'Bergabung dengan ribuan UMKM yang sudah menggunakan Shifr Asia', en: 'Join thousands of SMEs already using Shifr Asia' },
-    'landing.cta.button': { id: 'Daftar Gratis 3 Bulan', en: 'Register Free for 3 Months' },
+    // Landing Page - FAQ
+    'landing.faq.title': { id: 'Pertanyaan yang Sering Ditanyakan', en: 'Frequently Asked Questions' },
+    'landing.faq.q1': { id: 'Apakah benar-benar gratis 3 bulan?', en: 'Is it really free for 3 months?' },
+    'landing.faq.a1': { id: 'Ya! Anda bisa menggunakan semua fitur tanpa biaya selama 3 bulan pertama. Tidak perlu kartu kredit.', en: 'Yes! You can use all features for free during the first 3 months. No credit card required.' },
+    'landing.faq.q2': { id: 'Bagaimana cara pembayarannya?', en: 'How do I pay?' },
+    'landing.faq.a2': { id: 'Setelah masa trial, Anda bisa bayar via transfer bank, QRIS, atau e-wallet.', en: 'After the trial period, you can pay via bank transfer, QRIS, or e-wallet.' },
+    'landing.faq.q3': { id: 'Bisakah pindah dari marketplace?', en: 'Can I move from marketplace?' },
+    'landing.faq.a3': { id: 'Tentu! Anda tetap bisa jualan di marketplace sambil punya toko sendiri di Shifr Asia.', en: 'Of course! You can still sell on marketplace while having your own store on Shifr Asia.' },
+    'landing.faq.q4': { id: 'Apakah data saya aman?', en: 'Is my data secure?' },
+    'landing.faq.a4': { id: 'Ya, kami menggunakan enkripsi SSL dan server yang aman untuk menjaga keamanan data Anda.', en: 'Yes, we use SSL encryption and secure servers to protect your data.' },
+
+    // Landing Page - Final CTA
+    'landing.cta.title': { id: 'Mulai Hari Ini, Gratis!', en: 'Start Today, Free!' },
+    'landing.cta.subtitle': { id: '50+ UMKM sudah bergabung. Giliran kamu sekarang.', en: '50+ SMEs have joined. Your turn now.' },
+    'landing.cta.button': { id: 'Daftar Gratis - Tanpa Kartu Kredit', en: 'Register Free - No Credit Card' },
 
     // Landing Page - Footer
     'landing.footer.copyright': { id: '© 2024 Shifr Asia. Semua hak cipta dilindungi.', en: '© 2024 Shifr Asia. All rights reserved.' },
