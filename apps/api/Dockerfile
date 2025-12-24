@@ -1,10 +1,10 @@
 # ===========================================
 # Shifr Asia API - Production Dockerfile
 # ===========================================
-# Multi-stage build for Laravel 11 with PHP 8.3
+# Multi-stage build for Laravel 12 with PHP 8.4
 
 # Stage 1: Build dependencies
-FROM composer:2.7 AS composer
+FROM composer:2.8 AS composer
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev --no-scripts
 
 # Stage 2: Production image
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 # Install dependencies
 RUN apk add --no-cache \
