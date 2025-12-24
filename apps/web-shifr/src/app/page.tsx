@@ -2,22 +2,22 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Animation variants
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } }
 };
 
-const fadeIn = {
+const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.6 } }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
