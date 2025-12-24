@@ -441,6 +441,21 @@ export interface Store {
         whatsapp_number?: string;
         logo?: string;
         theme_color?: string;
+        banner_url?: string;
+        social_links?: {
+            instagram?: string;
+            tiktok?: string;
+            facebook?: string;
+            shopee?: string;
+            tokopedia?: string;
+        };
+        working_hours?: {
+            [key: string]: {
+                is_open: boolean;
+                open: string;
+                close: string;
+            };
+        };
     };
     is_active: boolean;
     created_at: string;

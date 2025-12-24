@@ -16,12 +16,43 @@ export default function StoreSettingsPage() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
-    // Form state
-    const [formData, setFormData] = useState({
+    // Form state types
+    type WorkingHour = { is_open: boolean; open: string; close: string };
+    type WorkingHours = { [key: string]: WorkingHour };
+    type SocialLinks = { [key: string]: string };
+
+    const [formData, setFormData] = useState<{
+        name: string;
+        description: string;
+        whatsapp_number: string;
+        template_id: number;
+        theme_color: string;
+        banner_url: string;
+        social_links: SocialLinks;
+        working_hours: WorkingHours;
+    }>({
         name: '',
         description: '',
         whatsapp_number: '',
         template_id: 1,
+        theme_color: '#374da0',
+        banner_url: '',
+        social_links: {
+            instagram: '',
+            tiktok: '',
+            facebook: '',
+            shopee: '',
+            tokopedia: '',
+        },
+        working_hours: {
+            monday: { is_open: true, open: '09:00', close: '17:00' },
+            tuesday: { is_open: true, open: '09:00', close: '17:00' },
+            wednesday: { is_open: true, open: '09:00', close: '17:00' },
+            thursday: { is_open: true, open: '09:00', close: '17:00' },
+            friday: { is_open: true, open: '09:00', close: '17:00' },
+            saturday: { is_open: false, open: '09:00', close: '17:00' },
+            sunday: { is_open: false, open: '09:00', close: '17:00' },
+        },
     });
 
     useEffect(() => {
@@ -52,6 +83,24 @@ export default function StoreSettingsPage() {
                     description: storeRes.store.description || '',
                     whatsapp_number: storeRes.store.settings?.whatsapp_number || '',
                     template_id: storeRes.store.template_id,
+                    theme_color: storeRes.store.settings?.theme_color || '#374da0',
+                    banner_url: storeRes.store.settings?.banner_url || '',
+                    social_links: storeRes.store.settings?.social_links || {
+                        instagram: '',
+                        tiktok: '',
+                        facebook: '',
+                        shopee: '',
+                        tokopedia: '',
+                    },
+                    working_hours: storeRes.store.settings?.working_hours || {
+                        monday: { is_open: true, open: '09:00', close: '17:00' },
+                        tuesday: { is_open: true, open: '09:00', close: '17:00' },
+                        wednesday: { is_open: true, open: '09:00', close: '17:00' },
+                        thursday: { is_open: true, open: '09:00', close: '17:00' },
+                        friday: { is_open: true, open: '09:00', close: '17:00' },
+                        saturday: { is_open: false, open: '09:00', close: '17:00' },
+                        sunday: { is_open: false, open: '09:00', close: '17:00' },
+                    },
                 });
             }
         } catch (err) {
@@ -194,7 +243,167 @@ export default function StoreSettingsPage() {
                             </div>
                         </div>
 
-                        {/* Template Selector */}
+                        {/* Customization Card */}
+                        <div className="bg-fifth rounded-xl p-6 shadow-sm">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4 font-[family-name:var(--font-ubuntu)]">
+                                Kustomisasi Toko
+                            </h3>
+                            <div className="space-y-4">
+                                {/* Theme Color */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Warna Tema
+                                    </label>
+                                    <div className="flex items-center gap-3">
+                                        <input
+                                            type="color"
+                                            value={formData.theme_color}
+                                            onChange={(e) => setFormData({ ...formData, theme_color: e.target.value })}
+                                            className="w-12 h-12 rounded-lg cursor-pointer border border-gray-300"
+                                        />
+                                        <input
+                                            type="text"
+                                            value={formData.theme_color}
+                                            onChange={(e) => setFormData({ ...formData, theme_color: e.target.value })}
+                                            className="w-32 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
+                                            placeholder="#374da0"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Banner URL */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        URL Banner
+                                    </label>
+                                    <input
+                                        type="url"
+                                        value={formData.banner_url}
+                                        onChange={(e) => setFormData({ ...formData, banner_url: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent transition"
+                                        placeholder="https://example.com/banner.jpg"
+                                    />
+                                    <p className="text-sm text-gray-500 mt-1">
+                                        Gambar banner untuk bagian atas toko Anda
+                                    </p>
+                                </div>
+
+                                {/* Social Links */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Link Media Sosial
+                                    </label>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xl">📷</span>
+                                            <input
+                                                type="url"
+                                                value={formData.social_links.instagram}
+                                                onChange={(e) => setFormData({
+                                                    ...formData,
+                                                    social_links: { ...formData.social_links, instagram: e.target.value }
+                                                })}
+                                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
+                                                placeholder="Instagram URL"
+                                            />
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xl">🎵</span>
+                                            <input
+                                                type="url"
+                                                value={formData.social_links.tiktok}
+                                                onChange={(e) => setFormData({
+                                                    ...formData,
+                                                    social_links: { ...formData.social_links, tiktok: e.target.value }
+                                                })}
+                                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
+                                                placeholder="TikTok URL"
+                                            />
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xl">🛒</span>
+                                            <input
+                                                type="url"
+                                                value={formData.social_links.shopee}
+                                                onChange={(e) => setFormData({
+                                                    ...formData,
+                                                    social_links: { ...formData.social_links, shopee: e.target.value }
+                                                })}
+                                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
+                                                placeholder="Shopee URL"
+                                            />
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xl">🟢</span>
+                                            <input
+                                                type="url"
+                                                value={formData.social_links.tokopedia}
+                                                onChange={(e) => setFormData({
+                                                    ...formData,
+                                                    social_links: { ...formData.social_links, tokopedia: e.target.value }
+                                                })}
+                                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
+                                                placeholder="Tokopedia URL"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Working Hours */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Jam Operasional
+                                    </label>
+                                    <div className="space-y-2">
+                                        {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => (
+                                            <div key={day} className="flex items-center gap-3 py-2">
+                                                <label className="w-24 text-sm capitalize text-gray-600">{day}</label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={formData.working_hours[day]?.is_open ?? false}
+                                                    onChange={(e) => setFormData({
+                                                        ...formData,
+                                                        working_hours: {
+                                                            ...formData.working_hours,
+                                                            [day]: { ...formData.working_hours[day], is_open: e.target.checked }
+                                                        }
+                                                    })}
+                                                    className="w-4 h-4 text-main rounded focus:ring-main"
+                                                />
+                                                <input
+                                                    type="time"
+                                                    value={formData.working_hours[day]?.open ?? '09:00'}
+                                                    onChange={(e) => setFormData({
+                                                        ...formData,
+                                                        working_hours: {
+                                                            ...formData.working_hours,
+                                                            [day]: { ...formData.working_hours[day], open: e.target.value }
+                                                        }
+                                                    })}
+                                                    disabled={!formData.working_hours[day]?.is_open}
+                                                    className="px-2 py-1 border border-gray-300 rounded text-sm disabled:opacity-50"
+                                                />
+                                                <span className="text-gray-400">-</span>
+                                                <input
+                                                    type="time"
+                                                    value={formData.working_hours[day]?.close ?? '17:00'}
+                                                    onChange={(e) => setFormData({
+                                                        ...formData,
+                                                        working_hours: {
+                                                            ...formData.working_hours,
+                                                            [day]: { ...formData.working_hours[day], close: e.target.value }
+                                                        }
+                                                    })}
+                                                    disabled={!formData.working_hours[day]?.is_open}
+                                                    className="px-2 py-1 border border-gray-300 rounded text-sm disabled:opacity-50"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="bg-fifth rounded-xl p-6 shadow-sm">
                             <h3 className="text-lg font-semibold text-gray-800 mb-4 font-[family-name:var(--font-ubuntu)]">
                                 Pilih Template

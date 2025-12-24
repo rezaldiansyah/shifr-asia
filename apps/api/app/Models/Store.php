@@ -235,6 +235,54 @@ class Store extends Model
     }
 
     /**
+     * Get store banner URL from settings.
+     */
+    public function getBannerUrlAttribute(): ?string
+    {
+        return $this->settings['banner_url'] ?? null;
+    }
+
+    /**
+     * Get store social links from settings.
+     */
+    public function getSocialLinksAttribute(): array
+    {
+        return $this->settings['social_links'] ?? [];
+    }
+
+    /**
+     * Get store working hours from settings.
+     */
+    public function getWorkingHoursAttribute(): array
+    {
+        return $this->settings['working_hours'] ?? [];
+    }
+
+    /**
+     * Check if store is currently open based on working hours.
+     */
+    public function getIsOpenNowAttribute(): bool
+    {
+        $hours = $this->working_hours;
+        if (empty($hours)) {
+            return true; // Always open if no hours set
+        }
+
+        $now = now()->setTimezone('Asia/Jakarta');
+        $dayOfWeek = strtolower($now->format('l')); // monday, tuesday, etc.
+        
+        if (!isset($hours[$dayOfWeek]) || !$hours[$dayOfWeek]['is_open']) {
+            return false;
+        }
+
+        $openTime = $hours[$dayOfWeek]['open'] ?? '00:00';
+        $closeTime = $hours[$dayOfWeek]['close'] ?? '23:59';
+        
+        $currentTime = $now->format('H:i');
+        return $currentTime >= $openTime && $currentTime <= $closeTime;
+    }
+
+    /**
      * Get product count.
      */
     public function getProductCountAttribute(): int

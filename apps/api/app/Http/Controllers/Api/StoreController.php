@@ -98,6 +98,17 @@ class StoreController extends Controller
             'whatsapp_number' => 'nullable|string|max:20',
             'logo' => 'nullable|string',
             'theme_color' => 'nullable|string|max:7',
+            'banner_url' => 'nullable|string',
+            'social_links' => 'nullable|array',
+            'social_links.instagram' => 'nullable|string|max:255',
+            'social_links.tiktok' => 'nullable|string|max:255',
+            'social_links.facebook' => 'nullable|string|max:255',
+            'social_links.shopee' => 'nullable|string|max:255',
+            'social_links.tokopedia' => 'nullable|string|max:255',
+            'working_hours' => 'nullable|array',
+            'working_hours.*.is_open' => 'boolean',
+            'working_hours.*.open' => 'nullable|string|max:5',
+            'working_hours.*.close' => 'nullable|string|max:5',
         ]);
 
         // Update basic fields
@@ -113,6 +124,8 @@ class StoreController extends Controller
 
         // Update settings
         $settings = $store->settings ?? [];
+        
+        // Basic settings
         if (isset($validated['whatsapp_number'])) {
             $settings['whatsapp_number'] = $validated['whatsapp_number'];
         }
@@ -122,8 +135,19 @@ class StoreController extends Controller
         if (isset($validated['theme_color'])) {
             $settings['theme_color'] = $validated['theme_color'];
         }
+        
+        // Customization settings
+        if (isset($validated['banner_url'])) {
+            $settings['banner_url'] = $validated['banner_url'];
+        }
+        if (isset($validated['social_links'])) {
+            $settings['social_links'] = $validated['social_links'];
+        }
+        if (isset($validated['working_hours'])) {
+            $settings['working_hours'] = $validated['working_hours'];
+        }
+        
         $store->settings = $settings;
-
         $store->save();
         $store->load('template:id,name,slug,thumbnail');
 
