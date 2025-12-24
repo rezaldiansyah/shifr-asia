@@ -178,6 +178,52 @@ export const translations: Translations = {
     'cta.subtitle': { id: 'Gratis 3 bulan untuk memulai. Tidak perlu kartu kredit.', en: 'Free 3 months to get started. No credit card required.' },
     'cta.registerNow': { id: 'Daftar Sekarang - Gratis!', en: 'Register Now - Free!' },
     'cta.registerFree': { id: 'Daftar Gratis', en: 'Register Free' },
+
+    // Landing Page - Hero
+    'landing.hero.title1': { id: 'Jualan Lebih Mudah,', en: 'Sell Easier,' },
+    'landing.hero.title2': { id: 'Lebih Profesional', en: 'More Professional' },
+    'landing.hero.subtitle': { id: 'Platform e-commerce yang membantu UMKM Indonesia untuk scale bisnis dengan mudah, profesional, dan penuh amanah.', en: 'E-commerce platform that helps Indonesian SMEs scale their business easily, professionally, and with trust.' },
+    'landing.hero.cta1': { id: 'Mulai Gratis Sekarang', en: 'Start Free Now' },
+    'landing.hero.cta2': { id: 'Pelajari Lebih Lanjut', en: 'Learn More' },
+
+    // Landing Page - Features
+    'landing.features.title': { id: 'Fitur Unggulan', en: 'Key Features' },
+    'landing.features.catalog.title': { id: 'Katalog Produk', en: 'Product Catalog' },
+    'landing.features.catalog.desc': { id: 'Upload produk dengan mudah. Lengkap dengan variant ukuran dan warna.', en: 'Upload products easily. Complete with size and color variants.' },
+    'landing.features.whatsapp.title': { id: 'WhatsApp Checkout', en: 'WhatsApp Checkout' },
+    'landing.features.whatsapp.desc': { id: 'Order otomatis ke WhatsApp. Tidak perlu sistem cart yang rumit.', en: 'Automatic order to WhatsApp. No complicated cart system needed.' },
+    'landing.features.payment.title': { id: 'Payment Gateway', en: 'Payment Gateway' },
+    'landing.features.payment.desc': { id: 'Terima pembayaran via QRIS, VA Bank, dan E-wallet dengan mudah.', en: 'Accept payments via QRIS, Bank VA, and E-wallet easily.' },
+
+    // Landing Page - Pricing
+    'landing.pricing.title': { id: 'Paket Harga', en: 'Pricing Plans' },
+    'landing.pricing.subtitle': { id: 'Pilih paket yang sesuai dengan kebutuhan bisnis Anda. Mulai gratis, upgrade kapan saja.', en: 'Choose the plan that fits your business. Start free, upgrade anytime.' },
+    'landing.pricing.starter.name': { id: 'Starter', en: 'Starter' },
+    'landing.pricing.starter.desc': { id: 'Untuk memulai bisnis online', en: 'To start your online business' },
+    'landing.pricing.growth.name': { id: 'Growth', en: 'Growth' },
+    'landing.pricing.growth.desc': { id: 'Untuk bisnis yang berkembang', en: 'For growing businesses' },
+    'landing.pricing.pro.name': { id: 'Pro', en: 'Pro' },
+    'landing.pricing.pro.desc': { id: 'Untuk bisnis profesional', en: 'For professional businesses' },
+    'landing.pricing.popular': { id: 'Populer', en: 'Popular' },
+    'landing.pricing.perMonth': { id: '/bulan', en: '/month' },
+    'landing.pricing.products': { id: 'Hingga {count} produk', en: 'Up to {count} products' },
+    'landing.pricing.whatsapp': { id: 'WhatsApp checkout', en: 'WhatsApp checkout' },
+    'landing.pricing.subdomain': { id: 'Subdomain gratis', en: 'Free subdomain' },
+    'landing.pricing.customDomain': { id: 'Custom domain', en: 'Custom domain' },
+    'landing.pricing.paymentGateway': { id: 'Payment gateway', en: 'Payment gateway' },
+    'landing.pricing.allGrowth': { id: 'Semua fitur Growth', en: 'All Growth features' },
+    'landing.pricing.prioritySupport': { id: 'Priority support', en: 'Priority support' },
+    'landing.pricing.analytics': { id: 'Analytics dashboard', en: 'Analytics dashboard' },
+    'landing.pricing.startNow': { id: 'Mulai Sekarang', en: 'Start Now' },
+    'landing.pricing.freeNote': { id: '🎉 Gratis 3 bulan pertama untuk semua paket. Tanpa kartu kredit.', en: '🎉 Free for the first 3 months for all plans. No credit card required.' },
+
+    // Landing Page - CTA Section
+    'landing.cta.title': { id: 'Siap Memulai Bisnis Online?', en: 'Ready to Start Your Online Business?' },
+    'landing.cta.subtitle': { id: 'Bergabung dengan ribuan UMKM yang sudah menggunakan Shifr Asia', en: 'Join thousands of SMEs already using Shifr Asia' },
+    'landing.cta.button': { id: 'Daftar Gratis 3 Bulan', en: 'Register Free for 3 Months' },
+
+    // Landing Page - Footer
+    'landing.footer.copyright': { id: '© 2024 Shifr Asia. Semua hak cipta dilindungi.', en: '© 2024 Shifr Asia. All rights reserved.' },
 };
 
 // Helper function to get translation
