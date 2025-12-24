@@ -31,8 +31,14 @@
 | Sprint 8: Domain System | ✅ COMPLETE | 23 Des 2024 |
 | Sprint 9: Mayar Payment | ✅ COMPLETE | 23 Des 2024 |
 | Sprint 10: CI/CD Infrastructure | ✅ COMPLETE | 23 Des 2024 |
-| Sprint 11: Production Deploy | 🔜 NEXT | - |
+| Sprint 11: Production Deploy | 🔄 IN PROGRESS | - |
 | Sprint 12: Final Testing | ⏳ PENDING | - |
+
+### Sprint 11 Progress (23 Des 2024)
+- ✅ **GitHub:** Repo pushed successfully
+- ✅ **Supabase:** Database ready (`db.ilnteicybkikhdccresx.supabase.co`)
+- ⏸️ **Render:** Butuh credit card verification
+- ⏸️ **Vercel:** Submodule issue fixed, belum deploy
 
 ---
 
