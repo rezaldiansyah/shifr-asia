@@ -99,8 +99,156 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-4 font-[family-name:var(--font-ubuntu)]">
+            Paket Harga
+          </h3>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Pilih paket yang sesuai dengan kebutuhan bisnis Anda. Mulai gratis, upgrade kapan saja.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Starter Plan */}
+            <div className="bg-fifth rounded-2xl p-8 border border-gray-200 hover:border-main/50 transition">
+              <h4 className="text-xl font-bold text-gray-900 mb-2 font-[family-name:var(--font-ubuntu)]">Starter</h4>
+              <p className="text-gray-500 text-sm mb-4">Untuk memulai bisnis online</p>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-gray-900">Rp 35k</span>
+                <span className="text-gray-500">/bulan</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Hingga 5 produk
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  WhatsApp checkout
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Subdomain gratis
+                </li>
+                <li className="flex items-center text-gray-400">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Custom domain
+                </li>
+              </ul>
+              <Link
+                href="/register"
+                className="block w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold transition"
+              >
+                Mulai Sekarang
+              </Link>
+            </div>
+
+            {/* Growth Plan - Popular */}
+            <div className="bg-fifth rounded-2xl p-8 border-2 border-main relative shadow-lg shadow-main/10">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-main text-white text-sm font-medium px-4 py-1 rounded-full">
+                Populer
+              </div>
+              <h4 className="text-xl font-bold text-gray-900 mb-2 font-[family-name:var(--font-ubuntu)]">Growth</h4>
+              <p className="text-gray-500 text-sm mb-4">Untuk bisnis yang berkembang</p>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-main">Rp 89k</span>
+                <span className="text-gray-500">/bulan</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Hingga 50 produk
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  WhatsApp checkout
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Custom domain
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Payment gateway
+                </li>
+              </ul>
+              <Link
+                href="/register"
+                className="block w-full text-center bg-main hover:bg-main-hover text-white py-3 rounded-xl font-semibold transition"
+              >
+                Mulai Sekarang
+              </Link>
+            </div>
+
+            {/* Pro Plan */}
+            <div className="bg-fifth rounded-2xl p-8 border border-gray-200 hover:border-main/50 transition">
+              <h4 className="text-xl font-bold text-gray-900 mb-2 font-[family-name:var(--font-ubuntu)]">Pro</h4>
+              <p className="text-gray-500 text-sm mb-4">Untuk bisnis profesional</p>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-gray-900">Rp 199k</span>
+                <span className="text-gray-500">/bulan</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Hingga 500 produk
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Semua fitur Growth
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Priority support
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <svg className="w-5 h-5 text-main mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Analytics dashboard
+                </li>
+              </ul>
+              <Link
+                href="/register"
+                className="block w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold transition"
+              >
+                Mulai Sekarang
+              </Link>
+            </div>
+          </div>
+
+          {/* Free Trial Note */}
+          <p className="text-center text-gray-500 mt-8">
+            🎉 <span className="font-medium text-main">Gratis 3 bulan pertama</span> untuk semua paket. Tanpa kartu kredit.
+          </p>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-fifth">
         <div className="max-w-4xl mx-auto gradient-primary rounded-3xl p-12 text-center text-white">
           <h3 className="text-3xl font-bold mb-4 font-[family-name:var(--font-ubuntu)]">
             Siap Memulai Bisnis Online?
