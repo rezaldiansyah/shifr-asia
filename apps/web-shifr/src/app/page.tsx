@@ -288,7 +288,7 @@ export default function Home() {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center text-gray-600 text-sm">
                   <span className="text-main mr-2">✓</span>
-                  {t('landing.pricing.products').replace('{count}', '5')}
+                  {t('landing.pricing.products').replace('{count}', '9')}
                 </li>
                 <li className="flex items-center text-gray-600 text-sm">
                   <span className="text-main mr-2">✓</span>
