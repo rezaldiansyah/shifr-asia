@@ -19,9 +19,9 @@ RUN composer install \
     --prefer-dist \
     --ignore-platform-reqs
 
-# Copy full app and generate autoloader
+# Copy full app and generate autoloader (skip scripts to avoid dev dependency issues)
 COPY . .
-RUN composer dump-autoload --optimize --no-dev
+RUN composer dump-autoload --optimize --no-dev --no-scripts
 
 # Stage 2: Production image
 FROM php:8.3-fpm-alpine
