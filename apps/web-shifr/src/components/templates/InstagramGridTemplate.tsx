@@ -69,19 +69,64 @@ export default function InstagramGridTemplate({ store }: Props) {
         setOrderError(null);
     };
 
+    // Get theme color with fallback
+    const themeColor = store.settings?.theme_color || '#374da0';
+    const bannerUrl = store.settings?.banner_url;
+    const socialLinks = store.settings?.social_links || {};
+    const workingHours = store.settings?.working_hours || {};
+
+    // Check if store is open now
+    const isOpenNow = () => {
+        const now = new Date();
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const today = days[now.getDay()];
+        const todayHours = workingHours[today];
+
+        if (!todayHours || !todayHours.is_open) return false;
+
+        const currentTime = now.toTimeString().slice(0, 5);
+        return currentTime >= todayHours.open && currentTime <= todayHours.close;
+    };
+
+    const hasSocialLinks = Object.values(socialLinks).some(v => v);
+
     return (
         <div className="min-h-screen bg-white">
+            {/* Banner */}
+            {bannerUrl && (
+                <div className="w-full h-40 bg-gray-100">
+                    <img
+                        src={bannerUrl}
+                        alt="Banner"
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+            )}
+
             {/* Header */}
-            <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
+            <header
+                className="sticky top-0 z-40 border-b border-gray-200"
+                style={{ backgroundColor: themeColor }}
+            >
                 <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
-                    <h1 className="font-bold text-lg">{store.name}</h1>
+                    <h1 className="font-bold text-lg text-white">{store.name}</h1>
+                    {/* Open/Closed Badge */}
+                    {Object.keys(workingHours).length > 0 && (
+                        <span className={`text-xs px-2 py-1 rounded-full ${isOpenNow() ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'
+                            }`}>
+                            {isOpenNow() ? '🟢 Buka' : '⚪ Tutup'}
+                        </span>
+                    )}
                 </div>
             </header>
 
             {/* Profile Section */}
             <div className="max-w-lg mx-auto px-4 py-6 border-b border-gray-200">
                 <div className="flex items-center gap-6">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-main to-second flex items-center justify-center text-white text-2xl font-bold">
+                    <div
+                        className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold"
+                        style={{ background: `linear-gradient(135deg, ${themeColor}, ${themeColor}dd)` }}
+                    >
                         {store.name.charAt(0)}
                     </div>
                     <div className="flex-1">
@@ -94,6 +139,42 @@ export default function InstagramGridTemplate({ store }: Props) {
                         </div>
                     </div>
                 </div>
+
+                {/* Social Links */}
+                {hasSocialLinks && (
+                    <div className="flex gap-3 mt-4 pt-4 border-t border-gray-100">
+                        {socialLinks.instagram && (
+                            <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer"
+                                className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                                📷
+                            </a>
+                        )}
+                        {socialLinks.tiktok && (
+                            <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer"
+                                className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                                🎵
+                            </a>
+                        )}
+                        {socialLinks.shopee && (
+                            <a href={socialLinks.shopee} target="_blank" rel="noopener noreferrer"
+                                className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                                🛒
+                            </a>
+                        )}
+                        {socialLinks.tokopedia && (
+                            <a href={socialLinks.tokopedia} target="_blank" rel="noopener noreferrer"
+                                className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                                🟢
+                            </a>
+                        )}
+                        {socialLinks.facebook && (
+                            <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer"
+                                className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                                📘
+                            </a>
+                        )}
+                    </div>
+                )}
             </div>
 
             {/* Product Grid */}

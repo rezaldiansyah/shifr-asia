@@ -15,6 +15,12 @@ export default function CompanyProfileTemplate({ store }: Props) {
         }).format(price);
     };
 
+    // Get customization settings
+    const themeColor = store.settings?.theme_color || '#374da0';
+    const bannerUrl = store.settings?.banner_url;
+    const socialLinks = store.settings?.social_links || {};
+    const hasSocialLinks = Object.values(socialLinks).some(v => v);
+
     const handleWhatsAppContact = () => {
         const phone = store.settings?.whatsapp_number?.replace(/\D/g, '') || '';
         const message = `Halo ${store.name}, saya ingin bertanya tentang produk/layanan Anda.`;
@@ -34,11 +40,22 @@ export default function CompanyProfileTemplate({ store }: Props) {
             {/* Navigation */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
                 <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <h1 className="font-bold text-xl text-main">{store.name}</h1>
+                    <h1 className="font-bold text-xl" style={{ color: themeColor }}>{store.name}</h1>
                     <div className="hidden md:flex items-center gap-6 text-sm">
                         <a href="#about" className="text-gray-600 hover:text-main transition">Tentang</a>
                         <a href="#products" className="text-gray-600 hover:text-main transition">Produk</a>
                         <a href="#contact" className="text-gray-600 hover:text-main transition">Kontak</a>
+                        {/* Social Links in Nav */}
+                        {hasSocialLinks && (
+                            <div className="flex gap-2 ml-2">
+                                {socialLinks.instagram && (
+                                    <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-lg hover:opacity-70">📷</a>
+                                )}
+                                {socialLinks.tiktok && (
+                                    <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="text-lg hover:opacity-70">🎵</a>
+                                )}
+                            </div>
+                        )}
                     </div>
                     {store.settings?.whatsapp_number && (
                         <button
@@ -54,10 +71,20 @@ export default function CompanyProfileTemplate({ store }: Props) {
                 </div>
             </nav>
 
-            {/* Hero Section */}
-            <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-main via-third to-second pt-16">
+            {/* Hero Section with Banner */}
+            <section
+                className="min-h-screen flex items-center justify-center pt-16 relative"
+                style={{
+                    background: bannerUrl
+                        ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bannerUrl}) center/cover`
+                        : `linear-gradient(135deg, ${themeColor}, ${themeColor}88)`
+                }}
+            >
                 <div className="text-center text-white px-6">
-                    <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-white/20 flex items-center justify-center text-4xl font-bold backdrop-blur">
+                    <div
+                        className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center text-4xl font-bold backdrop-blur"
+                        style={{ backgroundColor: `${themeColor}40` }}
+                    >
                         {store.name.charAt(0)}
                     </div>
                     <h1 className="text-4xl md:text-6xl font-bold mb-4">{store.name}</h1>
@@ -69,7 +96,8 @@ export default function CompanyProfileTemplate({ store }: Props) {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
                             href="#products"
-                            className="bg-white text-main hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold transition"
+                            className="bg-white hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold transition"
+                            style={{ color: themeColor }}
                         >
                             Lihat Produk
                         </a>
