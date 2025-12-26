@@ -1,15 +1,16 @@
 # Acceptance Test Scenarios (ATS)
 ## Shifr Asia Platform - End-to-End Testing
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Created:** 23 Desember 2025  
-**Test Phase:** Post-Sprint 10 (Final QA)
+**Updated:** 26 Desember 2025  
+**Test Phase:** Sprint 13 (Final QA)
 
 ---
 
 ## Document Overview
 
-This document contains all acceptance test scenarios for the Shifr Asia platform. Testing should be performed after Sprint 10 completion to validate all features work correctly end-to-end.
+This document contains all acceptance test scenarios for the Shifr Asia platform. Testing should be performed after Sprint 12 completion to validate all features work correctly end-to-end.
 
 ### Test Scope
 | Sprint | Module | Status |
@@ -19,8 +20,11 @@ This document contains all acceptance test scenarios for the Shifr Asia platform
 | 5 | Website Builder | ✅ Implemented |
 | 6 | Subscription UI | ✅ Implemented |
 | 7 | Polish & Multi-language | ✅ Implemented |
-| 8 | Domain System | ⏳ Pending |
-| 9-10 | Commerce & Billing | ⏳ Pending |
+| 8 | Domain System | ✅ Implemented |
+| 9-10 | Commerce & Billing | ✅ Implemented |
+| 11 | Production Deploy | ✅ Deployed |
+| 12 | Link-in-Bio, Promos, Analytics | ✅ Implemented |
+| 13 | Final Testing & Content Moderation | 🔄 In Progress |
 
 ### Pass/Fail Criteria
 - **PASS**: All expected results match actual behavior
@@ -1213,6 +1217,97 @@ Full regression on all modules before launch.
 
 ---
 
+## Module 12: Sprint 12 Features
+
+### ATS-LINK-001: Link-in-Bio Creation
+| Field | Value |
+|-------|-------|
+| **Priority** | P1 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Login to dashboard
+2. Navigate to `/dashboard/links`
+3. Click "Tambah Link"
+4. Enter title, URL, and icon emoji
+5. Save the link
+6. Toggle link active/inactive
+
+**Expected Results:**
+- [x] Links page loads with sidebar layout
+- [x] Form modal appears correctly
+- [ ] Link created successfully
+- [ ] Link appears in list
+- [ ] Toggle changes link visibility
+
+---
+
+### ATS-PROMO-001: Promotional Code Management
+| Field | Value |
+|-------|-------|
+| **Priority** | P1 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Navigate to `/dashboard/promos`
+2. Click "Tambah Promo"
+3. Create percentage discount (e.g., DISKON20 for 20%)
+4. Create fixed discount (e.g., POTONG50K for Rp 50.000)
+5. Test with validity dates
+
+**Expected Results:**
+- [x] Promos page loads with sidebar layout
+- [ ] Promo code created successfully
+- [ ] Status badges show correctly (Active, Expired, Invalid)
+- [ ] Usage count displays
+
+---
+
+### ATS-ANALYTICS-001: Analytics Dashboard
+| Field | Value |
+|-------|-------|
+| **Priority** | P1 |
+| **Sprint** | 12 |
+
+**Test Steps:**
+1. Navigate to `/dashboard/analytics`
+2. Check period filters (24h, 7d, 30d, 90d)
+3. View summary cards
+4. Check daily chart
+5. View top products and pages
+
+**Expected Results:**
+- [x] Analytics page loads with sidebar layout
+- [x] Period buttons work
+- [ ] Summary cards show data (or empty state)
+- [ ] Chart renders correctly
+- [ ] Top products/pages lists populate
+
+---
+
+## Module 13: Content Moderation
+
+### ATS-MOD-001: Prohibited Content Filter
+| Field | Value |
+|-------|-------|
+| **Priority** | P0 (Critical) |
+| **Sprint** | 13 |
+
+**Test Steps:**
+1. Try to create store with prohibited words (e.g., "Bir", "Wine")
+2. Try to create product with adult content keywords
+3. Try to create link with gambling references
+4. Use obfuscated words (e.g., "b1r", "w1n3")
+
+**Expected Results:**
+- [ ] Store creation blocked with moderation error
+- [ ] Product creation blocked with moderation error
+- [ ] Link creation blocked with moderation error
+- [ ] Obfuscated words also detected
+- [ ] Error message shows: "Konten mengandung kata-kata yang tidak diizinkan"
+
+---
+
 ## Test Data Requirements
 
 | Data | Quantity |
@@ -1222,6 +1317,8 @@ Full regression on all modules before launch.
 | Test Products | 10-15 per store |
 | Test Orders | 5-10 with various statuses |
 | Business Cards | 3 with full CV data |
+| Test Links | 5-10 per store |
+| Test Promos | 3-5 per store |
 
 ---
 
