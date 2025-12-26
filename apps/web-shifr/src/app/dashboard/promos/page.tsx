@@ -1,9 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 import { api, Promo } from '@/lib/api';
 
 export default function PromosPage() {
+    const router = useRouter();
+    const { isLoading: authLoading, isAuthenticated } = useAuth();
     const [promos, setPromos] = useState<Promo[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
@@ -25,8 +30,16 @@ export default function PromosPage() {
     const [success, setSuccess] = useState('');
 
     useEffect(() => {
-        loadPromos();
-    }, []);
+        if (!authLoading && !isAuthenticated) {
+            router.push('/login');
+        }
+    }, [authLoading, isAuthenticated, router]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            loadPromos();
+        }
+    }, [isAuthenticated]);
 
     const loadPromos = async () => {
         try {
@@ -146,52 +159,178 @@ export default function PromosPage() {
         return <span className="px-2 py-1 bg-green-100 text-green-600 rounded-full text-xs">Aktif</span>;
     };
 
-    if (loading) {
+    if (authLoading) {
         return (
-            <div className="animate-pulse">
-                <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-                <div className="space-y-4">
-                    {[1, 2, 3].map((i) => (
-                        <div key={i} className="h-24 bg-gray-200 rounded"></div>
-                    ))}
-                </div>
+            <div className="min-h-screen flex items-center justify-center bg-fourth">
+                <div className="w-8 h-8 border-4 border-main border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Kode Promo</h1>
-                    <p className="text-gray-500">Kelola kode diskon untuk pelanggan</p>
+        <div className="min-h-screen bg-fourth flex">
+            {/* Sidebar */}
+            <aside className="w-64 bg-fifth border-r border-gray-200 flex flex-col">
+                <div className="h-16 flex items-center px-6 border-b border-gray-200">
+                    <h1 className="text-xl font-bold text-main font-[family-name:var(--font-ubuntu)]">
+                        Shifr Asia
+                    </h1>
                 </div>
-                <button
-                    onClick={() => setShowForm(true)}
-                    className="px-4 py-2 bg-[#374da0] text-white rounded-lg hover:bg-[#2c3e80] transition-colors"
-                >
-                    + Tambah Promo
-                </button>
-            </div>
+                <nav className="flex-1 px-4 py-6 space-y-1">
+                    <Link href="/dashboard" className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        Dashboard
+                    </Link>
+                    <Link href="/dashboard/products" className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                        Produk
+                    </Link>
+                    <Link href="/dashboard/orders" className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                        Pesanan
+                    </Link>
+                    <Link href="/dashboard/links" className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Link Bio
+                    </Link>
+                    <Link href="/dashboard/promos" className="flex items-center px-4 py-3 text-main bg-main/10 rounded-lg font-medium">
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                        Promo
+                    </Link>
+                    <Link href="/dashboard/analytics" className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        Analytics
+                    </Link>
+                    <Link href="/dashboard/store" className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        Toko
+                    </Link>
+                </nav>
+            </aside>
 
-            {/* Alerts */}
-            {error && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-                    {error}
+            {/* Main Content */}
+            <main className="flex-1">
+                <header className="h-16 bg-fifth border-b border-gray-200 flex items-center justify-between px-6">
+                    <h2 className="text-lg font-semibold text-gray-800 font-[family-name:var(--font-ubuntu)]">Kode Promo</h2>
+                    <button
+                        onClick={() => setShowForm(true)}
+                        className="px-4 py-2 bg-main text-white rounded-lg hover:bg-main-hover transition-colors"
+                    >
+                        + Tambah Promo
+                    </button>
+                </header>
+
+                <div className="p-6">
+                    {/* Alerts */}
+                    {error && (
+                        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 mb-6">
+                            {error}
+                        </div>
+                    )}
+                    {success && (
+                        <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 mb-6">
+                            {success}
+                        </div>
+                    )}
+
+                    {loading ? (
+                        <div className="animate-pulse space-y-4">
+                            {[1, 2, 3].map((i) => (
+                                <div key={i} className="h-24 bg-gray-200 rounded-xl"></div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="space-y-3">
+                            {promos.length === 0 ? (
+                                <div className="text-center py-12 bg-fifth rounded-xl shadow-sm">
+                                    <div className="text-4xl mb-4">🏷️</div>
+                                    <h3 className="font-medium text-gray-900">Belum ada promo</h3>
+                                    <p className="text-gray-500 text-sm">Buat kode promo pertama Anda</p>
+                                </div>
+                            ) : (
+                                promos.map((promo) => (
+                                    <div
+                                        key={promo.id}
+                                        className={`bg-fifth rounded-xl p-4 shadow-sm ${!promo.is_active || promo.is_expired ? 'opacity-60' : ''}`}
+                                    >
+                                        <div className="flex items-start justify-between">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <code className="px-2 py-1 bg-main/10 text-main rounded font-mono text-sm font-bold">
+                                                        {promo.code}
+                                                    </code>
+                                                    {getStatusBadge(promo)}
+                                                </div>
+                                                <h3 className="font-medium text-gray-900">{promo.name}</h3>
+                                                {promo.description && (
+                                                    <p className="text-sm text-gray-500">{promo.description}</p>
+                                                )}
+                                                <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                                                    <span className="font-medium text-main">
+                                                        {promo.formatted_value}
+                                                    </span>
+                                                    {promo.min_order && (
+                                                        <span>Min. Rp {promo.min_order.toLocaleString('id-ID')}</span>
+                                                    )}
+                                                    <span>
+                                                        {promo.used_count}/{promo.max_uses || '∞'} digunakan
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={() => toggleActive(promo)}
+                                                    className={`p-2 rounded-lg ${promo.is_active
+                                                        ? 'text-green-600 hover:bg-green-50'
+                                                        : 'text-gray-400 hover:bg-gray-50'
+                                                        }`}
+                                                    title={promo.is_active ? 'Nonaktifkan' : 'Aktifkan'}
+                                                >
+                                                    {promo.is_active ? '✅' : '⭕'}
+                                                </button>
+                                                <button
+                                                    onClick={() => handleEdit(promo)}
+                                                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                                                    title="Edit"
+                                                >
+                                                    ✏️
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(promo.id)}
+                                                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                                                    title="Hapus"
+                                                >
+                                                    🗑️
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    )}
                 </div>
-            )}
-            {success && (
-                <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-                    {success}
-                </div>
-            )}
+            </main>
 
             {/* Form Modal */}
             {showForm && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
-                    <div className="bg-white rounded-xl p-6 w-full max-w-lg mx-4 my-8">
-                        <h2 className="text-xl font-bold mb-4">
+                    <div className="bg-fifth rounded-xl p-6 w-full max-w-lg mx-4 my-8 shadow-xl">
+                        <h2 className="text-xl font-bold mb-4 font-[family-name:var(--font-ubuntu)]">
                             {editingPromo ? 'Edit Promo' : 'Tambah Promo Baru'}
                         </h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
@@ -204,7 +343,7 @@ export default function PromosPage() {
                                         type="text"
                                         value={formData.code}
                                         onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent uppercase"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent uppercase"
                                         placeholder="DISKON10"
                                         required
                                     />
@@ -217,7 +356,7 @@ export default function PromosPage() {
                                         type="text"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                         placeholder="Diskon Tahun Baru"
                                         required
                                     />
@@ -232,7 +371,7 @@ export default function PromosPage() {
                                     type="text"
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                 />
                             </div>
 
@@ -244,7 +383,7 @@ export default function PromosPage() {
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as 'percentage' | 'fixed' })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                     >
                                         <option value="percentage">Persentase (%)</option>
                                         <option value="fixed">Potongan Tetap (Rp)</option>
@@ -258,7 +397,7 @@ export default function PromosPage() {
                                         type="number"
                                         value={formData.value}
                                         onChange={(e) => setFormData({ ...formData, value: e.target.value })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                         min="0"
                                         max={formData.type === 'percentage' ? '100' : undefined}
                                         required
@@ -275,7 +414,7 @@ export default function PromosPage() {
                                         type="number"
                                         value={formData.min_order}
                                         onChange={(e) => setFormData({ ...formData, min_order: e.target.value })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                         min="0"
                                     />
                                 </div>
@@ -287,7 +426,7 @@ export default function PromosPage() {
                                         type="number"
                                         value={formData.max_discount}
                                         onChange={(e) => setFormData({ ...formData, max_discount: e.target.value })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                         min="0"
                                         disabled={formData.type === 'fixed'}
                                     />
@@ -302,7 +441,7 @@ export default function PromosPage() {
                                     type="number"
                                     value={formData.max_uses}
                                     onChange={(e) => setFormData({ ...formData, max_uses: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                     min="1"
                                     placeholder="Kosongkan untuk unlimited"
                                 />
@@ -317,7 +456,7 @@ export default function PromosPage() {
                                         type="datetime-local"
                                         value={formData.starts_at}
                                         onChange={(e) => setFormData({ ...formData, starts_at: e.target.value })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                     />
                                 </div>
                                 <div>
@@ -328,7 +467,7 @@ export default function PromosPage() {
                                         type="datetime-local"
                                         value={formData.expires_at}
                                         onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#374da0] focus:border-transparent"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-transparent"
                                     />
                                 </div>
                             </div>
@@ -339,7 +478,7 @@ export default function PromosPage() {
                                     id="is_active"
                                     checked={formData.is_active}
                                     onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                                    className="rounded"
+                                    className="rounded text-main focus:ring-main"
                                 />
                                 <label htmlFor="is_active" className="text-sm text-gray-700">
                                     Aktif
@@ -356,7 +495,7 @@ export default function PromosPage() {
                                 </button>
                                 <button
                                     type="submit"
-                                    className="flex-1 px-4 py-2 bg-[#374da0] text-white rounded-lg hover:bg-[#2c3e80]"
+                                    className="flex-1 px-4 py-2 bg-main text-white rounded-lg hover:bg-main-hover"
                                 >
                                     {editingPromo ? 'Simpan' : 'Tambah'}
                                 </button>
@@ -365,77 +504,6 @@ export default function PromosPage() {
                     </div>
                 </div>
             )}
-
-            {/* Promos List */}
-            <div className="space-y-3">
-                {promos.length === 0 ? (
-                    <div className="text-center py-12 bg-gray-50 rounded-xl">
-                        <div className="text-4xl mb-4">🏷️</div>
-                        <h3 className="font-medium text-gray-900">Belum ada promo</h3>
-                        <p className="text-gray-500 text-sm">Buat kode promo pertama Anda</p>
-                    </div>
-                ) : (
-                    promos.map((promo) => (
-                        <div
-                            key={promo.id}
-                            className={`bg-white rounded-xl border p-4 ${!promo.is_active || promo.is_expired ? 'opacity-60' : ''
-                                }`}
-                        >
-                            <div className="flex items-start justify-between">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <code className="px-2 py-1 bg-gray-100 rounded font-mono text-sm">
-                                            {promo.code}
-                                        </code>
-                                        {getStatusBadge(promo)}
-                                    </div>
-                                    <h3 className="font-medium text-gray-900">{promo.name}</h3>
-                                    {promo.description && (
-                                        <p className="text-sm text-gray-500">{promo.description}</p>
-                                    )}
-                                    <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
-                                        <span className="font-medium text-[#374da0]">
-                                            {promo.formatted_value}
-                                        </span>
-                                        {promo.min_order && (
-                                            <span>Min. Rp {promo.min_order.toLocaleString('id-ID')}</span>
-                                        )}
-                                        <span>
-                                            {promo.used_count}/{promo.max_uses || '∞'} digunakan
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={() => toggleActive(promo)}
-                                        className={`p-2 rounded-lg ${promo.is_active
-                                                ? 'text-green-600 hover:bg-green-50'
-                                                : 'text-gray-400 hover:bg-gray-50'
-                                            }`}
-                                        title={promo.is_active ? 'Nonaktifkan' : 'Aktifkan'}
-                                    >
-                                        {promo.is_active ? '✅' : '⭕'}
-                                    </button>
-                                    <button
-                                        onClick={() => handleEdit(promo)}
-                                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
-                                        title="Edit"
-                                    >
-                                        ✏️
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(promo.id)}
-                                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
-                                        title="Hapus"
-                                    >
-                                        🗑️
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
-            </div>
         </div>
     );
 }
