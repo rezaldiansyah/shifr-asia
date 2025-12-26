@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\DomainController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\AnalyticsController;
+use App\Http\Controllers\Api\LinkController;
+use App\Http\Controllers\Api\PromoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +48,16 @@ Route::get('/cards/{slug}/qr', [PublicCardController::class, 'qrCode']);
 
 // Public subscription tiers (for pricing page)
 Route::get('/subscription/tiers', [SubscriptionController::class, 'tiers']);
+
+// Analytics tracking (public)
+Route::post('/analytics/track', [AnalyticsController::class, 'track']);
+
+// Public promo validation
+Route::post('/promos/validate', [PromoController::class, 'validate']);
+
+// Public links (for bio page)
+Route::get('/links/{storeSlug}', [LinkController::class, 'publicIndex']);
+Route::post('/links/{link}/click', [LinkController::class, 'trackClick']);
 
 // Protected routes (require authentication)
 Route::middleware('auth:sanctum')->group(function () {
@@ -107,6 +120,25 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment/checkout', [PaymentController::class, 'checkout']);
     Route::get('/payment/callback', [PaymentController::class, 'callback']);
     Route::get('/payment/history', [PaymentController::class, 'history']);
+
+    // Analytics (authenticated routes)
+    Route::get('/analytics', [AnalyticsController::class, 'index']);
+    Route::get('/analytics/summary', [AnalyticsController::class, 'summary']);
+    Route::get('/analytics/charts', [AnalyticsController::class, 'charts']);
+
+    // Links (Link-in-Bio)
+    Route::get('/links', [LinkController::class, 'index']);
+    Route::post('/links', [LinkController::class, 'store']);
+    Route::put('/links/{link}', [LinkController::class, 'update']);
+    Route::delete('/links/{link}', [LinkController::class, 'destroy']);
+    Route::post('/links/reorder', [LinkController::class, 'reorder']);
+
+    // Promos (Discount Codes)
+    Route::get('/promos', [PromoController::class, 'index']);
+    Route::post('/promos', [PromoController::class, 'store']);
+    Route::get('/promos/{promo}', [PromoController::class, 'show']);
+    Route::put('/promos/{promo}', [PromoController::class, 'update']);
+    Route::delete('/promos/{promo}', [PromoController::class, 'destroy']);
 });
 
 // Payment webhook (public, no auth required)

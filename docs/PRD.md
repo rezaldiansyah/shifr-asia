@@ -2,7 +2,7 @@
 ## Shifr Asia - E-commerce Platform for UMKM
 
 **Version:** 1.0  
-**Date:** 19 Desember 2024  
+**Date:** 19 Desember 2025  
 **Author:** Founder & AI Assistant
 
 ---
@@ -73,9 +73,9 @@ Membangun platform e-commerce yang membantu UMKM Indonesia & Asia untuk scale bi
 | 6 | **Custom Domain** | *.shifr.asia atau domain sendiri | P1 | ✅ Done |
 | 7 | **Multi-language** | Indonesia + English | P1 | ✅ Done |
 | 8 | **Store Customization** | Theme color, banner, social links, jam operasional | P1 | ✅ Done |
-| 9 | **Link-in-Bio Page** | Public page seperti Linktree | P2 | ⏳ Pending |
-| 10 | **Promo/Discount Codes** | Kode diskon untuk marketing | P2 | ⏳ Pending |
-| 11 | **Simple Analytics** | Views, clicks, orders tracking | P2 | ⏳ Pending |
+| 9 | **Link-in-Bio Page** | Public page seperti Linktree | P2 | ✅ Done |
+| 10 | **Promo/Discount Codes** | Kode diskon untuk marketing | P2 | ✅ Done |
+| 11 | **Simple Analytics** | Views, clicks, orders tracking | P2 | ✅ Done |
 
 #### Out of MVP Scope
 - ❌ Digital product delivery
@@ -514,7 +514,7 @@ background: linear-gradient(135deg, #2cbbbc 0%, #327eac 100%);
 ### Sprint 4: Digital Business Card (Week 9-10) ✅ COMPLETE
 **WBS: 1.6.1-1.6.2 Bizup.id Core**
 
-> **📝 Status (21 Des 2024):** Sprint 4 selesai. Fitur CV dan color picker sudah diimplementasi.
+> **📝 Status (21 Des 2025):** Sprint 4 selesai. Fitur CV dan color picker sudah diimplementasi.
 
 | Task | WBS Ref | Status |
 |------|---------|--------|

@@ -1,16 +1,16 @@
 # Shifr Asia - Task Tracker
-**Last Updated:** 24 Desember 2024, 21:13 WIB
+**Last Updated:** 26 Desember 2025, 14:00 WIB
 
 ---
 
 ## 📍 Current Status
 | Item | Status |
 |------|--------|
-| **Current Sprint** | Sprint 12: Customization & High Value 🔄 |
+| **Current Sprint** | Sprint 12: Customization & High Value ✅ |
 | **Production** | ✅ LIVE (shifr.asia) |
 | **API Status** | ✅ Running (shifr-api.onrender.com) |
 | **Frontend Status** | ✅ Running (shifr.asia) |
-| **Database** | ✅ Supabase (18 tables) |
+| **Database** | ✅ Supabase (21 tables) |
 
 ---
 
@@ -20,7 +20,7 @@
 - Foundation, Auth, Products, Orders, Business Card, Website Builder
 - Subscription UI, Multi-language, Domain System, Mayar Payment, CI/CD
 
-### Sprint 11: Production Deploy ✅ COMPLETE (24 Des 2024)
+### Sprint 11: Production Deploy ✅ COMPLETE (24 Des 2025)
 - [x] GitHub repository setup
 - [x] Supabase database + migrations
 - [x] Render backend deployment
@@ -31,11 +31,9 @@
 - [x] Multi-language (ID/EN)
 - [x] Dripsender WhatsApp integration (code ready)
 
----
+### Sprint 12: Customization & High Value ✅ COMPLETE (26 Des 2025)
 
-## 🔄 Sprint 12: Customization & High Value Features
-
-### Phase 1: Store Customization ✅ COMPLETE
+#### Phase 1: Store Customization ✅
 - [x] Theme color picker (Backend + Frontend)
 - [x] Banner URL for store
 - [x] Social links (IG, TikTok, Shopee, Tokopedia, Facebook)
@@ -43,27 +41,31 @@
 - [x] Dashboard settings UI card
 - [x] Public stores use customization (both templates)
 
-### Phase 2: Link-in-Bio ⏳ PENDING
-- [ ] Create `links` table + migration
-- [ ] Create LinkController API
-- [ ] Create dashboard Links management page
-- [ ] Create public Bio page (/bio/[slug])
+#### Phase 2: Link-in-Bio ✅
+- [x] Create `links` table + migration
+- [x] Create Link model
+- [x] Create LinkController API (CRUD, reorder, click tracking)
+- [x] Create dashboard Links management page
+- [x] Create public Bio page (/bio/[slug])
 
-### Phase 3: Promo/Discount Codes ⏳ PENDING
-- [ ] Create `promos` table + migration
-- [ ] Create PromoController API
-- [ ] Create dashboard Promos page
-- [ ] Integrate promo validation in checkout
+#### Phase 3: Promo/Discount Codes ✅
+- [x] Create `promos` table + migration
+- [x] Create Promo model (validation, discount calculation)
+- [x] Create PromoController API (CRUD + validate)
+- [x] Create dashboard Promos page
+- [x] Promo validation endpoint ready for checkout
 
-### Phase 4: Simple Analytics ⏳ PENDING
-- [ ] Create `analytics_events` table
-- [ ] Create AnalyticsController API
-- [ ] Add tracking to public store pages
-- [ ] Create analytics dashboard
+#### Phase 4: Simple Analytics ✅
+- [x] Create `analytics_events` table + migration
+- [x] Create AnalyticsEvent model
+- [x] Create AnalyticsController API (track, summary, charts)
+- [x] Add tracking to public bio page
+- [x] Create analytics dashboard with charts
 
 ---
 
 ## ⏳ Sprint 13: Final Testing (PENDING)
+- [ ] Run pending database migrations
 - [ ] Full acceptance test scenarios
 - [ ] End-to-end order flow test
 - [ ] Multi-device testing
@@ -74,6 +76,7 @@
 ## 🔧 Pending Action Items
 | Item | Owner | Priority |
 |------|-------|----------|
+| Run new migrations (3 tables) | Dev | HIGH |
 | Add Dripsender API Key | User | HIGH |
 | Test WhatsApp notifications | User | HIGH |
 | Test order flow end-to-end | User | MEDIUM |

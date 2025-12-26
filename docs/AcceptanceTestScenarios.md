@@ -2,7 +2,7 @@
 ## Shifr Asia Platform - End-to-End Testing
 
 **Version:** 1.0  
-**Created:** 23 Desember 2024  
+**Created:** 23 Desember 2025  
 **Test Phase:** Post-Sprint 10 (Final QA)
 
 ---

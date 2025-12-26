@@ -41,6 +41,14 @@ class User extends Authenticatable
         return $this->hasMany(Store::class);
     }
 
+    /**
+     * Get the primary store (first store) for backward compatibility.
+     */
+    public function store(): HasOne
+    {
+        return $this->hasOne(Store::class)->oldest();
+    }
+
     public function subscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class);

@@ -173,6 +173,30 @@ class Store extends Model
     }
 
     /**
+     * Get the links for this store (Link-in-Bio).
+     */
+    public function links(): HasMany
+    {
+        return $this->hasMany(Link::class)->orderBy('sort_order');
+    }
+
+    /**
+     * Get the promos for this store.
+     */
+    public function promos(): HasMany
+    {
+        return $this->hasMany(Promo::class);
+    }
+
+    /**
+     * Get the analytics events for this store.
+     */
+    public function analyticsEvents(): HasMany
+    {
+        return $this->hasMany(AnalyticsEvent::class);
+    }
+
+    /**
      * Get the active subscription for this store.
      */
     public function subscription(): HasOne

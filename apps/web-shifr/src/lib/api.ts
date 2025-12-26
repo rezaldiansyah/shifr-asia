@@ -404,6 +404,145 @@ class ApiClient {
             }>;
         }>('/payment/history');
     }
+
+    // ==================== LINK-IN-BIO ENDPOINTS ====================
+
+    async getLinks() {
+        return this.request<{ links: Link[] }>('/links');
+    }
+
+    async getPublicLinks(storeSlug: string) {
+        return this.request<{
+            store: {
+                id: number;
+                name: string;
+                slug: string;
+                description?: string;
+                logo?: string;
+                theme_color?: string;
+            };
+            links: Link[];
+        }>(`/links/${storeSlug}`);
+    }
+
+    async createLink(data: CreateLinkData) {
+        return this.request<{ message: string; link: Link }>('/links', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    }
+
+    async updateLink(id: number, data: UpdateLinkData) {
+        return this.request<{ message: string; link: Link }>(`/links/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    }
+
+    async deleteLink(id: number) {
+        return this.request<{ message: string }>(`/links/${id}`, {
+            method: 'DELETE',
+        });
+    }
+
+    async reorderLinks(order: number[]) {
+        return this.request<{ message: string; links: Link[] }>('/links/reorder', {
+            method: 'POST',
+            body: JSON.stringify({ order }),
+        });
+    }
+
+    async trackLinkClick(linkId: number) {
+        return this.request<{ success: boolean; url: string }>(`/links/${linkId}/click`, {
+            method: 'POST',
+        });
+    }
+
+    // ==================== PROMO CODE ENDPOINTS ====================
+
+    async getPromos() {
+        return this.request<{ promos: Promo[] }>('/promos');
+    }
+
+    async getPromo(id: number) {
+        return this.request<{ promo: Promo }>(`/promos/${id}`);
+    }
+
+    async createPromo(data: CreatePromoData) {
+        return this.request<{ message: string; promo: Promo }>('/promos', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    }
+
+    async updatePromo(id: number, data: UpdatePromoData) {
+        return this.request<{ message: string; promo: Promo }>(`/promos/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    }
+
+    async deletePromo(id: number) {
+        return this.request<{ message: string }>(`/promos/${id}`, {
+            method: 'DELETE',
+        });
+    }
+
+    async validatePromo(storeId: number, code: string, orderAmount?: number) {
+        return this.request<PromoValidationResult>('/promos/validate', {
+            method: 'POST',
+            body: JSON.stringify({
+                store_id: storeId,
+                code,
+                order_amount: orderAmount,
+            }),
+        });
+    }
+
+    // ==================== ANALYTICS ENDPOINTS ====================
+
+    async trackEvent(data: {
+        store_id: number;
+        event_type: 'view' | 'click' | 'order' | 'bio_view' | 'link_click' | 'product_view';
+        page?: string;
+        target_type?: string;
+        target_id?: number;
+        metadata?: Record<string, unknown>;
+    }) {
+        return this.request<{ success: boolean; event_id: number }>('/analytics/track', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    }
+
+    async getAnalyticsSummary(period: '24h' | '7d' | '30d' | '90d' = '7d') {
+        return this.request<{
+            summary: AnalyticsSummary;
+            period: string;
+            start_date: string;
+            end_date: string;
+        }>(`/analytics/summary?period=${period}`);
+    }
+
+    async getAnalyticsCharts(period: '24h' | '7d' | '30d' | '90d' = '7d') {
+        return this.request<AnalyticsCharts>(`/analytics/charts?period=${period}`);
+    }
+
+    async getAnalyticsEvents(filters?: { event_type?: string; per_page?: number }) {
+        const params = new URLSearchParams();
+        if (filters?.event_type) params.append('event_type', filters.event_type);
+        if (filters?.per_page) params.append('per_page', filters.per_page.toString());
+        const query = params.toString() ? `?${params.toString()}` : '';
+        return this.request<{
+            events: AnalyticsEvent[];
+            pagination: {
+                current_page: number;
+                last_page: number;
+                per_page: number;
+                total: number;
+            };
+        }>(`/analytics${query}`);
+    }
 }
 
 // Types
@@ -665,7 +804,152 @@ export interface DomainSettings {
     dns_instructions: DnsInstructions | null;
 }
 
+// Link Types (Link-in-Bio)
+export interface Link {
+    id: number;
+    store_id: number;
+    title: string;
+    url: string;
+    icon?: string;
+    thumbnail?: string;
+    description?: string;
+    sort_order: number;
+    is_active: boolean;
+    click_count: number;
+    created_at: string;
+}
+
+export interface CreateLinkData {
+    title: string;
+    url: string;
+    icon?: string;
+    thumbnail?: string;
+    description?: string;
+    is_active?: boolean;
+}
+
+export interface UpdateLinkData {
+    title?: string;
+    url?: string;
+    icon?: string;
+    thumbnail?: string;
+    description?: string;
+    is_active?: boolean;
+}
+
+// Promo Types (Discount Codes)
+export interface Promo {
+    id: number;
+    code: string;
+    name: string;
+    description?: string;
+    type: 'percentage' | 'fixed';
+    value: number;
+    formatted_value: string;
+    min_order?: number;
+    max_discount?: number;
+    max_uses?: number;
+    used_count: number;
+    starts_at?: string;
+    expires_at?: string;
+    is_active: boolean;
+    is_valid: boolean;
+    is_expired: boolean;
+    created_at: string;
+}
+
+export interface CreatePromoData {
+    code: string;
+    name: string;
+    description?: string;
+    type: 'percentage' | 'fixed';
+    value: number;
+    min_order?: number;
+    max_discount?: number;
+    max_uses?: number;
+    starts_at?: string;
+    expires_at?: string;
+    is_active?: boolean;
+}
+
+export interface UpdatePromoData {
+    code?: string;
+    name?: string;
+    description?: string;
+    type?: 'percentage' | 'fixed';
+    value?: number;
+    min_order?: number;
+    max_discount?: number;
+    max_uses?: number;
+    starts_at?: string;
+    expires_at?: string;
+    is_active?: boolean;
+}
+
+export interface PromoValidationResult {
+    valid: boolean;
+    message?: string;
+    promo?: {
+        code: string;
+        name: string;
+        type: 'percentage' | 'fixed';
+        value: number;
+        formatted_value: string;
+    };
+    discount?: number;
+    formatted_discount?: string;
+}
+
+// Analytics Types
+export interface AnalyticsSummary {
+    total_views: number;
+    unique_visitors: number;
+    total_clicks: number;
+    total_orders: number;
+    bio_views: number;
+    link_clicks: number;
+    conversion_rate: number;
+}
+
+export interface DailyStats {
+    date: string;
+    views: number;
+    clicks: number;
+    orders: number;
+}
+
+export interface TopPage {
+    page: string;
+    count: number;
+}
+
+export interface TopProduct {
+    product_id: number;
+    product_name: string;
+    views: number;
+}
+
+export interface AnalyticsCharts {
+    daily: DailyStats[];
+    top_pages: TopPage[];
+    top_products: TopProduct[];
+    period: string;
+}
+
+export interface AnalyticsEvent {
+    id: number;
+    store_id: number;
+    event_type: string;
+    page?: string;
+    target_type?: string;
+    target_id?: number;
+    metadata?: Record<string, unknown>;
+    ip_address?: string;
+    created_at: string;
+}
+
 // Export singleton instance
 export const api = new ApiClient();
 export type { ApiError, CreateOrderData };
+
 

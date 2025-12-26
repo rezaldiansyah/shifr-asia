@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('links', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('store_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->string('url');
+            $table->string('icon')->nullable(); // emoji or icon name
+            $table->string('thumbnail')->nullable(); // optional thumbnail image
+            $table->string('description')->nullable();
+            $table->integer('sort_order')->default(0);
+            $table->boolean('is_active')->default(true);
+            $table->unsignedBigInteger('click_count')->default(0);
+            $table->timestamps();
+
+            // Index for sorting
+            $table->index(['store_id', 'sort_order']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('links');
+    }
+};

@@ -1,5 +1,5 @@
 # Shifr Asia - Progress Notes
-**Last Updated:** 24 Desember 2024, 21:13 WIB
+**Last Updated:** 26 Desember 2025, 14:00 WIB
 
 ---
 
@@ -21,21 +21,21 @@
 | Sprint | Status | Tanggal Selesai |
 |--------|--------|-----------------|
 | Sprint 0: Foundation | ✅ COMPLETE | - |
-| Sprint 1: Authentication | ✅ COMPLETE | 19 Des 2024 |
-| Sprint 2: Product Management | ✅ COMPLETE | 20 Des 2024 |
-| Sprint 3: Order Management | ✅ COMPLETE | 20 Des 2024 |
-| Sprint 4: Digital Business Card | ✅ COMPLETE | 21 Des 2024 |
-| Sprint 5: Website Builder | ✅ COMPLETE | 22 Des 2024 |
-| Sprint 6: Subscription UI | ✅ COMPLETE | 22 Des 2024 |
-| Sprint 7: Polish & Prep | ✅ COMPLETE | 23 Des 2024 |
-| Sprint 8: Domain System | ✅ COMPLETE | 23 Des 2024 |
-| Sprint 9: Mayar Payment | ✅ COMPLETE | 23 Des 2024 |
-| Sprint 10: CI/CD Infrastructure | ✅ COMPLETE | 23 Des 2024 |
-| Sprint 11: Production Deploy | ✅ COMPLETE | 24 Des 2024 |
-| Sprint 12: Customization & High Value | 🔄 IN PROGRESS | - |
+| Sprint 1: Authentication | ✅ COMPLETE | 19 Des 2025 |
+| Sprint 2: Product Management | ✅ COMPLETE | 20 Des 2025 |
+| Sprint 3: Order Management | ✅ COMPLETE | 20 Des 2025 |
+| Sprint 4: Digital Business Card | ✅ COMPLETE | 21 Des 2025 |
+| Sprint 5: Website Builder | ✅ COMPLETE | 22 Des 2025 |
+| Sprint 6: Subscription UI | ✅ COMPLETE | 22 Des 2025 |
+| Sprint 7: Polish & Prep | ✅ COMPLETE | 23 Des 2025 |
+| Sprint 8: Domain System | ✅ COMPLETE | 23 Des 2025 |
+| Sprint 9: Mayar Payment | ✅ COMPLETE | 23 Des 2025 |
+| Sprint 10: CI/CD Infrastructure | ✅ COMPLETE | 23 Des 2025 |
+| Sprint 11: Production Deploy | ✅ COMPLETE | 24 Des 2025 |
+| Sprint 12: Customization & High Value | ✅ COMPLETE | 26 Des 2025 |
 | Sprint 13: Final Testing | ⏳ PENDING | - |
 
-### Sprint 11 Progress ✅ COMPLETE (24 Des 2024)
+### Sprint 11 Progress ✅ COMPLETE (24 Des 2025)
 - ✅ **GitHub:** Repo pushed (rezaldiansyah/shifr-asia)
 - ✅ **Supabase:** Database ready, 18 tables, migrations OK
 - ✅ **Render:** Backend deployed (shifr-api.onrender.com)
@@ -46,17 +46,31 @@
 - ✅ **Multi-language:** ID/EN with 60+ translation keys
 - ✅ **Dripsender WhatsApp:** Integration ready (needs API key)
 
-### Sprint 12 Progress 🔄 IN PROGRESS (24 Des 2024)
-- ✅ **Phase 1: Store Customization COMPLETE**
+### Sprint 12 Progress ✅ COMPLETE (26 Des 2025)
+- ✅ **Phase 1: Store Customization**
   - Theme color picker
   - Banner URL
   - Social links (IG, TikTok, Shopee, Tokopedia, Facebook)
   - Working hours with open/closed status
   - Dashboard settings UI
   - Public store templates updated
-- ⏳ **Phase 2: Link-in-Bio** (Pending)
-- ⏳ **Phase 3: Promo Codes** (Pending)
-- ⏳ **Phase 4: Simple Analytics** (Pending)
+- ✅ **Phase 2: Link-in-Bio**
+  - `links` table + migration
+  - Link model with click tracking
+  - LinkController API (CRUD, reorder)
+  - Dashboard `/dashboard/links` page
+  - Public Bio page `/bio/[slug]`
+- ✅ **Phase 3: Promo Codes**
+  - `promos` table + migration
+  - Promo model with validation & discount calculation
+  - PromoController API (CRUD + validate)
+  - Dashboard `/dashboard/promos` page
+- ✅ **Phase 4: Simple Analytics**
+  - `analytics_events` table + migration
+  - AnalyticsEvent model with scopes
+  - AnalyticsController API (track, summary, charts)
+  - Dashboard `/dashboard/analytics` page
+  - Tracking on public bio page
 
 ---
 
@@ -68,7 +82,7 @@
 - [x] Next.js 14 frontend setup (web-shifr, web-bizup)
 - [x] Database schema design
 
-### Sprint 1: Authentication (19 Des 2024)
+### Sprint 1: Authentication (19 Des 2025)
 **Backend:**
 - [x] User model dengan role (merchant/admin), locale, phone
 - [x] Sanctum token authentication
@@ -79,7 +93,7 @@
 - [x] AuthContext untuk state management
 - [x] Dashboard shell dengan sidebar navigation
 
-### Sprint 2: Product Management (20 Des 2024)
+### Sprint 2: Product Management (20 Des 2025)
 **Backend:**
 - [x] Template, Store, Product models
 - [x] TemplateController, StoreController, ProductController
@@ -96,7 +110,7 @@
 - [x] Instagram Grid Template (3-column grid, modal detail)
 - [x] Company Profile Template (Hero → About → Products → Contact)
 
-### Sprint 3: Order Management (20 Des 2024)
+### Sprint 3: Order Management (20 Des 2025)
 **Backend:**
 - [x] Order model dengan WA tracking fields
 - [x] OrderController (create, list, show, updateStatus)
@@ -115,7 +129,7 @@
 - [x] Template pesan ke penjual (new order alert)
 - [x] Dripsender config di `config/services.php`
 
-### Sprint 4: Digital Business Card (21 Des 2024)
+### Sprint 4: Digital Business Card (21 Des 2025)
 **Backend:**
 - [x] BusinessCard model dengan JSON data, vCard generation
 - [x] BusinessCardController (CRUD, photo upload, QR code)
@@ -148,7 +162,7 @@
 
 ---
 
-## 🔜 Next Steps (Updated 21 Des 2024)
+## 🔜 Next Steps (Updated 26 Des 2025)
 
 ### Sprint 4: Digital Business Card (bizup.id) ✅ COMPLETE
 - [x] BusinessCard model & migration
