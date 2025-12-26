@@ -198,31 +198,42 @@
 - [x] Custom background color picker (6 presets + custom gradient)
 - [x] "View Profile" expandable section di public card
 
-**📝 TODO Perbaikan CV (Sesi Selanjutnya):**
+**📝 CV Improvements (Future Enhancement):**
 - [ ] Pengalaman Kerja: Format periode → tahun mulai, tahun selesai, opsi "Masih Disini"
 - [ ] Prestasi: Tambah field tahun perolehan + organisasi pemberi
 - [ ] Pendidikan: Tahun lulus → format integer 4 digit (bukan string)
 
-### Sprint 5: Website Builder (Basic) ⭐ NEXT
-- [ ] Section editor (add/remove/reorder)
-- [ ] Content editing
-- [ ] Preview mode
-- [ ] Additional templates
+### Sprint 5-7: ✅ COMPLETE (22-23 Des 2025)
+- [x] Website Builder (Section editor, content editing, preview)
+- [x] Subscription UI (Tier display, upgrade UI, feature gates)
+- [x] Multi-language (ID/EN with 60+ keys)
+- [x] Mobile optimization
+- [x] Performance improvements
 
-### Sprint 6: Subscription UI
-- [ ] Subscription model
-- [ ] Tier display & upgrade UI
-- [ ] Feature gates
+### Sprint 8-10: ✅ COMPLETE (23 Des 2025)
+- [x] Domain System (Custom domain, Cloudflare integration)
+- [x] Mayar Payment Gateway
+- [x] CI/CD Infrastructure (Render, Vercel)
 
-### Sprint 7: Polish & Preparation
-- [ ] Multi-language (ID/EN)
-- [ ] Mobile optimization
-- [ ] Performance improvements
+### Sprint 11-12: ✅ COMPLETE (24-26 Des 2025)
+- [x] Production Deploy (shifr.asia, shifr-api.onrender.com)
+- [x] Store Customization (theme color, banner, social links)
+- [x] Link-in-Bio (Linktree-like feature)
+- [x] Promo/Discount Codes
+- [x] Simple Analytics Dashboard
 
-### ⏳ Post-Sprint 7: Third-Party Integrations
-- [ ] Dripsender API verification & testing
-- [ ] Payment Gateway (Mayar/Duitku)
-- [ ] Email Notification (Mailgun/Resend)
+### Sprint 13: 🔄 IN PROGRESS (26 Des 2025)
+- [x] Browser Testing (API, Frontend, Dashboard)
+- [x] Content Moderation (Keyword blacklist)
+- [x] Dashboard Layout Fixes
+- [ ] End-to-end order flow test
+- [ ] WhatsApp notification test (needs Dripsender API key)
+
+### ⏳ Pending Action Items
+- [ ] Add Dripsender API Key for WhatsApp notifications
+- [ ] Test WhatsApp order notifications
+- [ ] Cloudflare R2 for file storage (future)
+- [ ] Resend for email notifications (future)
 
 ---
 
@@ -230,11 +241,14 @@
 
 | Layer | Technology |
 |-------|------------|
-| Backend | Laravel 11 |
+| Backend | Laravel 12 + PHP 8.4 |
 | Frontend | Next.js 16 + Tailwind CSS |
-| Database | SQLite (dev) → PostgreSQL (prod) |
+| Database | PostgreSQL (Supabase) |
 | Auth | Laravel Sanctum (Token-based) |
 | WhatsApp | Dripsender API |
+| Payments | Mayar Payment Gateway |
+| Hosting | Render (API) + Vercel (Frontend) |
+| CDN/DNS | Cloudflare |
 | Monorepo | Turborepo |
 
 ---
@@ -247,21 +261,24 @@ app/Http/Controllers/Api/
 ├── AuthController.php
 ├── StoreController.php
 ├── ProductController.php
-├── PublicStoreController.php
-├── TemplateController.php
-└── OrderController.php
+├── OrderController.php
+├── LinkController.php
+├── PromoController.php
+├── AnalyticsController.php
+└── PublicStoreController.php
 
 app/Models/
 ├── User.php
 ├── Store.php
 ├── Product.php
-├── Template.php
-└── Order.php
+├── Order.php
+├── Link.php
+├── Promo.php
+└── AnalyticsEvent.php
 
 app/Services/
-└── WhatsAppService.php
-
-config/services.php          # Dripsender config
+├── WhatsAppService.php
+└── ContentModerationService.php
 ```
 
 ### Frontend (apps/web-shifr)
@@ -271,17 +288,12 @@ src/app/
 │   ├── page.tsx             # Dashboard home
 │   ├── store/page.tsx       # Store settings
 │   ├── products/page.tsx    # Products list
-│   ├── products/create/page.tsx
-│   ├── products/[id]/page.tsx
-│   └── orders/page.tsx      # Order management
+│   ├── orders/page.tsx      # Order management
+│   ├── links/page.tsx       # Link-in-Bio
+│   ├── promos/page.tsx      # Promo codes
+│   └── analytics/page.tsx   # Analytics dashboard
 ├── store/[slug]/page.tsx    # Public store
-
-src/components/templates/
-├── InstagramGridTemplate.tsx
-└── CompanyProfileTemplate.tsx
-
-src/lib/api.ts               # API client + types
-src/contexts/AuthContext.tsx # Auth state
+├── bio/[slug]/page.tsx      # Public bio page
 ```
 
 ---
@@ -298,8 +310,8 @@ cd apps/web-shifr && npm run dev
 # Run migrations
 cd apps/api && php artisan migrate
 
-# Seed templates
-cd apps/api && php artisan db:seed --class=TemplateSeeder
+# Build for production
+cd apps/web-shifr && npm run build
 ```
 
 ---
@@ -308,20 +320,30 @@ cd apps/api && php artisan db:seed --class=TemplateSeeder
 
 ### Backend (.env)
 ```
+APP_URL=https://shifr-api.onrender.com
+DB_CONNECTION=pgsql
+DB_HOST=<supabase-host>
 DRIPSENDER_API_KEY=your_api_key_here
+MAYAR_API_KEY=your_mayar_key_here
 ```
 
 ---
 
 ## 🚀 Resume Point
 
-**Ketika melanjutkan development, perlu:**
+**Status: Sprint 13 - Final Testing**
 
-1. **Verifikasi Dripsender API** - Cek endpoint dan format request yang benar
-2. **Test flow checkout** - Submit order → cek WA terkirim
-3. **Deploy ke staging** - Setup Cloud Run atau Vercel
-4. **Sprint 4**: Digital Business Card (bizup.id)
+**Completed Today (26 Des 2025):**
+1. ✅ Browser testing - API, frontend, dashboard pages verified
+2. ✅ Content moderation - Keyword blacklist implemented
+3. ✅ Dashboard layout fixes - Analytics, Links, Promos pages
+
+**Next Steps:**
+1. Add Dripsender API key for WhatsApp testing
+2. Test complete order flow with real WhatsApp
+3. Multi-device testing
+4. Performance optimization if needed
 
 ---
 
-*Progress hari ini sangat baik! 3 sprint selesai dalam sehari! 🚀*
+*Platform sudah LIVE di shifr.asia! 🚀*
