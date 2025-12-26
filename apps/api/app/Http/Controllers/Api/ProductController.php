@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Store;
+use App\Services\ContentModerationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,6 +99,14 @@ class ProductController extends Controller
             'is_active' => 'boolean',
         ]);
 
+        // Content moderation check
+        $moderation = new ContentModerationService();
+        $moderation->validateFields([
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? '',
+            'category' => $validated['category'] ?? '',
+        ]);
+
         $product = Product::create([
             'store_id' => $store->id,
             'name' => $validated['name'],
@@ -162,6 +171,14 @@ class ProductController extends Controller
             'stock' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
             'sort_order' => 'integer|min:0',
+        ]);
+
+        // Content moderation check
+        $moderation = new ContentModerationService();
+        $moderation->validateFields([
+            'name' => $validated['name'] ?? '',
+            'description' => $validated['description'] ?? '',
+            'category' => $validated['category'] ?? '',
         ]);
 
         $product->update($validated);

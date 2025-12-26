@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Link;
 use App\Models\Store;
 use App\Models\AnalyticsEvent;
+use App\Services\ContentModerationService;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
@@ -83,6 +84,14 @@ class LinkController extends Controller
             'thumbnail' => 'nullable|url|max:500',
             'description' => 'nullable|string|max:255',
             'is_active' => 'nullable|boolean',
+        ]);
+
+        // Content moderation check
+        $moderation = new ContentModerationService();
+        $moderation->validateFields([
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? '',
+            'url' => $validated['url'],
         ]);
 
         // Get max sort order

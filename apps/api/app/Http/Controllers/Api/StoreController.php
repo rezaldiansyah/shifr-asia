@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Store;
+use App\Services\ContentModerationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,13 @@ class StoreController extends Controller
             'whatsapp_number' => 'nullable|string|max:20',
             'logo' => 'nullable|string',
             'theme_color' => 'nullable|string|max:7',
+        ]);
+
+        // Content moderation check
+        $moderation = new ContentModerationService();
+        $moderation->validateFields([
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? '',
         ]);
 
         $store = Store::create([
@@ -109,6 +117,13 @@ class StoreController extends Controller
             'working_hours.*.is_open' => 'boolean',
             'working_hours.*.open' => 'nullable|string|max:5',
             'working_hours.*.close' => 'nullable|string|max:5',
+        ]);
+
+        // Content moderation check
+        $moderation = new ContentModerationService();
+        $moderation->validateFields([
+            'name' => $validated['name'] ?? '',
+            'description' => $validated['description'] ?? '',
         ]);
 
         // Update basic fields
