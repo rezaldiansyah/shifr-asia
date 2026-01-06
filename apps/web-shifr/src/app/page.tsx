@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
@@ -39,13 +40,22 @@ export default function Home() {
       {/* Navigation */}
       <nav className="bg-fifth/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-xl font-bold text-main font-[family-name:var(--font-ubuntu)]"
+            className="flex items-center"
           >
-            Shifr Asia
-          </motion.h1>
+            <Link href="/">
+              <Image
+                src="/logo.png"
+                alt="Shifr Asia"
+                width={120}
+                height={40}
+                className="h-8 w-auto"
+                priority
+              />
+            </Link>
+          </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

@@ -1,8 +1,8 @@
 # Product Requirements Document (PRD)
 ## Shifr Asia - E-commerce Platform for UMKM
 
-**Version:** 1.0  
-**Date:** 26 Desember 2025  
+**Version:** 1.1  
+**Date:** 2 Januari 2026  
 **Author:** Founder & AI Assistant
 
 ---
@@ -101,6 +101,7 @@ Membangun platform e-commerce yang membantu UMKM Indonesia & Asia untuk scale bi
 | **Reminder System** | T-30, T-7, T-1 email/WA |
 | **Product Filtering** | Blacklist: rokok, alkohol, non-syariah |
 | **Merchant Dashboard** | Simple (Version A) - CRUD produk, order, settings |
+| **Email Multi-Provider** | Load sharing: kirim.email + Resend + Mailgun + Google SMTP (400/day) |
 
 > **⚠️ PENTING:** Ya, setiap user/client yang berlangganan akan memiliki **dashboard sendiri** untuk:
 > - Mengubah konten toko/profile

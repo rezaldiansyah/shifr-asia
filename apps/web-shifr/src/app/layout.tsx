@@ -21,6 +21,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Shifr Asia - E-commerce untuk UMKM",
   description: "Jualan lebih mudah, lebih profesional, penuh amanah.",
+  icons: {
+    icon: "/logogram.png",
+    shortcut: "/logogram.png",
+    apple: "/logogram.png",
+  },
 };
 
 export default function RootLayout({
