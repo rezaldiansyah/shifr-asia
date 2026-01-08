@@ -48,6 +48,17 @@ export const translations: Translations = {
     'auth.registerTitle': { id: 'Buat Akun Baru', en: 'Create New Account' },
     'auth.welcomeBack': { id: 'Selamat datang kembali!', en: 'Welcome back!' },
     'auth.startFree': { id: 'Mulai gratis, upgrade kapan saja', en: 'Start free, upgrade anytime' },
+    'auth.resetPasswordTitle': { id: 'Reset Kata Sandi', en: 'Reset Password' },
+    'auth.forgotPasswordDesc': { id: 'Masukkan email Anda dan kami akan mengirim link untuk reset kata sandi.', en: 'Enter your email and we will send you a password reset link.' },
+    'auth.sendResetLink': { id: 'Kirim Link Reset', en: 'Send Reset Link' },
+    'auth.backToLogin': { id: 'Kembali ke Login', en: 'Back to Login' },
+    'auth.checkEmail': { id: 'Cek Email Anda', en: 'Check Your Email' },
+    'auth.resetEmailSent': { id: 'Jika email terdaftar, Anda akan menerima link untuk reset kata sandi.', en: 'If email is registered, you will receive a password reset link.' },
+    'auth.newPassword': { id: 'Kata Sandi Baru', en: 'New Password' },
+    'auth.confirmNewPassword': { id: 'Konfirmasi Kata Sandi Baru', en: 'Confirm New Password' },
+    'auth.resetPassword': { id: 'Reset Kata Sandi', en: 'Reset Password' },
+    'auth.passwordResetSuccess': { id: 'Kata sandi berhasil diubah! Silakan login dengan kata sandi baru.', en: 'Password successfully changed! Please login with your new password.' },
+    'auth.invalidResetToken': { id: 'Link reset tidak valid atau sudah kadaluarsa.', en: 'Reset link is invalid or expired.' },
 
     // Dashboard
     'dashboard.title': { id: 'Dashboard', en: 'Dashboard' },

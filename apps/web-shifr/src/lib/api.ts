@@ -126,6 +126,20 @@ class ApiClient {
         });
     }
 
+    async forgotPassword(email: string) {
+        return this.request<{ message: string }>('/forgot-password', {
+            method: 'POST',
+            body: JSON.stringify({ email }),
+        });
+    }
+
+    async resetPassword(data: { email: string; token: string; password: string; password_confirmation: string }) {
+        return this.request<{ message: string }>('/reset-password', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    }
+
     // Template endpoints
     async getTemplates() {
         return this.request<{ templates: Template[] }>('/templates');
