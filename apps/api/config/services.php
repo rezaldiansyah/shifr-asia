@@ -20,6 +20,7 @@ return [
 
     'resend' => [
         'key' => env('RESEND_API_KEY'),
+        'domain_verified' => env('RESEND_DOMAIN_VERIFIED', false),
     ],
 
     'ses' => [

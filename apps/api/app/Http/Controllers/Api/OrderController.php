@@ -6,18 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Store;
-use App\Services\WhatsAppService;
+use App\Services\NotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    protected WhatsAppService $whatsAppService;
+    protected NotificationService $notificationService;
 
-    public function __construct(WhatsAppService $whatsAppService)
+    public function __construct(NotificationService $notificationService)
     {
-        $this->whatsAppService = $whatsAppService;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -31,6 +31,7 @@ class OrderController extends Controller
             'quantity' => 'integer|min:1',
             'customer_name' => 'required|string|max:100',
             'customer_phone' => 'required|string|max:20',
+            'customer_email' => 'nullable|email|max:255',
             'customer_address' => 'nullable|string|max:500',
             'notes' => 'nullable|string|max:500',
         ]);
@@ -56,6 +57,7 @@ class OrderController extends Controller
             'quantity' => $quantity,
             'customer_name' => $validated['customer_name'],
             'customer_phone' => $validated['customer_phone'],
+            'customer_email' => $validated['customer_email'] ?? null,
             'customer_address' => $validated['customer_address'] ?? null,
             'notes' => $validated['notes'] ?? null,
             'subtotal' => $subtotal,
@@ -64,39 +66,15 @@ class OrderController extends Controller
             'status' => 'pending',
         ]);
 
-        // Prepare order data for WhatsApp
-        $orderData = [
-            'order_number' => $order->order_number,
-            'customer_name' => $order->customer_name,
-            'customer_phone' => $order->customer_phone,
-            'customer_address' => $order->customer_address,
-            'notes' => $order->notes,
-            'product_name' => $product->name,
-            'total' => $order->formatted_total,
-            'store_name' => $store->name,
-            'seller_phone' => $store->settings['whatsapp_number'] ?? '',
-        ];
-
-        // Send WhatsApp notifications
-        $waBuyer = $this->whatsAppService->sendOrderConfirmationToBuyer($orderData);
-        $waSeller = $this->whatsAppService->sendNewOrderToSeller($orderData);
-
-        // Update WA status
-        $order->update([
-            'wa_sent_buyer' => $waBuyer,
-            'wa_sent_seller' => $waSeller,
-            'wa_sent_at' => now(),
-        ]);
+        // Send notifications (WhatsApp + Email) via NotificationService
+        $notificationResults = $this->notificationService->notifyNewOrder($order);
 
         $order->load(['product', 'store']);
 
         return response()->json([
             'message' => 'Pesanan berhasil dibuat',
             'order' => $order,
-            'wa_status' => [
-                'buyer' => $waBuyer,
-                'seller' => $waSeller,
-            ],
+            'notification_status' => $notificationResults,
         ], 201);
     }
 
