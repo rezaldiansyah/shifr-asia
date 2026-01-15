@@ -297,14 +297,15 @@ class ProductController extends Controller
 
         // Detect storage type and delete file
         $imageUrl = $request->image_url;
-        $r2Url = env('CLOUDFLARE_R2_URL');
+        $r2Url = config('filesystems.disks.r2.url');
         
         try {
-            if ($r2Url && str_starts_with($imageUrl, $r2Url)) {
+            // Check if it's an R2 URL (supports both custom domain and r2.dev URLs)
+            if (str_contains($imageUrl, 'r2.dev') || str_contains($imageUrl, 'assets.shifr.asia')) {
                 // R2 storage - extract path from URL
-                $path = str_replace($r2Url . '/', '', $imageUrl);
+                $path = preg_replace('/^https?:\/\/[^\/]+\//', '', $imageUrl);
                 Storage::disk('r2')->delete($path);
-            } else {
+            } elseif (str_starts_with($imageUrl, '/storage/')) {
                 // Local storage
                 $path = str_replace('/storage/', '', $imageUrl);
                 Storage::disk('public')->delete($path);
