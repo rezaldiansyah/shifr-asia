@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
@@ -16,7 +16,7 @@ interface PaymentMethod {
 // List of enabled payment methods (user requested: QRIS, BSI VA, BCA VA, Mandiri VA, CIMB VA)
 const ENABLED_METHODS = ['SP', 'NQ', 'BV', 'BC', 'M2', 'B1'];
 
-export default function CheckoutPage() {
+function CheckoutContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { user, isLoading: authLoading, isAuthenticated } = useAuth();
@@ -292,5 +292,21 @@ export default function CheckoutPage() {
                 </p>
             </div>
         </div>
+    );
+}
+
+// Wrapper component with Suspense for useSearchParams
+export default function CheckoutPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-fourth">
+                <div className="text-center">
+                    <div className="w-8 h-8 border-4 border-main border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Memuat...</p>
+                </div>
+            </div>
+        }>
+            <CheckoutContent />
+        </Suspense>
     );
 }
