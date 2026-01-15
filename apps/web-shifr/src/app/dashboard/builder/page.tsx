@@ -66,21 +66,59 @@ export default function WebsiteBuilderPage() {
 
     const loadData = async () => {
         try {
-            const [typesRes, sectionsRes, productsRes] = await Promise.all([
-                api.getSectionTypes(),
-                api.getStoreSections(),
-                api.getProducts(),
-            ]);
+            // First, check if section types exist (this should always work)
+            let typesRes;
+            try {
+                typesRes = await api.getSectionTypes();
+                setSectionTypes(typesRes.types || []);
+            } catch {
+                console.warn('Failed to load section types');
+                setSectionTypes([]);
+            }
 
-            setSectionTypes(typesRes.types);
-            setSections(sectionsRes.sections);
-            setStoreName(sectionsRes.store.name);
-            setStoreSlug(sectionsRes.store.slug);
+            // Then check if store exists
+            let sectionsRes;
+            try {
+                sectionsRes = await api.getStoreSections();
+                if (!sectionsRes.store) {
+                    setError('Anda belum membuat toko. Silakan buat toko terlebih dahulu.');
+                    setIsLoading(false);
+                    return;
+                }
+                setSections(sectionsRes.sections || []);
+                setStoreName(sectionsRes.store.name || '');
+                setStoreSlug(sectionsRes.store.slug || '');
+            } catch (err: unknown) {
+                const error = err as { status?: number; message?: string };
+                if (error.status === 404 || error.message?.includes('Toko belum')) {
+                    setError('Anda belum membuat toko. Silakan buat toko terlebih dahulu.');
+                } else {
+                    setError('Gagal memuat data sections.');
+                }
+                setIsLoading(false);
+                return;
+            }
 
-            const previewRes = await api.getStorePreview();
-            setProducts(previewRes.store.products);
-            setStoreDescription(previewRes.store.description || '');
-            setWhatsappNumber(previewRes.store.settings?.whatsapp_number || '');
+            // Load products for preview
+            try {
+                const productsRes = await api.getProducts();
+                setProducts(productsRes.products || []);
+            } catch {
+                console.warn('Failed to load products');
+                setProducts([]);
+            }
+
+            // Load store preview for additional data
+            try {
+                const previewRes = await api.getStorePreview();
+                if (previewRes.store) {
+                    setStoreDescription(previewRes.store.description || '');
+                    setWhatsappNumber(previewRes.store.settings?.whatsapp_number || '');
+                }
+            } catch {
+                console.warn('Failed to load store preview');
+            }
+
         } catch (err) {
             console.error('Error loading data:', err);
             setError('Gagal memuat data. Pastikan Anda sudah membuat toko.');
@@ -166,7 +204,41 @@ export default function WebsiteBuilderPage() {
     if (authLoading || isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-fourth">
-                <div className="w-8 h-8 border-4 border-main border-t-transparent rounded-full animate-spin"></div>
+                <div className="text-center">
+                    <div className="w-8 h-8 border-4 border-main border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-gray-500">Memuat Website Builder...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Show error screen if no store or loading failed
+    if (error) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-fourth">
+                <div className="text-center max-w-md mx-auto px-4">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <h2 className="text-xl font-semibold text-gray-800 mb-2">Tidak Dapat Memuat Builder</h2>
+                    <p className="text-gray-600 mb-6">{error}</p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <Link
+                            href="/dashboard/store"
+                            className="bg-main hover:bg-main-hover text-white px-6 py-3 rounded-lg font-medium transition"
+                        >
+                            Buat Toko Sekarang
+                        </Link>
+                        <Link
+                            href="/dashboard"
+                            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition"
+                        >
+                            Kembali ke Dashboard
+                        </Link>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -197,8 +269,8 @@ export default function WebsiteBuilderPage() {
                         <button
                             onClick={() => setPreviewMode('desktop')}
                             className={`px-3 py-1 rounded text-sm ${previewMode === 'desktop'
-                                    ? 'bg-white shadow text-gray-800'
-                                    : 'text-gray-500'
+                                ? 'bg-white shadow text-gray-800'
+                                : 'text-gray-500'
                                 }`}
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -208,8 +280,8 @@ export default function WebsiteBuilderPage() {
                         <button
                             onClick={() => setPreviewMode('mobile')}
                             className={`px-3 py-1 rounded text-sm ${previewMode === 'mobile'
-                                    ? 'bg-white shadow text-gray-800'
-                                    : 'text-gray-500'
+                                ? 'bg-white shadow text-gray-800'
+                                : 'text-gray-500'
                                 }`}
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
