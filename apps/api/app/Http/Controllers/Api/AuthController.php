@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Subscription;
+use App\Models\Affiliate;
 use App\Services\NotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,7 +36,16 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed', Password::defaults()],
             'phone' => ['nullable', 'string', 'max:20'],
             'locale' => ['nullable', 'string', 'in:id,en'],
+            'ref_code' => ['nullable', 'string', 'max:20'], // Affiliate referral code
         ]);
+
+        // Check for affiliate referral
+        $affiliate = null;
+        if (!empty($validated['ref_code'])) {
+            $affiliate = Affiliate::where('code', $validated['ref_code'])
+                ->where('status', Affiliate::STATUS_APPROVED)
+                ->first();
+        }
 
         $user = User::create([
             'name' => $validated['name'],
@@ -44,6 +54,7 @@ class AuthController extends Controller
             'phone' => $validated['phone'] ?? null,
             'locale' => $validated['locale'] ?? 'id',
             'role' => 'merchant',
+            'referred_by' => $affiliate?->id, // Store affiliate ID for later commission calculation
         ]);
 
         $token = $user->createToken('auth-token')->plainTextToken;
@@ -57,6 +68,11 @@ class AuthController extends Controller
             'starts_at' => now(),
             'expires_at' => now()->addMonths(3),
         ]);
+
+        // Track click for affiliate
+        if ($affiliate) {
+            $affiliate->incrementClicks();
+        }
 
         // Send welcome notification (email + optional WA)
         $this->notificationService->notifyWelcome($user);

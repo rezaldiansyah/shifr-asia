@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Affiliate;
 use App\Models\AffiliateReferral;
+use App\Models\AffiliatePayout;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +82,7 @@ class AdminAffiliateController extends Controller
             'total_paid' => Affiliate::sum('total_paid'),
             'formatted_total_earnings' => 'Rp ' . number_format(Affiliate::sum('total_earnings'), 0, ',', '.'),
             'formatted_pending_payouts' => 'Rp ' . number_format(Affiliate::sum('pending_payout'), 0, ',', '.'),
+            'pending_payout_requests' => AffiliatePayout::pending()->count(),
         ];
 
         return response()->json(['stats' => $stats]);
@@ -261,5 +263,84 @@ class AdminAffiliateController extends Controller
         return response()->json([
             'message' => 'Affiliate berhasil diaktifkan kembali',
         ]);
+    }
+
+    // ==================== PAYOUT MANAGEMENT ====================
+
+    /**
+     * List all payout requests
+     */
+    public function payouts(Request $request): JsonResponse
+    {
+        $query = AffiliatePayout::with(['affiliate.user']);
+
+        if ($request->has('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        $payouts = $query->orderBy('created_at', 'desc')
+            ->paginate($request->input('per_page', 20));
+
+        return response()->json([
+            'payouts' => $payouts->map(fn($p) => [
+                'id' => $p->id,
+                'affiliate' => [
+                    'id' => $p->affiliate->id,
+                    'code' => $p->affiliate->code,
+                    'user_name' => $p->affiliate->user?->name,
+                    'user_email' => $p->affiliate->user?->email,
+                ],
+                'amount' => $p->amount,
+                'formatted_amount' => $p->formatted_amount,
+                'status' => $p->status,
+                'status_label' => $p->status_label,
+                'bank_name' => $p->bank_name,
+                'bank_account' => $p->bank_account,
+                'account_holder_name' => $p->account_holder_name,
+                'admin_notes' => $p->admin_notes,
+                'created_at' => $p->created_at,
+                'processed_at' => $p->processed_at,
+                'completed_at' => $p->completed_at,
+            ]),
+            'pagination' => [
+                'current_page' => $payouts->currentPage(),
+                'last_page' => $payouts->lastPage(),
+                'per_page' => $payouts->perPage(),
+                'total' => $payouts->total(),
+            ],
+        ]);
+    }
+
+    public function approvePayout(AffiliatePayout $payout): JsonResponse
+    {
+        if ($payout->status !== AffiliatePayout::STATUS_PENDING) {
+            return response()->json(['message' => 'Hanya permintaan pending yang dapat disetujui'], 422);
+        }
+        $payout->approve(Auth::id());
+        return response()->json(['message' => 'Permintaan penarikan disetujui', 'payout' => ['id' => $payout->id, 'status' => $payout->status]]);
+    }
+
+    public function rejectPayout(Request $request, AffiliatePayout $payout): JsonResponse
+    {
+        if ($payout->status !== AffiliatePayout::STATUS_PENDING) {
+            return response()->json(['message' => 'Hanya permintaan pending yang dapat ditolak'], 422);
+        }
+        $validated = $request->validate(['reason' => 'required|string|min:10|max:500']);
+        $payout->reject(Auth::id(), $validated['reason']);
+        return response()->json(['message' => 'Permintaan penarikan ditolak']);
+    }
+
+    public function completePayout(Request $request, AffiliatePayout $payout): JsonResponse
+    {
+        if (!in_array($payout->status, [AffiliatePayout::STATUS_PENDING, AffiliatePayout::STATUS_APPROVED])) {
+            return response()->json(['message' => 'Payout tidak dalam status yang dapat diselesaikan'], 422);
+        }
+        $validated = $request->validate(['transfer_proof' => 'nullable|string|max:500', 'admin_notes' => 'nullable|string|max:500']);
+        if (!empty($validated['admin_notes'])) {
+            $payout->admin_notes = $validated['admin_notes'];
+            $payout->save();
+        }
+        $payout->markAsCompleted($validated['transfer_proof'] ?? null);
+        return response()->json(['message' => 'Payout selesai! Dana telah ditransfer.', 'payout' => ['id' => $payout->id, 'status' => $payout->status, 'completed_at' => $payout->completed_at]]);
     }
 }

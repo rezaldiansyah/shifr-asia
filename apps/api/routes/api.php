@@ -177,14 +177,21 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::put('/affiliates/{affiliate}/commission', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'updateCommission']);
     Route::post('/affiliates/{affiliate}/suspend', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'suspend']);
     Route::post('/affiliates/{affiliate}/reactivate', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'reactivate']);
+    
+    // Payout Management
+    Route::get('/payouts', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'payouts']);
+    Route::post('/payouts/{payout}/approve', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'approvePayout']);
+    Route::post('/payouts/{payout}/reject', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'rejectPayout']);
+    Route::post('/payouts/{payout}/complete', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'completePayout']);
 });
 
-// Affiliate routes (authenticated users)
 Route::middleware('auth:sanctum')->prefix('affiliate')->group(function () {
     Route::get('/status', [\App\Http\Controllers\Api\AffiliateController::class, 'status']);
     Route::post('/apply', [\App\Http\Controllers\Api\AffiliateController::class, 'apply']);
     Route::get('/dashboard', [\App\Http\Controllers\Api\AffiliateController::class, 'dashboard']);
     Route::put('/payout-info', [\App\Http\Controllers\Api\AffiliateController::class, 'updatePayoutInfo']);
+    Route::post('/request-payout', [\App\Http\Controllers\Api\AffiliateController::class, 'requestPayout']);
+    Route::get('/payout-history', [\App\Http\Controllers\Api\AffiliateController::class, 'payoutHistory']);
 });
 
 // Affiliate click tracking (public, no auth)
