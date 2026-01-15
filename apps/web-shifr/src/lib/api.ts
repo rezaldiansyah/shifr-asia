@@ -650,6 +650,62 @@ class ApiClient {
     async getAdminPaymentDetail(id: number) {
         return this.request<{ payment: AdminPaymentDetail }>(`/admin/payments/${id}`);
     }
+
+    // ==================== ADMIN SUBSCRIPTION ENDPOINTS ====================
+
+    async getAdminSubscriptions(filters?: { status?: string; tier?: string; search?: string }) {
+        const params = new URLSearchParams();
+        if (filters?.status && filters.status !== 'all') params.append('status', filters.status);
+        if (filters?.tier && filters.tier !== 'all') params.append('tier', filters.tier);
+        if (filters?.search) params.append('search', filters.search);
+        const query = params.toString() ? `?${params.toString()}` : '';
+        return this.request<{
+            subscriptions: AdminSubscriptionFull[];
+            pagination: {
+                current_page: number;
+                last_page: number;
+                per_page: number;
+                total: number;
+            };
+        }>(`/admin/subscriptions${query}`);
+    }
+
+    async getAdminReminderStats() {
+        return this.request<{
+            stats: {
+                total_reminders: number;
+                sent_today: number;
+                pending: number;
+                by_checkpoint: Record<string, number>;
+            };
+        }>('/admin/subscriptions/reminder-stats');
+    }
+
+    async getAdminReminderHistory(subscriptionId: number) {
+        return this.request<{
+            reminders: AdminReminder[];
+        }>(`/admin/subscriptions/${subscriptionId}/reminders`);
+    }
+
+    async triggerAdminReminder(subscriptionId: number, channel: 'email' | 'whatsapp' | 'both' = 'email') {
+        return this.request<{
+            message: string;
+            reminder: AdminReminder;
+        }>(`/admin/subscriptions/${subscriptionId}/trigger-reminder`, {
+            method: 'POST',
+            body: JSON.stringify({ channel }),
+        });
+    }
+
+    async runAdminReminderCheck() {
+        return this.request<{
+            message: string;
+            processed: number;
+            sent: { email: number; whatsapp: number };
+        }>('/admin/subscriptions/run-check', {
+            method: 'POST',
+        });
+    }
 }
 
 // Types
@@ -1107,6 +1163,32 @@ export interface AdminSubscription {
     days_remaining: number | null;
     days_overdue?: number;
     auto_renew: boolean;
+}
+
+export interface AdminSubscriptionFull extends AdminSubscription {
+    is_trial: boolean;
+    starts_at: string | null;
+    created_at: string;
+    store?: {
+        id: number;
+        name: string;
+        slug: string;
+    } | null;
+    reminders_count?: number;
+    last_reminder_at?: string | null;
+}
+
+export interface AdminReminder {
+    id: number;
+    subscription_id: number;
+    days_before_expiration: number;
+    channel: 'email' | 'whatsapp' | 'both';
+    email_sent_at: string | null;
+    whatsapp_sent_at: string | null;
+    sent: boolean;
+    created_at: string;
+    email_response?: Record<string, unknown>;
+    whatsapp_response?: Record<string, unknown>;
 }
 
 // Export singleton instance
