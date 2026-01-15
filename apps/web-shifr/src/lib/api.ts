@@ -706,6 +706,92 @@ class ApiClient {
             method: 'POST',
         });
     }
+
+    // ==================== AFFILIATE ENDPOINTS (User) ====================
+
+    async getAffiliateStatus() {
+        return this.request<AffiliateStatus>('/affiliate/status');
+    }
+
+    async applyAffiliate(data: { motivation: string; payout_info?: PayoutInfo }) {
+        return this.request<{ message: string; affiliate: AffiliateBasic }>('/affiliate/apply', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    }
+
+    async getAffiliateDashboard() {
+        return this.request<AffiliateDashboard>('/affiliate/dashboard');
+    }
+
+    async updateAffiliatePayoutInfo(data: PayoutInfo) {
+        return this.request<{ message: string }>('/affiliate/payout-info', {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    }
+
+    async trackAffiliateClick(code: string) {
+        return this.request<{ success: boolean }>('/affiliate/track-click', {
+            method: 'POST',
+            body: JSON.stringify({ code }),
+        });
+    }
+
+    // ==================== ADMIN AFFILIATE ENDPOINTS ====================
+
+    async getAdminAffiliates(filters?: { status?: string; search?: string }) {
+        const params = new URLSearchParams();
+        if (filters?.status && filters.status !== 'all') params.append('status', filters.status);
+        if (filters?.search) params.append('search', filters.search);
+        const query = params.toString() ? `?${params.toString()}` : '';
+        return this.request<{
+            affiliates: AdminAffiliate[];
+            pagination: { current_page: number; last_page: number; per_page: number; total: number };
+        }>(`/admin/affiliates${query}`);
+    }
+
+    async getAdminAffiliateStats() {
+        return this.request<{ stats: AffiliateStats }>('/admin/affiliates/stats');
+    }
+
+    async getAdminAffiliateDetail(id: number) {
+        return this.request<{ affiliate: AdminAffiliateDetail; referrals: AffiliateReferralItem[] }>(`/admin/affiliates/${id}`);
+    }
+
+    async approveAffiliate(id: number, data?: { commission_rate?: number; admin_notes?: string }) {
+        return this.request<{ message: string; affiliate: AffiliateBasic }>(`/admin/affiliates/${id}/approve`, {
+            method: 'POST',
+            body: JSON.stringify(data || {}),
+        });
+    }
+
+    async rejectAffiliate(id: number, reason: string) {
+        return this.request<{ message: string }>(`/admin/affiliates/${id}/reject`, {
+            method: 'POST',
+            body: JSON.stringify({ reason }),
+        });
+    }
+
+    async suspendAffiliate(id: number, reason: string) {
+        return this.request<{ message: string }>(`/admin/affiliates/${id}/suspend`, {
+            method: 'POST',
+            body: JSON.stringify({ reason }),
+        });
+    }
+
+    async reactivateAffiliate(id: number) {
+        return this.request<{ message: string }>(`/admin/affiliates/${id}/reactivate`, {
+            method: 'POST',
+        });
+    }
+
+    async updateAffiliateCommission(id: number, commission_rate: number) {
+        return this.request<{ message: string }>(`/admin/affiliates/${id}/commission`, {
+            method: 'PUT',
+            body: JSON.stringify({ commission_rate }),
+        });
+    }
 }
 
 // Types
@@ -1189,6 +1275,107 @@ export interface AdminReminder {
     created_at: string;
     email_response?: Record<string, unknown>;
     whatsapp_response?: Record<string, unknown>;
+}
+
+// Affiliate Types
+export interface PayoutInfo {
+    bank_name?: string;
+    bank_account?: string;
+    account_name?: string;
+}
+
+export interface AffiliateBasic {
+    id: number;
+    code: string;
+    status: 'pending' | 'approved' | 'rejected' | 'suspended';
+    status_label: string;
+    commission_rate?: number;
+}
+
+export interface AffiliateStatus {
+    is_affiliate: boolean;
+    can_apply?: boolean;
+    message?: string;
+    affiliate?: {
+        id: number;
+        code: string;
+        status: string;
+        status_label: string;
+        commission_rate: number;
+        total_clicks: number;
+        total_referrals: number;
+        total_earnings: number;
+        pending_payout: number;
+        total_paid: number;
+        referral_url: string | null;
+        created_at: string;
+        approved_at: string | null;
+    };
+}
+
+export interface AffiliateDashboard {
+    affiliate: {
+        id: number;
+        code: string;
+        referral_url: string;
+        commission_rate: number;
+        total_clicks: number;
+        total_referrals: number;
+        total_earnings: number;
+        pending_payout: number;
+        total_paid: number;
+        formatted_earnings: string;
+        formatted_pending: string;
+    };
+    recent_referrals: AffiliateReferralItem[];
+    monthly_stats: { month: string; count: number; total: number }[];
+}
+
+export interface AffiliateReferralItem {
+    id: number;
+    user_name?: string;
+    user?: { name: string; email: string };
+    tier: string | null;
+    commission_amount: number;
+    formatted_commission: string;
+    status: string;
+    created_at: string;
+}
+
+export interface AdminAffiliate {
+    id: number;
+    user: { id: number; name: string; email: string; phone: string | null } | null;
+    code: string;
+    status: string;
+    status_label: string;
+    commission_rate: number;
+    motivation: string | null;
+    total_clicks: number;
+    total_referrals: number;
+    total_earnings: number;
+    pending_payout: number;
+    created_at: string;
+    approved_at: string | null;
+}
+
+export interface AdminAffiliateDetail extends AdminAffiliate {
+    admin_notes: string | null;
+    payout_info: PayoutInfo | null;
+    total_paid: number;
+    approver: string | null;
+}
+
+export interface AffiliateStats {
+    total_affiliates: number;
+    pending_applications: number;
+    approved_affiliates: number;
+    total_clicks: number;
+    total_referrals: number;
+    total_earnings: number;
+    total_pending_payouts: number;
+    total_paid: number;
+    formatted_total_earnings: string;
+    formatted_pending_payouts: string;
 }
 
 // Export singleton instance
