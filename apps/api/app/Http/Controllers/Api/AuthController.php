@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Subscription;
 use App\Services\NotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -46,6 +47,16 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth-token')->plainTextToken;
+
+        // Create free trial subscription (3 months)
+        Subscription::create([
+            'user_id' => $user->id,
+            'tier' => 'free',
+            'status' => 'active',
+            'is_trial' => true,
+            'starts_at' => now(),
+            'expires_at' => now()->addMonths(3),
+        ]);
 
         // Send welcome notification (email + optional WA)
         $this->notificationService->notifyWelcome($user);

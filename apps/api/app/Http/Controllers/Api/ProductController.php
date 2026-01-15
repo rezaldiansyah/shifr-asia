@@ -231,8 +231,11 @@ class ProductController extends Controller
         $uploadedImages = [];
         
         // Determine which disk to use (R2 if configured, otherwise local)
-        $useR2 = !empty(env('CLOUDFLARE_R2_ACCESS_KEY_ID')) && !empty(env('CLOUDFLARE_R2_SECRET_ACCESS_KEY'));
-        $disk = $useR2 ? 'r2' : 'public';
+        // Use config() instead of env() for cached config compatibility
+        $r2Key = config('filesystems.disks.r2.key');
+        $r2Secret = config('filesystems.disks.r2.secret');
+        $r2Url = config('filesystems.disks.r2.url');
+        $useR2 = !empty($r2Key) && !empty($r2Secret);
         
         foreach ($request->file('images') as $image) {
             $filename = time() . '_' . Str::random(8) . '.' . $image->getClientOriginalExtension();
@@ -242,7 +245,7 @@ class ProductController extends Controller
                 if ($useR2) {
                     // Upload to Cloudflare R2
                     Storage::disk('r2')->put($path, file_get_contents($image), 'public');
-                    $url = env('CLOUDFLARE_R2_URL') . '/' . $path;
+                    $url = $r2Url . '/' . $path;
                 } else {
                     // Fallback to local storage
                     $storedPath = $image->storeAs('products/' . $store->id, $filename, 'public');
