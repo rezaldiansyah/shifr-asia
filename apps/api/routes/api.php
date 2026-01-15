@@ -167,7 +167,28 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/subscriptions/reminder-stats', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'reminderStats']);
     Route::post('/subscriptions/{subscription}/send-reminder', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'sendReminder']);
     Route::post('/subscriptions/run-reminder-check', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'runReminderCheck']);
+    
+    // Affiliate Management
+    Route::get('/affiliates', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'index']);
+    Route::get('/affiliates/stats', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'stats']);
+    Route::get('/affiliates/{affiliate}', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'show']);
+    Route::post('/affiliates/{affiliate}/approve', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'approve']);
+    Route::post('/affiliates/{affiliate}/reject', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'reject']);
+    Route::put('/affiliates/{affiliate}/commission', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'updateCommission']);
+    Route::post('/affiliates/{affiliate}/suspend', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'suspend']);
+    Route::post('/affiliates/{affiliate}/reactivate', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'reactivate']);
 });
+
+// Affiliate routes (authenticated users)
+Route::middleware('auth:sanctum')->prefix('affiliate')->group(function () {
+    Route::get('/status', [\App\Http\Controllers\Api\AffiliateController::class, 'status']);
+    Route::post('/apply', [\App\Http\Controllers\Api\AffiliateController::class, 'apply']);
+    Route::get('/dashboard', [\App\Http\Controllers\Api\AffiliateController::class, 'dashboard']);
+    Route::put('/payout-info', [\App\Http\Controllers\Api\AffiliateController::class, 'updatePayoutInfo']);
+});
+
+// Affiliate click tracking (public, no auth)
+Route::post('/affiliate/track-click', [\App\Http\Controllers\Api\AffiliateController::class, 'trackClick']);
 
 // Health check
 Route::get('/health', function () {
