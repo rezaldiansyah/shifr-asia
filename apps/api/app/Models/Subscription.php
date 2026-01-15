@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Carbon\Carbon;
 
 class Subscription extends Model
@@ -14,7 +15,10 @@ class Subscription extends Model
     protected $fillable = [
         'user_id',
         'store_id',
+        'product',
         'tier',
+        'amount',
+        'billing_cycle',
         'status',
         'starts_at',
         'expires_at',
@@ -128,6 +132,14 @@ class Subscription extends Model
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
+    }
+
+    /**
+     * Get the reminders for this subscription.
+     */
+    public function reminders(): HasMany
+    {
+        return $this->hasMany(SubscriptionReminder::class);
     }
 
     /**
@@ -257,11 +269,15 @@ class Subscription extends Model
         return self::create([
             'user_id' => $user->id,
             'store_id' => $store?->id,
+            'product' => 'ecommerce', // default product
             'tier' => 'free',
-            'status' => 'trial',
+            'amount' => 0,
+            'billing_cycle' => 'monthly',
+            'status' => 'active', // Use 'active' as SQLite CHECK constraint doesn't allow 'trial'
             'starts_at' => now(),
             'expires_at' => now()->addMonths(3), // 3 bulan trial
             'auto_renew' => false,
+            'metadata' => ['is_trial' => true], // Mark as trial in metadata
         ]);
     }
 }

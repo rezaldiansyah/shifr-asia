@@ -60,6 +60,28 @@ return [
             'report' => false,
         ],
 
+        /*
+        |--------------------------------------------------------------------------
+        | Cloudflare R2 Storage
+        |--------------------------------------------------------------------------
+        |
+        | S3-compatible object storage with free egress.
+        | Free tier: 10GB storage, 1M Class A ops, 10M Class B ops
+        |
+        */
+        'r2' => [
+            'driver' => 's3',
+            'key' => env('CLOUDFLARE_R2_ACCESS_KEY_ID'),
+            'secret' => env('CLOUDFLARE_R2_SECRET_ACCESS_KEY'),
+            'region' => 'auto',
+            'bucket' => env('CLOUDFLARE_R2_BUCKET', 'shifr-assets'),
+            'url' => env('CLOUDFLARE_R2_URL'),
+            'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
+            'use_path_style_endpoint' => false,
+            'visibility' => 'public',
+            'throw' => true,
+        ],
+
     ],
 
     /*

@@ -42,8 +42,35 @@ class MayarService
             $amount = $amount * 12 * 0.8; // 20% discount for yearly
         }
 
-        $description = "Langganan {$tierConfig['name']} - Shifr Asia";
-        $redirectUrl = config('app.frontend_url', 'http://localhost:3000') . '/dashboard/payment/callback';
+        // Generate unique reference for this payment
+        $paymentRef = 'PAY-' . strtoupper(Str::random(8));
+        $description = "Langganan {$tierConfig['name']} - Shifr Asia ({$paymentRef})";
+        
+        // Create a temporary payment record first to get the ID
+        $payment = Payment::create([
+            'user_id' => $user->id,
+            'amount' => $amount,
+            'tier' => $tier,
+            'period' => $period,
+            'status' => 'pending',
+            'payment_gateway' => 'mayar',
+            'customer_name' => $user->name,
+            'customer_email' => $user->email,
+            'customer_phone' => $user->phone,
+            'expires_at' => now()->addHours(24),
+        ]);
+        
+        // Now build redirect URL with payment_id
+        $redirectUrl = config('app.frontend_url', 'http://localhost:3000') . '/dashboard/payment/callback?payment_id=' . $payment->id;
+
+        Log::info('MayarService: Creating payment link', [
+            'user_id' => $user->id,
+            'tier' => $tier,
+            'amount' => $amount,
+            'payment_id' => $payment->id,
+            'api_key_present' => !empty($this->apiKey),
+            'base_url' => $this->baseUrl,
+        ]);
 
         try {
             $response = Http::withHeaders([
@@ -57,47 +84,41 @@ class MayarService
                 'description' => $description,
                 'redirectUrl' => $redirectUrl,
                 'expiredAt' => now()->addHours(24)->toISOString(),
-                'metadata' => [
-                    'user_id' => $user->id,
-                    'tier' => $tier,
-                    'period' => $period,
-                ],
             ]);
 
             if ($response->successful()) {
                 $data = $response->json('data');
 
-                // Create payment record
-                $payment = Payment::create([
-                    'user_id' => $user->id,
+                // Update payment record with Mayar data
+                $payment->update([
                     'mayar_payment_id' => $data['id'] ?? Str::uuid(),
                     'mayar_link_id' => $data['linkId'] ?? null,
                     'mayar_link_url' => $data['link'] ?? null,
-                    'amount' => $amount,
-                    'tier' => $tier,
-                    'period' => $period,
-                    'status' => 'pending',
-                    'customer_name' => $user->name,
-                    'customer_email' => $user->email,
-                    'customer_phone' => $user->phone,
                     'metadata' => $data,
-                    'expires_at' => now()->addHours(24),
                 ]);
 
-                return $payment;
+                Log::info('MayarService: Payment created successfully', [
+                    'payment_id' => $payment->id,
+                    'mayar_link' => $payment->mayar_link_url,
+                ]);
+
+                return $payment->fresh();
             }
 
+            // Failed to create Mayar link, delete the temp record
             Log::error('MayarService: Failed to create payment', [
                 'response' => $response->json(),
                 'status' => $response->status(),
             ]);
-
+            
+            $payment->delete();
             return null;
 
         } catch (\Exception $e) {
             Log::error('MayarService: Exception', [
                 'message' => $e->getMessage(),
             ]);
+            $payment->delete();
             return null;
         }
     }
@@ -105,15 +126,41 @@ class MayarService
     /**
      * Verify payment status from Mayar.
      */
-    public function verifyPayment(string $paymentId): ?array
+    public function verifyPayment(?string $paymentId): ?array
     {
+        if (empty($paymentId)) {
+            Log::error('MayarService: verifyPayment called with empty paymentId');
+            return null;
+        }
+
         try {
+            Log::info('MayarService: Verifying payment', [
+                'payment_id' => $paymentId,
+                'url' => $this->baseUrl . '/payment/' . $paymentId,
+            ]);
+
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $this->apiKey,
             ])->get($this->baseUrl . '/payment/' . $paymentId);
 
+            Log::info('MayarService: Verify response', [
+                'status_code' => $response->status(),
+                'body' => $response->json(),
+            ]);
+
             if ($response->successful()) {
-                return $response->json('data');
+                $data = $response->json('data');
+                
+                // Normalize status - Mayar may use different status values
+                if ($data) {
+                    $status = strtolower($data['status'] ?? '');
+                    // Map various paid states
+                    if (in_array($status, ['paid', 'settled', 'success', 'completed'])) {
+                        $data['status'] = 'paid';
+                    }
+                }
+                
+                return $data;
             }
 
             return null;
@@ -129,7 +176,7 @@ class MayarService
     /**
      * Handle webhook from Mayar.
      */
-    public function handleWebhook(array $payload): bool
+    public function handleWebhook(array $payload): ?Payment
     {
         $event = $payload['event'] ?? '';
         $data = $payload['data'] ?? [];
@@ -143,19 +190,19 @@ class MayarService
             return $this->handlePaymentReceived($data);
         }
 
-        return true;
+        return null;
     }
 
     /**
      * Handle payment.received event.
      */
-    private function handlePaymentReceived(array $data): bool
+    private function handlePaymentReceived(array $data): ?Payment
     {
         $paymentId = $data['id'] ?? null;
         
         if (!$paymentId) {
             Log::error('MayarService: No payment ID in webhook');
-            return false;
+            return null;
         }
 
         // Find payment by Mayar payment ID
@@ -169,7 +216,7 @@ class MayarService
 
         if (!$payment) {
             Log::error('MayarService: Payment not found', ['payment_id' => $paymentId]);
-            return false;
+            return null;
         }
 
         // Mark as paid
@@ -180,7 +227,7 @@ class MayarService
             'mayar_id' => $paymentId,
         ]);
 
-        return true;
+        return $payment;
     }
 
     /**

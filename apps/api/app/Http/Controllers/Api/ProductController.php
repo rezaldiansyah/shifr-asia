@@ -211,6 +211,7 @@ class ProductController extends Controller
 
     /**
      * Upload images for a product.
+     * Uses Cloudflare R2 if configured, otherwise falls back to local storage.
      */
     public function uploadImages(Request $request, Product $product): JsonResponse
     {
@@ -228,9 +229,32 @@ class ProductController extends Controller
         ]);
 
         $uploadedImages = [];
+        
+        // Determine which disk to use (R2 if configured, otherwise local)
+        $useR2 = !empty(env('CLOUDFLARE_R2_ACCESS_KEY_ID')) && !empty(env('CLOUDFLARE_R2_SECRET_ACCESS_KEY'));
+        $disk = $useR2 ? 'r2' : 'public';
+        
         foreach ($request->file('images') as $image) {
-            $path = $image->store('products/' . $store->id, 'public');
-            $uploadedImages[] = '/storage/' . $path;
+            $filename = time() . '_' . Str::random(8) . '.' . $image->getClientOriginalExtension();
+            $path = 'products/' . $store->id . '/' . $filename;
+            
+            try {
+                if ($useR2) {
+                    // Upload to Cloudflare R2
+                    Storage::disk('r2')->put($path, file_get_contents($image), 'public');
+                    $url = env('CLOUDFLARE_R2_URL') . '/' . $path;
+                } else {
+                    // Fallback to local storage
+                    $storedPath = $image->storeAs('products/' . $store->id, $filename, 'public');
+                    $url = '/storage/' . $storedPath;
+                }
+                $uploadedImages[] = $url;
+            } catch (\Exception $e) {
+                // If R2 fails, try local storage as fallback
+                \Log::error('R2 upload failed, falling back to local storage: ' . $e->getMessage());
+                $storedPath = $image->storeAs('products/' . $store->id, $filename, 'public');
+                $uploadedImages[] = '/storage/' . $storedPath;
+            }
         }
 
         // Append to existing images
@@ -241,11 +265,13 @@ class ProductController extends Controller
         return response()->json([
             'message' => 'Gambar berhasil diupload',
             'images' => $product->images,
+            'storage' => $useR2 ? 'cloudflare_r2' : 'local',
         ]);
     }
 
     /**
      * Remove an image from a product.
+     * Automatically detects storage location (R2 or local) based on URL.
      */
     public function removeImage(Request $request, Product $product): JsonResponse
     {
@@ -266,9 +292,23 @@ class ProductController extends Controller
         $product->images = $images;
         $product->save();
 
-        // Delete file from storage
-        $path = str_replace('/storage/', '', $request->image_url);
-        Storage::disk('public')->delete($path);
+        // Detect storage type and delete file
+        $imageUrl = $request->image_url;
+        $r2Url = env('CLOUDFLARE_R2_URL');
+        
+        try {
+            if ($r2Url && str_starts_with($imageUrl, $r2Url)) {
+                // R2 storage - extract path from URL
+                $path = str_replace($r2Url . '/', '', $imageUrl);
+                Storage::disk('r2')->delete($path);
+            } else {
+                // Local storage
+                $path = str_replace('/storage/', '', $imageUrl);
+                Storage::disk('public')->delete($path);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Failed to delete image: ' . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Gambar berhasil dihapus',

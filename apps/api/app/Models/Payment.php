@@ -13,12 +13,22 @@ class Payment extends Model
     protected $fillable = [
         'user_id',
         'subscription_id',
+        // Mayar fields
         'mayar_payment_id',
         'mayar_link_id',
         'mayar_link_url',
+        // Duitku fields
+        'duitku_reference',
+        'duitku_merchant_order_id',
+        'duitku_payment_url',
+        'duitku_va_number',
+        'duitku_qr_string',
+        // Common fields
         'amount',
         'tier',
         'period',
+        'payment_method',
+        'payment_gateway',
         'status',
         'customer_name',
         'customer_email',

@@ -557,6 +557,99 @@ class ApiClient {
             };
         }>(`/analytics${query}`);
     }
+
+    // ==================== ADMIN ENDPOINTS ====================
+
+    async getAdminDashboard() {
+        return this.request<{
+            overview: {
+                total_users: number;
+                active_subscriptions: number;
+                pending_payments: number;
+                total_revenue: number;
+                total_revenue_formatted: string;
+                this_month_revenue: number;
+                this_month_revenue_formatted: string;
+            };
+            alerts: {
+                expiring_in_3_days: number;
+                expiring_in_7_days: number;
+            };
+            revenue_by_tier: Array<{
+                tier: string;
+                total: number;
+                total_formatted: string;
+                count: number;
+            }>;
+        }>('/admin/dashboard');
+    }
+
+    async getAdminPayments(filters?: {
+        status?: string;
+        gateway?: string;
+        from?: string;
+        to?: string;
+        per_page?: number;
+        page?: number;
+    }) {
+        const params = new URLSearchParams();
+        if (filters?.status && filters.status !== 'all') params.append('status', filters.status);
+        if (filters?.gateway && filters.gateway !== 'all') params.append('gateway', filters.gateway);
+        if (filters?.from) params.append('from', filters.from);
+        if (filters?.to) params.append('to', filters.to);
+        if (filters?.per_page) params.append('per_page', filters.per_page.toString());
+        if (filters?.page) params.append('page', filters.page.toString());
+        const query = params.toString() ? `?${params.toString()}` : '';
+        return this.request<{
+            payments: AdminPayment[];
+            pagination: {
+                current_page: number;
+                last_page: number;
+                per_page: number;
+                total: number;
+            };
+        }>(`/admin/payments${query}`);
+    }
+
+    async getAdminPaymentSummary() {
+        return this.request<{
+            stats: {
+                total_paid: number;
+                total_pending: number;
+                total_revenue: number;
+                total_revenue_formatted: string;
+                today_revenue: number;
+                today_revenue_formatted: string;
+                monthly_revenue: number;
+                monthly_revenue_formatted: string;
+            };
+            recent_payments: Array<{
+                id: number;
+                user_name: string;
+                tier_name: string;
+                formatted_amount: string;
+                status: string;
+                created_at: string;
+            }>;
+        }>('/admin/payments/summary');
+    }
+
+    async getAdminExpiring(days: number = 7) {
+        return this.request<{
+            expiring_soon: {
+                count: number;
+                subscriptions: AdminSubscription[];
+            };
+            expired: {
+                count: number;
+                subscriptions: AdminSubscription[];
+            };
+        }>(`/admin/payments/expiring?days=${days}`);
+    }
+
+    async getAdminPaymentDetail(id: number) {
+        return this.request<{ payment: AdminPaymentDetail }>(`/admin/payments/${id}`);
+    }
 }
 
 // Types
@@ -962,8 +1055,63 @@ export interface AnalyticsEvent {
     created_at: string;
 }
 
+// Admin Types
+export interface AdminPayment {
+    id: number;
+    user: {
+        id: number;
+        name: string;
+        email: string;
+    } | null;
+    tier: string;
+    tier_name: string;
+    amount: number;
+    formatted_amount: string;
+    status: string;
+    is_paid: boolean;
+    payment_gateway: string;
+    payment_method: string | null;
+    duitku_reference: string | null;
+    duitku_va_number: string | null;
+    paid_at: string | null;
+    expires_at: string | null;
+    created_at: string;
+}
+
+export interface AdminPaymentDetail extends AdminPayment {
+    period: string | null;
+    customer_name: string | null;
+    customer_email: string | null;
+    customer_phone: string | null;
+    duitku_merchant_order_id: string | null;
+    duitku_payment_url: string | null;
+    mayar_payment_id: string | null;
+    mayar_link_url: string | null;
+    updated_at: string;
+    metadata: Record<string, unknown> | null;
+    webhook_data: Record<string, unknown> | null;
+}
+
+export interface AdminSubscription {
+    id: number;
+    user: {
+        id: number;
+        name: string;
+        email: string;
+        phone: string | null;
+    } | null;
+    tier: string;
+    tier_name: string;
+    status: string;
+    expires_at: string | null;
+    days_remaining: number | null;
+    days_overdue?: number;
+    auto_renew: boolean;
+}
+
 // Export singleton instance
 export const api = new ApiClient();
 export type { ApiError, CreateOrderData };
+
 
 

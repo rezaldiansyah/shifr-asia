@@ -146,7 +146,28 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // Payment webhook (public, no auth required)
-Route::post('/payment/webhook', [PaymentController::class, 'webhook']);
+Route::post('/payment/webhook', [PaymentController::class, 'webhook']); // Mayar
+Route::post('/payment/webhook/duitku', [PaymentController::class, 'webhookDuitku']); // Duitku
+
+// Payment methods (public)
+Route::post('/payment/methods', [PaymentController::class, 'paymentMethods']);
+
+// Admin routes (require admin role)
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    // Payment Dashboard
+    Route::get('/dashboard', [\App\Http\Controllers\Api\AdminPaymentController::class, 'dashboard']);
+    Route::get('/payments', [\App\Http\Controllers\Api\AdminPaymentController::class, 'index']);
+    Route::get('/payments/summary', [\App\Http\Controllers\Api\AdminPaymentController::class, 'summary']);
+    Route::get('/payments/expiring', [\App\Http\Controllers\Api\AdminPaymentController::class, 'expiring']);
+    Route::get('/payments/{payment}', [\App\Http\Controllers\Api\AdminPaymentController::class, 'show']);
+    
+    // Subscription Management & Reminders
+    Route::get('/subscriptions', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'index']);
+    Route::get('/subscriptions/reminders', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'reminders']);
+    Route::get('/subscriptions/reminder-stats', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'reminderStats']);
+    Route::post('/subscriptions/{subscription}/send-reminder', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'sendReminder']);
+    Route::post('/subscriptions/run-reminder-check', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'runReminderCheck']);
+});
 
 // Health check
 Route::get('/health', function () {
