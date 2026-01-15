@@ -212,6 +212,7 @@ class ProductController extends Controller
     /**
      * Upload images for a product.
      * Uses Cloudflare R2 if configured, otherwise falls back to local storage.
+     * Auto-compresses and converts to WebP for optimal performance.
      */
     public function uploadImages(Request $request, Product $product): JsonResponse
     {
@@ -225,38 +226,65 @@ class ProductController extends Controller
 
         $request->validate([
             'images' => 'required|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,webp,gif|max:5120', // Allow up to 5MB before compression
         ]);
 
         $uploadedImages = [];
+        $compressionStats = [];
         
         // Determine which disk to use (R2 if configured, otherwise local)
-        // Use config() instead of env() for cached config compatibility
         $r2Key = config('filesystems.disks.r2.key');
         $r2Secret = config('filesystems.disks.r2.secret');
         $r2Url = config('filesystems.disks.r2.url');
         $useR2 = !empty($r2Key) && !empty($r2Secret);
         
+        // Initialize image service
+        $imageService = new \App\Services\ImageService();
+        
         foreach ($request->file('images') as $image) {
-            $filename = time() . '_' . Str::random(8) . '.' . $image->getClientOriginalExtension();
-            $path = 'products/' . $store->id . '/' . $filename;
-            
             try {
+                // Process and compress the image
+                $processed = $imageService->processUploadedFile($image);
+                
+                // Generate filename with proper extension
+                $filename = time() . '_' . Str::random(8) . '.' . $processed['extension'];
+                $path = 'products/' . $store->id . '/' . $filename;
+                
+                // Track compression stats
+                $compressionStats[] = [
+                    'original_size' => $processed['original_size'],
+                    'compressed_size' => $processed['processed_size'],
+                    'saved_percent' => round((1 - ($processed['processed_size'] / $processed['original_size'])) * 100, 1),
+                ];
+                
                 if ($useR2) {
-                    // Upload to Cloudflare R2
-                    Storage::disk('r2')->put($path, file_get_contents($image), 'public');
+                    // Upload compressed image to Cloudflare R2
+                    Storage::disk('r2')->put($path, $processed['data'], 'public');
                     $url = $r2Url . '/' . $path;
                 } else {
                     // Fallback to local storage
+                    Storage::disk('public')->put($path, $processed['data']);
+                    $url = '/storage/' . $path;
+                }
+                
+                $uploadedImages[] = $url;
+                
+            } catch (\Exception $e) {
+                // If compression fails, upload original as fallback
+                \Log::error('Image compression failed, uploading original: ' . $e->getMessage());
+                
+                $filename = time() . '_' . Str::random(8) . '.' . $image->getClientOriginalExtension();
+                $path = 'products/' . $store->id . '/' . $filename;
+                
+                if ($useR2) {
+                    Storage::disk('r2')->put($path, file_get_contents($image), 'public');
+                    $url = $r2Url . '/' . $path;
+                } else {
                     $storedPath = $image->storeAs('products/' . $store->id, $filename, 'public');
                     $url = '/storage/' . $storedPath;
                 }
+                
                 $uploadedImages[] = $url;
-            } catch (\Exception $e) {
-                // If R2 fails, try local storage as fallback
-                \Log::error('R2 upload failed, falling back to local storage: ' . $e->getMessage());
-                $storedPath = $image->storeAs('products/' . $store->id, $filename, 'public');
-                $uploadedImages[] = '/storage/' . $storedPath;
             }
         }
 
@@ -265,11 +293,34 @@ class ProductController extends Controller
         $product->images = array_merge($existingImages, $uploadedImages);
         $product->save();
 
+        // Calculate total savings
+        $totalOriginal = array_sum(array_column($compressionStats, 'original_size'));
+        $totalCompressed = array_sum(array_column($compressionStats, 'compressed_size'));
+        $totalSavedPercent = $totalOriginal > 0 ? round((1 - ($totalCompressed / $totalOriginal)) * 100, 1) : 0;
+
         return response()->json([
-            'message' => 'Gambar berhasil diupload',
+            'message' => 'Gambar berhasil diupload dan dikompres',
             'images' => $product->images,
             'storage' => $useR2 ? 'cloudflare_r2' : 'local',
+            'compression' => [
+                'original_total' => $this->formatBytes($totalOriginal),
+                'compressed_total' => $this->formatBytes($totalCompressed),
+                'saved_percent' => $totalSavedPercent . '%',
+            ],
         ]);
+    }
+
+    /**
+     * Format bytes to human readable
+     */
+    private function formatBytes(int $bytes): string
+    {
+        if ($bytes >= 1048576) {
+            return round($bytes / 1048576, 2) . ' MB';
+        } elseif ($bytes >= 1024) {
+            return round($bytes / 1024, 2) . ' KB';
+        }
+        return $bytes . ' B';
     }
 
     /**
