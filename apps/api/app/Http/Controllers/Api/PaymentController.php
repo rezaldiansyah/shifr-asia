@@ -311,4 +311,53 @@ class PaymentController extends Controller
             'payments' => $payments,
         ]);
     }
+
+    /**
+     * Validate a voucher code for subscription checkout
+     */
+    public function validateVoucher(Request $request): JsonResponse
+    {
+        $request->validate([
+            'code' => 'required|string|max:50',
+            'tier' => 'required|string|in:starter,growth,pro',
+            'amount' => 'required|numeric|min:0',
+        ]);
+
+        $voucher = \App\Models\SubscriptionVoucher::where('code', strtoupper($request->code))->first();
+
+        if (!$voucher) {
+            return response()->json([
+                'valid' => false,
+                'message' => 'Kode voucher tidak ditemukan',
+            ], 404);
+        }
+
+        $error = $voucher->validateFor($request->tier, Auth::id());
+        if ($error) {
+            return response()->json([
+                'valid' => false,
+                'message' => $error,
+            ], 422);
+        }
+
+        $discount = $voucher->calculateDiscount($request->amount);
+        $finalAmount = max(0, $request->amount - $discount);
+
+        return response()->json([
+            'valid' => true,
+            'voucher' => [
+                'id' => $voucher->id,
+                'code' => $voucher->code,
+                'name' => $voucher->name,
+                'type' => $voucher->type,
+                'value' => $voucher->value,
+                'formatted_value' => $voucher->formatted_value,
+            ],
+            'discount' => $discount,
+            'formatted_discount' => 'Rp ' . number_format($discount, 0, ',', '.'),
+            'original_amount' => $request->amount,
+            'final_amount' => $finalAmount,
+            'formatted_final_amount' => 'Rp ' . number_format($finalAmount, 0, ',', '.'),
+        ]);
+    }
 }

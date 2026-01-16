@@ -124,6 +124,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment/checkout', [PaymentController::class, 'checkout']);
     Route::get('/payment/callback', [PaymentController::class, 'callback']);
     Route::get('/payment/history', [PaymentController::class, 'history']);
+    Route::post('/payment/validate-voucher', [PaymentController::class, 'validateVoucher']);
 
     // Analytics (authenticated routes)
     Route::get('/analytics', [AnalyticsController::class, 'index']);
@@ -183,6 +184,14 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::post('/payouts/{payout}/approve', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'approvePayout']);
     Route::post('/payouts/{payout}/reject', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'rejectPayout']);
     Route::post('/payouts/{payout}/complete', [\App\Http\Controllers\Api\AdminAffiliateController::class, 'completePayout']);
+    
+    // Voucher Management
+    Route::get('/vouchers', [\App\Http\Controllers\Api\AdminVoucherController::class, 'index']);
+    Route::get('/vouchers/stats', [\App\Http\Controllers\Api\AdminVoucherController::class, 'stats']);
+    Route::post('/vouchers', [\App\Http\Controllers\Api\AdminVoucherController::class, 'store']);
+    Route::put('/vouchers/{voucher}', [\App\Http\Controllers\Api\AdminVoucherController::class, 'update']);
+    Route::post('/vouchers/{voucher}/toggle', [\App\Http\Controllers\Api\AdminVoucherController::class, 'toggle']);
+    Route::delete('/vouchers/{voucher}', [\App\Http\Controllers\Api\AdminVoucherController::class, 'destroy']);
 });
 
 Route::middleware('auth:sanctum')->prefix('affiliate')->group(function () {
