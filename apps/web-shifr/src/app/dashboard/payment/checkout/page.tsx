@@ -32,6 +32,18 @@ function CheckoutContent() {
     // Mayar uses hosted checkout, so no specific method selection is needed on our side
     const [isHostedCheckout, setIsHostedCheckout] = useState(false);
 
+    // Voucher state
+    const [voucherCode, setVoucherCode] = useState('');
+    const [voucherLoading, setVoucherLoading] = useState(false);
+    const [voucherError, setVoucherError] = useState<string | null>(null);
+    const [appliedVoucher, setAppliedVoucher] = useState<{
+        id: number;
+        code: string;
+        name: string;
+        discount: number;
+        formatted_discount: string;
+    } | null>(null);
+
     // Tier pricing
     const tierPrices: Record<string, { name: string; price: number }> = {
         starter: { name: 'Starter', price: 35000 },
@@ -42,7 +54,8 @@ function CheckoutContent() {
     const selectedTier = tierPrices[tier] || tierPrices.growth;
     // If hosted checkout (Mayar), we don't know the fee yet (or it's included), assuming 0 for display
     const selectedFee = paymentMethods.find(m => m.paymentMethod === selectedMethod)?.totalFee || '0';
-    const totalAmount = selectedTier.price + parseInt(selectedFee);
+    const discountAmount = appliedVoucher?.discount || 0;
+    const totalAmount = Math.max(0, selectedTier.price + parseInt(selectedFee) - discountAmount);
 
     useEffect(() => {
         if (!authLoading && !isAuthenticated) {
@@ -141,6 +154,55 @@ function CheckoutContent() {
         }
     };
 
+    const handleApplyVoucher = async () => {
+        if (!voucherCode.trim()) {
+            setVoucherError('Masukkan kode voucher');
+            return;
+        }
+
+        setVoucherLoading(true);
+        setVoucherError(null);
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/payment/validate-voucher`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${api.getToken()}`,
+                },
+                body: JSON.stringify({
+                    code: voucherCode.trim(),
+                    tier,
+                    amount: selectedTier.price,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (data.valid) {
+                setAppliedVoucher({
+                    id: data.voucher.id,
+                    code: data.voucher.code,
+                    name: data.voucher.name,
+                    discount: data.discount,
+                    formatted_discount: data.formatted_discount,
+                });
+                setVoucherCode('');
+            } else {
+                setVoucherError(data.message || 'Kode voucher tidak valid');
+            }
+        } catch {
+            setVoucherError('Gagal memvalidasi voucher');
+        } finally {
+            setVoucherLoading(false);
+        }
+    };
+
+    const handleRemoveVoucher = () => {
+        setAppliedVoucher(null);
+        setVoucherError(null);
+    };
+
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
@@ -186,6 +248,17 @@ function CheckoutContent() {
                         <span className="text-gray-600">Periode</span>
                         <span className="font-semibold capitalize">{period === 'monthly' ? 'Bulanan' : 'Tahunan'}</span>
                     </div>
+                    {appliedVoucher && (
+                        <div className="flex justify-between items-center py-3 border-b border-gray-100 text-green-600">
+                            <span className="flex items-center gap-2">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" />
+                                </svg>
+                                Diskon ({appliedVoucher.code})
+                            </span>
+                            <span className="font-semibold">-{appliedVoucher.formatted_discount}</span>
+                        </div>
+                    )}
                     {!isHostedCheckout && (
                         <div className="flex justify-between items-center py-3 border-b border-gray-100">
                             <span className="text-gray-600">Biaya Layanan</span>
@@ -196,6 +269,58 @@ function CheckoutContent() {
                         <span className="font-bold text-gray-800">Total Pembayaran</span>
                         <span className="text-xl font-bold text-main">{formatCurrency(totalAmount)}</span>
                     </div>
+                </div>
+
+                {/* Voucher Code Input */}
+                <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-main" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                        Kode Voucher
+                    </h2>
+
+                    {appliedVoucher ? (
+                        <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div>
+                                <p className="font-semibold text-green-700">{appliedVoucher.code}</p>
+                                <p className="text-sm text-green-600">{appliedVoucher.name} - Hemat {appliedVoucher.formatted_discount}</p>
+                            </div>
+                            <button
+                                onClick={handleRemoveVoucher}
+                                className="text-red-500 hover:text-red-700 p-2"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex gap-3">
+                            <input
+                                type="text"
+                                value={voucherCode}
+                                onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
+                                placeholder="Masukkan kode voucher"
+                                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-main focus:border-main uppercase"
+                            />
+                            <button
+                                onClick={handleApplyVoucher}
+                                disabled={voucherLoading || !voucherCode.trim()}
+                                className="px-6 py-3 bg-main text-white rounded-lg font-medium hover:bg-main-hover disabled:opacity-50 disabled:cursor-not-allowed transition"
+                            >
+                                {voucherLoading ? (
+                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                ) : (
+                                    'Pakai'
+                                )}
+                            </button>
+                        </div>
+                    )}
+
+                    {voucherError && (
+                        <p className="mt-2 text-sm text-red-600">{voucherError}</p>
+                    )}
                 </div>
 
                 {/* Payment Methods - Only show if not hosted checkout */}
