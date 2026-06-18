@@ -224,6 +224,68 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Section 5.5: Our Digital Ecosystem */}
+            <section className="py-24 px-6 bg-[var(--color-third)] relative z-10">
+                <div className="max-w-7xl mx-auto">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={fadeInUp}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl font-bold text-main font-[family-name:var(--font-ubuntu)] mb-4">
+                            {t('landing.ecosystem.title')}
+                        </h2>
+                        <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto">
+                            {t('landing.ecosystem.subtitle')}
+                        </p>
+                    </motion.div>
+
+                    <motion.div 
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={staggerContainer}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                    >
+                        {[
+                            { 
+                                id: 'halalin', 
+                                icon: '🛍️', 
+                                link: 'https://halalin.asia'
+                            },
+                            { 
+                                id: 'bizup', 
+                                icon: '🪪', 
+                                link: 'https://bizup.id'
+                            },
+                            { 
+                                id: 'saakina', 
+                                icon: '🕌', 
+                                link: 'https://saakina.id'
+                            }
+                        ].map((product, idx) => (
+                            <motion.div key={idx} variants={fadeInUp} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+                                <div className="text-4xl mb-6 bg-[var(--color-teal-tint)] w-16 h-16 rounded-2xl flex items-center justify-center">{product.icon}</div>
+                                <h3 className="text-2xl font-bold text-main mb-2">{t(`landing.ecosystem.${product.id}.title`)}</h3>
+                                <div className="text-xs font-semibold text-second uppercase tracking-wider mb-4">
+                                    {t(`landing.ecosystem.${product.id}.label`)}
+                                </div>
+                                <p className="text-foreground leading-relaxed flex-grow">
+                                    {t(`landing.ecosystem.${product.id}.desc`)}
+                                </p>
+                                <div className="mt-8 pt-6 border-t border-gray-100">
+                                    <a href={product.link} target="_blank" rel="noopener noreferrer" className="text-main font-semibold hover:text-second transition inline-flex items-center gap-2">
+                                        Visit Platform <span aria-hidden="true">→</span>
+                                    </a>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
             {/* Section 6: Portfolio / Track Record */}
             <section id="portfolio" className="py-24 px-6 bg-[var(--color-fourth)] relative z-10">
                 <div className="max-w-7xl mx-auto">

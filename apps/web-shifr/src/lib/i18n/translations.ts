@@ -290,7 +290,20 @@ export const translations: Translations = {
     'landing.cta.future': { en: 'The Future Won\'t Wait. Let\'s Define Your Winning Strategy.', id: 'Masa Depan Tidak Menunggu. Mari Tentukan Strategi Kemenangan Anda.', ar: 'المستقبل لن ينتظر. دعنا نحدد استراتيجيتك للفوز.' },
     'landing.cta.button': { en: 'Let\'s Talk', id: 'Mari Berdiskusi', ar: 'دعنا نتحدث' },
     'landing.cta.email': { en: 'partner@shifr.asia', id: 'partner@shifr.asia', ar: 'partner@shifr.asia' },
-    'landing.cta.address': { en: 'i7 Creative Community Space, Bogor Tengah, Kota Bogor', id: 'i7 Creative Community Space, Bogor Tengah, Kota Bogor', ar: 'مساحة المجتمع الإبداعي i7، بوغور تينغاه، مدينة بوغور' },
+    'landing.cta.address': { en: 'i7 Creative Community Space, Bogor Tengah, Kota Bogor', id: 'i7 Creative Community Space, Bogor Tengah, Kota Bogor', ar: 'i7 Creative Community Space, Bogor Tengah, Kota Bogor' },
+
+    // Ecosystem
+    'landing.ecosystem.title': { en: 'Our Proprietary Products', id: 'Produk Proprietary Kami', ar: 'منتجاتنا الخاصة' },
+    'landing.ecosystem.subtitle': { en: 'As a Venture Builder, we design, build, and scale our own digital platforms.', id: 'Sebagai Venture Builder, kami merancang, membangun, dan menskalakan platform digital kami sendiri.', ar: 'بصفتنا باني مشاريع، نقوم بتصميم وبناء وتوسيع منصاتنا الرقمية الخاصة.' },
+    'landing.ecosystem.halalin.title': { en: 'Halalin.asia', id: 'Halalin.asia', ar: 'Halalin.asia' },
+    'landing.ecosystem.halalin.label': { en: 'E-Commerce OS & Builder', id: 'E-Commerce OS & Builder', ar: 'نظام تشغيل ومنشئ التجارة الإلكترونية' },
+    'landing.ecosystem.halalin.desc': { en: 'Empowering SMEs with a comprehensive, low-friction digital commerce ecosystem designed for local and regional scale.', id: 'Memberdayakan UMKM dengan ekosistem e-commerce digital yang komprehensif, rendah hambatan, dan dirancang untuk skala lokal dan regional.', ar: 'تمكين الشركات الصغيرة والمتوسطة بنظام تجارة إلكترونية شامل ومنخفض الاحتكاك مصمم للنطاق المحلي والإقليمي.' },
+    'landing.ecosystem.bizup.title': { en: 'Bizup.id', id: 'Bizup.id', ar: 'Bizup.id' },
+    'landing.ecosystem.bizup.label': { en: 'Professional Networking Platform', id: 'Platform Networking Profesional', ar: 'منصة التواصل المهني' },
+    'landing.ecosystem.bizup.desc': { en: 'Redefining digital identity and business networking through smart, integrated NFC business cards and profile management.', id: 'Mendefinisikan ulang identitas digital dan networking bisnis melalui kartu nama NFC terintegrasi dan manajemen profil yang cerdas.', ar: 'إعادة تعريف الهوية الرقمية والشبكات التجارية من خلال بطاقات عمل NFC الذكية المتكاملة وإدارة الملف الشخصي.' },
+    'landing.ecosystem.saakina.title': { en: 'Saakina.id', id: 'Saakina.id', ar: 'Saakina.id' },
+    'landing.ecosystem.saakina.label': { en: 'Muslim Lifestyle Ecosystem', id: 'Ekosistem Lifestyle Muslim', ar: 'نظام نمط الحياة الإسلامي' },
+    'landing.ecosystem.saakina.desc': { en: 'Integrated digital platform serving the Muslim community, from smart digital invitations to curated e-commerce experiences.', id: 'Platform digital terintegrasi yang melayani komunitas Muslim, dari undangan digital pintar hingga pengalaman e-commerce yang dikurasi.', ar: 'منصة رقمية متكاملة تخدم المجتمع الإسلامي، من الدعوات الرقمية الذكية إلى تجارب التجارة الإلكترونية المنسقة.' },
 
     // Footer
     'landing.footer.company': { en: 'PT Shifr Asia Inovasi', id: 'PT Shifr Asia Inovasi', ar: 'PT Shifr Asia Inovasi' },
