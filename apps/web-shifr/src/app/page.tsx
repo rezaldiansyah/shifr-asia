@@ -107,7 +107,7 @@ export default function Home() {
                         animate={{ opacity: 1, x: 0 }}
                         className="flex items-center gap-6"
                     >
-                        <LanguageSwitcher variant="toggle" />
+                        <LanguageSwitcher variant="globe" />
                     </motion.div>
                 </div>
             </nav>
