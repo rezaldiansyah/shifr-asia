@@ -421,7 +421,7 @@ export default function Home() {
                     >
                         {activeTab === 'industry' && [
                             { tKey: 'landing.portfolio.prida' },
-                            { tKey: 'landing.portfolio.pinara' },
+                            { tKey: 'landing.portfolio.iclean' },
                             { tKey: 'landing.portfolio.gaspro' }
                         ].map((item, i) => (
                             <div key={i} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
