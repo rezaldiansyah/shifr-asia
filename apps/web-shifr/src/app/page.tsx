@@ -224,6 +224,89 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Section 7: Why Partner With Us */}
+            <section className="py-24 px-6 bg-white relative z-10">
+                <div className="max-w-7xl mx-auto">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={fadeInUp}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl font-bold text-main font-[family-name:var(--font-ubuntu)]">
+                            {t('landing.why.title')}
+                        </h2>
+                    </motion.div>
+
+                    <motion.div 
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={staggerContainer}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                    >
+                        {[
+                            { tKey: 'landing.why.datadriven' },
+                            { tKey: 'landing.why.scalability' },
+                            { tKey: 'landing.why.integrity' },
+                            { tKey: 'landing.why.trackrecord' }
+                        ].map((item, idx) => (
+                            <motion.div key={idx} variants={fadeInUp} className="card-cream p-10 rounded-3xl flex gap-6">
+                                <div className="w-12 h-12 bg-main/10 text-main rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
+                                    {idx + 1}
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold text-main mb-3">{t(`${item.tKey}.title`)}</h3>
+                                    <p className="text-foreground leading-relaxed">{t(`${item.tKey}.desc`)}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Section 8: Partnership Framework */}
+            <section className="py-24 px-6 bg-[var(--color-fourth)] relative z-10">
+                <div className="max-w-7xl mx-auto">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={fadeInUp}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl font-bold text-main font-[family-name:var(--font-ubuntu)]">
+                            {t('landing.framework.title')}
+                        </h2>
+                    </motion.div>
+
+                    <motion.div 
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={staggerContainer}
+                        className="grid grid-cols-1 md:grid-cols-4 gap-6"
+                    >
+                        {[
+                            { tKey: 'landing.framework.discovery', icon: "🔍" },
+                            { tKey: 'landing.framework.cocreation', icon: "💡" },
+                            { tKey: 'landing.framework.agile', icon: "⚙️" },
+                            { tKey: 'landing.framework.optimization', icon: "🚀" }
+                        ].map((step, idx) => (
+                            <motion.div key={idx} variants={fadeInUp} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative">
+                                {idx < 3 && (
+                                    <div className="hidden md:block absolute top-12 -right-4 w-8 h-[2px] bg-gray-200 z-10"></div>
+                                )}
+                                <div className="text-4xl mb-6">{step.icon}</div>
+                                <h3 className="text-lg font-bold text-main mb-3">{t(`${step.tKey}.title`)}</h3>
+                                <p className="text-text-secondary text-sm leading-relaxed">{t(`${step.tKey}.desc`)}</p>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
             {/* Section 5.5: Our Digital Ecosystem */}
             <section className="py-24 px-6 bg-[var(--color-third)] relative z-10">
                 <div className="max-w-7xl mx-auto">
@@ -391,89 +474,6 @@ export default function Home() {
                                 <h4 className="text-xl font-bold text-main mb-3">{t(`${item.tKey}.title`)}</h4>
                                 <p className="text-text-secondary">{t(`${item.tKey}.desc`)}</p>
                             </div>
-                        ))}
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* Section 7: Why Partner With Us */}
-            <section className="py-24 px-6 bg-white relative z-10">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={fadeInUp}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-4xl font-bold text-main font-[family-name:var(--font-ubuntu)]">
-                            {t('landing.why.title')}
-                        </h2>
-                    </motion.div>
-
-                    <motion.div 
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={staggerContainer}
-                        className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                    >
-                        {[
-                            { tKey: 'landing.why.datadriven' },
-                            { tKey: 'landing.why.scalability' },
-                            { tKey: 'landing.why.integrity' },
-                            { tKey: 'landing.why.trackrecord' }
-                        ].map((item, idx) => (
-                            <motion.div key={idx} variants={fadeInUp} className="card-cream p-10 rounded-3xl flex gap-6">
-                                <div className="w-12 h-12 bg-main/10 text-main rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
-                                    {idx + 1}
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-bold text-main mb-3">{t(`${item.tKey}.title`)}</h3>
-                                    <p className="text-foreground leading-relaxed">{t(`${item.tKey}.desc`)}</p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* Section 8: Partnership Framework */}
-            <section className="py-24 px-6 bg-[var(--color-fourth)] relative z-10">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={fadeInUp}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-4xl font-bold text-main font-[family-name:var(--font-ubuntu)]">
-                            {t('landing.framework.title')}
-                        </h2>
-                    </motion.div>
-
-                    <motion.div 
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={staggerContainer}
-                        className="grid grid-cols-1 md:grid-cols-4 gap-6"
-                    >
-                        {[
-                            { tKey: 'landing.framework.discovery', icon: "🔍" },
-                            { tKey: 'landing.framework.cocreation', icon: "💡" },
-                            { tKey: 'landing.framework.agile', icon: "⚙️" },
-                            { tKey: 'landing.framework.optimization', icon: "🚀" }
-                        ].map((step, idx) => (
-                            <motion.div key={idx} variants={fadeInUp} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative">
-                                {idx < 3 && (
-                                    <div className="hidden md:block absolute top-12 -right-4 w-8 h-[2px] bg-gray-200 z-10"></div>
-                                )}
-                                <div className="text-4xl mb-6">{step.icon}</div>
-                                <h3 className="text-lg font-bold text-main mb-3">{t(`${step.tKey}.title`)}</h3>
-                                <p className="text-text-secondary text-sm leading-relaxed">{t(`${step.tKey}.desc`)}</p>
-                            </motion.div>
                         ))}
                     </motion.div>
                 </div>
