@@ -18,14 +18,24 @@ export default function LanguageSwitcher({ variant = 'toggle', className = '' }:
                 onChange={(e) => setLocale(e.target.value as Locale)}
                 className={`px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-main ${className}`}
             >
-                <option value="id">🇮🇩 Indonesia</option>
                 <option value="en">🇬🇧 English</option>
+                <option value="id">🇮🇩 Indonesia</option>
+                <option value="ar">🇸🇦 العربية</option>
             </select>
         );
     }
 
     return (
         <div className={`inline-flex items-center bg-gray-100 rounded-lg p-1 ${className}`}>
+            <button
+                onClick={() => setLocale('en')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${locale === 'en'
+                        ? 'bg-white text-main shadow'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
+            >
+                EN
+            </button>
             <button
                 onClick={() => setLocale('id')}
                 className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${locale === 'id'
@@ -36,13 +46,13 @@ export default function LanguageSwitcher({ variant = 'toggle', className = '' }:
                 ID
             </button>
             <button
-                onClick={() => setLocale('en')}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${locale === 'en'
+                onClick={() => setLocale('ar')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${locale === 'ar'
                         ? 'bg-white text-main shadow'
                         : 'text-gray-600 hover:text-gray-800'
                     }`}
             >
-                EN
+                AR
             </button>
         </div>
     );

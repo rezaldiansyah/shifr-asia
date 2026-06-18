@@ -19,8 +19,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Shifr Asia - E-commerce untuk UMKM",
-  description: "Jualan lebih mudah, lebih profesional, penuh amanah.",
+  title: "Shifr Asia - Shaping a Bolder Future",
+  description: "PT Shifr Asia Inovasi - Your integrated business transformation partner for competitive advantage in the digital economy. Strategic management, enterprise systems, and growth-driven digital marketing.",
   icons: {
     icon: "/logogram.png",
     shortcut: "/logogram.png",
@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="en">
       <body className={`${ubuntu.variable} ${poppins.variable} antialiased`}>
         <LanguageProvider>
           <AuthProvider>{children}</AuthProvider>

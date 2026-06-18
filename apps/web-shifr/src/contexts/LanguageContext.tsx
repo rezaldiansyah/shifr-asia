@@ -14,14 +14,16 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const STORAGE_KEY = 'shifr_locale';
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-    const [locale, setLocaleState] = useState<Locale>('id');
+    const [locale, setLocaleState] = useState<Locale>('en');
     const [isHydrated, setIsHydrated] = useState(false);
 
     // Load locale from localStorage on mount
     useEffect(() => {
         const stored = localStorage.getItem(STORAGE_KEY) as Locale | null;
-        if (stored && (stored === 'id' || stored === 'en')) {
+        if (stored && (stored === 'id' || stored === 'en' || stored === 'ar')) {
             setLocaleState(stored);
+            document.documentElement.lang = stored;
+            document.documentElement.dir = stored === 'ar' ? 'rtl' : 'ltr';
         }
         setIsHydrated(true);
     }, []);
@@ -31,6 +33,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(STORAGE_KEY, newLocale);
         // Update HTML lang attribute
         document.documentElement.lang = newLocale;
+        document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr';
     };
 
     const t = (key: string): string => {
@@ -40,7 +43,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     // Prevent hydration mismatch
     if (!isHydrated) {
         return (
-            <LanguageContext.Provider value={{ locale: 'id', setLocale, t: (key) => translate(key, 'id') }}>
+            <LanguageContext.Provider value={{ locale: 'en', setLocale, t: (key) => translate(key, 'en') }}>
                 {children}
             </LanguageContext.Provider>
         );
