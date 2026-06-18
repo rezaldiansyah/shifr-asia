@@ -190,6 +190,29 @@ h6 {
   animation: float-orb-reverse 18s ease-in-out infinite;
 }
 
+.animate-shimmer-text {
+  background: linear-gradient(
+    to right,
+    var(--color-main) 20%,
+    var(--color-second) 40%,
+    var(--color-second) 60%,
+    var(--color-main) 80%
+  );
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
 /* Mobile Menu */
 .mobile-overlay {
   background: rgba(0, 0, 0, 0.5);

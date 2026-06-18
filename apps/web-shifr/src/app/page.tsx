@@ -114,9 +114,10 @@ export default function Home() {
 
             {/* Section 2: Hero */}
             <section className="relative pt-24 pb-32 px-6 lg:pt-32 lg:pb-40 z-10 overflow-hidden">
-                {/* Glowing Orbs (Breathing Aurora) */}
-                <div className="absolute top-1/2 left-1/4 w-[400px] h-[400px] bg-[var(--color-second)]/30 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2 animate-orb -z-10 pointer-events-none"></div>
-                <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[var(--color-main)]/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 animate-orb-reverse -z-10 pointer-events-none"></div>
+                {/* World Map Background */}
+                <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                    <Image src="/world-map.svg" alt="World Map" fill className="object-cover scale-150 md:object-contain md:scale-110" priority />
+                </div>
 
                 <div className="max-w-5xl mx-auto text-center relative z-10">
                     <motion.div
@@ -129,7 +130,7 @@ export default function Home() {
                         </motion.div>
                         <motion.h1 
                             variants={fadeInUp} 
-                            className="text-5xl md:text-7xl font-bold text-main mb-8 leading-tight font-[family-name:var(--font-ubuntu)]"
+                            className="text-5xl md:text-7xl font-bold mb-8 leading-tight font-[family-name:var(--font-ubuntu)] animate-shimmer-text"
                         >
                             {t('landing.hero.title')}
                         </motion.h1>
