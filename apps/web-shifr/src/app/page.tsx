@@ -114,13 +114,17 @@ export default function Home() {
 
             {/* Section 2: Hero */}
             <section className="relative pt-24 pb-32 px-6 lg:pt-32 lg:pb-40 z-10 overflow-hidden">
-                <div className="max-w-5xl mx-auto text-center">
+                {/* Glowing Orbs (Breathing Aurora) */}
+                <div className="absolute top-1/2 left-1/4 w-[400px] h-[400px] bg-[var(--color-second)]/30 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2 animate-orb -z-10 pointer-events-none"></div>
+                <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[var(--color-main)]/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 animate-orb-reverse -z-10 pointer-events-none"></div>
+
+                <div className="max-w-5xl mx-auto text-center relative z-10">
                     <motion.div
                         initial="hidden"
                         animate="visible"
                         variants={staggerContainer}
                     >
-                        <motion.div variants={fadeInUp} className="inline-block px-5 py-2 rounded-full border border-gray-200 bg-white/50 text-main font-semibold text-sm mb-8 shadow-sm">
+                        <motion.div variants={fadeInUp} className="inline-block px-5 py-2 rounded-full border border-gray-200 bg-white/70 backdrop-blur-sm text-main font-semibold text-sm mb-8 shadow-sm animate-shimmer relative overflow-hidden">
                             {t('landing.hero.badge')}
                         </motion.div>
                         <motion.h1 
