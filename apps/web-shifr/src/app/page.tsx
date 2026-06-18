@@ -247,7 +247,7 @@ export default function Home() {
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={staggerContainer}
-                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
                     >
                         {[
                             { 
@@ -264,6 +264,11 @@ export default function Home() {
                                 id: 'saakina', 
                                 icon: '🕌', 
                                 link: 'https://saakina.id'
+                            },
+                            { 
+                                id: 'sohibot', 
+                                icon: '🤖', 
+                                link: 'https://sohibot.com'
                             }
                         ].map((product, idx) => (
                             <motion.div key={idx} variants={fadeInUp} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">

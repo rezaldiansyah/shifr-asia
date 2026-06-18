@@ -304,6 +304,9 @@ export const translations: Translations = {
     'landing.ecosystem.saakina.title': { en: 'Saakina.id', id: 'Saakina.id', ar: 'Saakina.id' },
     'landing.ecosystem.saakina.label': { en: 'Muslim Lifestyle Ecosystem', id: 'Ekosistem Lifestyle Muslim', ar: 'نظام نمط الحياة الإسلامي' },
     'landing.ecosystem.saakina.desc': { en: 'Integrated digital platform serving the Muslim community, from smart digital invitations to curated e-commerce experiences.', id: 'Platform digital terintegrasi yang melayani komunitas Muslim, dari undangan digital pintar hingga pengalaman e-commerce yang dikurasi.', ar: 'منصة رقمية متكاملة تخدم المجتمع الإسلامي، من الدعوات الرقمية الذكية إلى تجارب التجارة الإلكترونية المنسقة.' },
+    'landing.ecosystem.sohibot.title': { en: 'Sohibot.com', id: 'Sohibot.com', ar: 'Sohibot.com' },
+    'landing.ecosystem.sohibot.label': { en: 'WhatsApp Automation & CRM', id: 'WhatsApp Automation & CRM', ar: 'أتمتة واتساب وإدارة علاقات العملاء' },
+    'landing.ecosystem.sohibot.desc': { en: 'Intelligent WhatsApp integration platform for seamless customer communication, automated broadcasting, and conversational commerce.', id: 'Platform integrasi WhatsApp cerdas untuk komunikasi pelanggan yang mulus, penyiaran otomatis, dan conversational commerce.', ar: 'منصة دمج واتساب الذكية للتواصل السلس مع العملاء، والبث التلقائي، والتجارة الحوارية.' },
 
     // Footer
     'landing.footer.company': { en: 'PT Shifr Asia Inovasi', id: 'PT Shifr Asia Inovasi', ar: 'PT Shifr Asia Inovasi' },
