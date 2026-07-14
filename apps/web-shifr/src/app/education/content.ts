@@ -719,7 +719,7 @@ export const content = {
       ar: "مستشار تحول التعليم",
     },
     contactCompany: "PT Shifr Asia Inovasi",
-    email: "marketing@shifr.asia",
+    email: "solutions@shifr.asia",
     phone: "+62 856 1758 523",
     phoneLink: "https://wa.me/628561758523",
   },
