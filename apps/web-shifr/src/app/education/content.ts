@@ -554,10 +554,60 @@ export const content = {
           ar: "تحول مؤسسي شامل",
         },
         desc: {
-          en: "For Asy Syuuraa Batam, we led a complete organizational turnaround that bridged technology, human resources, and commercial viability. Our strategic interventions included:<br/><br/><b>Commercial & Welfare Optimization:</b> Restructured the foundation's business units into measurable, profit-generating ventures, which directly improved the financial welfare of the teaching staff.<br/><br/><b>Digital Branding & Engagement:</b> Revamped the institution's social media management and digital presence to strengthen public trust and brand positioning.<br/><br/><b>Resources Upgrading:</b> Elevated the overall quality of human resources and foundation staff through targeted management restructuring and regular training.<br/><br/><b>System Integration:</b> Designed and deployed a fully integrated information system to serve as the secure backbone for this newly optimized management structure.",
-          id: "Untuk Asy Syuuraa Batam, kami memimpin transformasi organisasi menyeluruh yang menjembatani teknologi, sumber daya manusia, dan kelayakan komersial. Intervensi strategis kami meliputi:<br/><br/><b>Optimalisasi Komersial & Kesejahteraan:</b> Merestrukturisasi unit bisnis yayasan menjadi usaha terukur yang menghasilkan keuntungan, yang secara langsung meningkatkan kesejahteraan finansial tenaga pengajar.<br/><br/><b>Branding & Keterlibatan Digital:</b> Memperbarui manajemen media sosial dan kehadiran digital institusi untuk memperkuat kepercayaan publik dan posisi merek.<br/><br/><b>Peningkatan Sumber Daya:</b> Meningkatkan kualitas sumber daya manusia dan staf yayasan secara keseluruhan melalui restrukturisasi manajemen yang ditargetkan dan pelatihan rutin.<br/><br/><b>Integrasi Sistem:</b> Merancang dan menerapkan sistem informasi yang terintegrasi penuh sebagai tulang punggung yang aman untuk struktur manajemen yang baru dioptimalkan ini.",
-          ar: "بالنسبة لأسى الشورى باتام، قمنا بقيادة تحول تنظيمي كامل يربط بين التكنولوجيا والموارد البشرية والجدوى التجارية. شملت تدخلاتنا الاستراتيجية:<br/><br/><b>التحسين التجاري والرفاهية:</b> إعادة هيكلة وحدات أعمال المؤسسة إلى مشاريع قابلة للقياس ومدرة للربح، مما أدى بشكل مباشر إلى تحسين الرفاهية المالية لهيئة التدريس.<br/><br/><b>العلامة التجارية الرقمية والمشاركة:</b> تجديد إدارة وسائل التواصل الاجتماعي والحضور الرقمي للمؤسسة لتعزيز ثقة الجمهور ومكانة العلامة التجارية.<br/><br/><b>الارتقاء بالموارد:</b> رفع مستوى الجودة الشاملة للموارد البشرية وموظفي المؤسسة من خلال إعادة الهيكلة الإدارية المستهدفة والتدريب المنتظم.<br/><br/><b>تكامل النظام:</b> تصميم ونشر نظام معلومات متكامل تمامًا ليكون بمثابة العمود الفقري الآمن لهيكل الإدارة المحسن حديثًا.",
+          en: "For Asy Syuuraa Batam, we led a complete organizational turnaround that bridged technology, human resources, and commercial viability. Our strategic interventions included:",
+          id: "Untuk Asy Syuuraa Batam, kami memimpin transformasi organisasi menyeluruh yang menjembatani teknologi, sumber daya manusia, dan kelayakan komersial. Intervensi strategis kami meliputi:",
+          ar: "بالنسبة لأسى الشورى باتام، قمنا بقيادة تحول تنظيمي كامل يربط بين التكنولوجيا والموارد البشرية والجدوى التجارية. شملت تدخلاتنا الاستراتيجية:",
         },
+        cards: [
+          {
+            title: {
+              en: "Commercial & Welfare Optimization",
+              id: "Optimalisasi Komersial & Kesejahteraan",
+              ar: "التحسين التجاري والرفاهية"
+            },
+            desc: {
+              en: "Restructured the foundation's business units into measurable, profit-generating ventures, which directly improved the financial welfare of the teaching staff.",
+              id: "Merestrukturisasi unit bisnis yayasan menjadi usaha terukur yang menghasilkan keuntungan, yang secara langsung meningkatkan kesejahteraan finansial tenaga pengajar.",
+              ar: "إعادة هيكلة وحدات أعمال المؤسسة إلى مشاريع قابلة للقياس ومدرة للربح، مما أدى بشكل مباشر إلى تحسين الرفاهية المالية لهيئة التدريس."
+            }
+          },
+          {
+            title: {
+              en: "Digital Branding & Engagement",
+              id: "Branding & Keterlibatan Digital",
+              ar: "العلامة التجارية الرقمية والمشاركة"
+            },
+            desc: {
+              en: "Revamped the institution's social media management and digital presence to strengthen public trust and brand positioning.",
+              id: "Memperbarui manajemen media sosial dan kehadiran digital institusi untuk memperkuat kepercayaan publik dan posisi merek.",
+              ar: "تجديد إدارة وسائل التواصل الاجتماعي والحضور الرقمي للمؤسسة لتعزيز ثقة الجمهور ومكانة العلامة التجارية."
+            }
+          },
+          {
+            title: {
+              en: "Resources Upgrading",
+              id: "Peningkatan Sumber Daya",
+              ar: "الارتقاء بالموارد"
+            },
+            desc: {
+              en: "Elevated the overall quality of human resources and foundation staff through targeted management restructuring and regular training.",
+              id: "Meningkatkan kualitas sumber daya manusia dan staf yayasan secara keseluruhan melalui restrukturisasi manajemen yang ditargetkan dan pelatihan rutin.",
+              ar: "رفع مستوى الجودة الشاملة للموارد البشرية وموظفي المؤسسة من خلال إعادة الهيكلة الإدارية المستهدفة والتدريب المنتظم."
+            }
+          },
+          {
+            title: {
+              en: "System Integration",
+              id: "Integrasi Sistem",
+              ar: "تكامل النظام"
+            },
+            desc: {
+              en: "Designed and deployed a fully integrated information system to serve as the secure backbone for this newly optimized management structure.",
+              id: "Merancang dan menerapkan sistem informasi yang terintegrasi penuh sebagai tulang punggung yang aman untuk struktur manajemen yang baru dioptimalkan ini.",
+              ar: "تصميم ونشر نظام معلومات متكامل تمامًا ليكون بمثابة العمود الفقري الآمن لهيكل الإدارة المحسن حديثًا."
+            }
+          }
+        ]
       }
     ],
   },

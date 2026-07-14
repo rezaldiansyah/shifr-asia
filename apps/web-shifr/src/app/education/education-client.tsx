@@ -714,9 +714,25 @@ export default function EducationProposal({ locale = "en" }: { locale?: Locale }
                   )}
 
                   <div 
-                    className="text-lg text-slate-600 leading-relaxed mb-8 space-y-2"
+                    className="text-lg text-slate-600 leading-relaxed mb-8"
                     dangerouslySetInnerHTML={{ __html: t(caseStudy.desc, locale) }} 
                   />
+
+                  {/* Cards (if any) */}
+                  {caseStudy.cards && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                      {caseStudy.cards.map((card, i) => (
+                        <div key={i} className="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                          <h5 className="text-lg font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">
+                            {t(card.title, locale)}
+                          </h5>
+                          <p className="text-slate-600 leading-relaxed text-sm">
+                            {t(card.desc, locale)}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Stats */}
                   {caseStudy.stats && (
