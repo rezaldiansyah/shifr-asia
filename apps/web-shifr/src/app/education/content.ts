@@ -712,16 +712,16 @@ export const content = {
       id: "Silakan hubungi kami untuk menjadwalkan Pertemuan Awal Penyelarasan:",
       ar: "يرجى التواصل لتحديد موعد الاجتماع التمهيدي:",
     },
-    contactName: "Dian",
+    contactName: "Ardi",
     contactRole: {
-      en: "Partnership Engagement Specialist - Education",
-      id: "Spesialis Kemitraan - Pendidikan",
-      ar: "أخصائي مشاركة الشراكة - التعليم",
+      en: "Education Transformation Advisor",
+      id: "Penasihat Transformasi Pendidikan",
+      ar: "مستشار تحول التعليم",
     },
     contactCompany: "PT Shifr Asia Inovasi",
     email: "marketing@shifr.asia",
-    phone: "+62 811 935 083",
-    phoneLink: "https://wa.me/62811935083",
+    phone: "+62 856 1758 523",
+    phoneLink: "https://wa.me/628561758523",
   },
 
   footer: {
