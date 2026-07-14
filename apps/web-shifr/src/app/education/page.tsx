@@ -14,5 +14,5 @@ export const metadata: Metadata = {
 };
 
 export default function EducationPage() {
-  return <EducationProposal />;
+  return <EducationProposal locale="en" />;
 }

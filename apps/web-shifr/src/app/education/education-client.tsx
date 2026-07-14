@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
+import { content, t, tArr, Locale } from "./content";
 
 // ─── Animation Variants ─────────────────────────────────────────
 const fadeInUp: Variants = {
@@ -235,9 +236,11 @@ function SectionHeader({
 // ═════════════════════════════════════════════════════════════════
 // MAIN COMPONENT
 // ═════════════════════════════════════════════════════════════════
-export default function EducationProposal() {
+export default function EducationProposal({ locale = "en" }: { locale?: Locale }) {
+  const dir = content.dir[locale];
+  
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen bg-white overflow-x-hidden" dir={dir}>
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1 — COVER PAGE / HERO
        ═══════════════════════════════════════════════════════════ */}
@@ -262,7 +265,7 @@ export default function EducationProposal() {
             <Image src="/logo.png" alt="Shifr Asia" width={130} height={42} className="h-9 w-auto brightness-0 invert" priority />
             <div className="hidden md:flex items-center gap-2 text-white/50 text-sm">
               <span className="w-2 h-2 rounded-full bg-[#2cbbbc] animate-pulse" />
-              Confidential Proposal
+              {t(content.hero.confidential, locale)}
             </div>
           </div>
         </motion.div>
@@ -272,7 +275,7 @@ export default function EducationProposal() {
           <motion.div initial="hidden" animate="visible" variants={stagger}>
             <motion.div variants={fadeInUp} className="mb-8">
               <span className="inline-block px-4 py-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm text-[#2cbbbc] font-semibold text-sm tracking-wide">
-                Prepared by: PT Shifr Asia Inovasi
+                {t(content.hero.badge, locale)}
               </span>
             </motion.div>
 
@@ -280,19 +283,19 @@ export default function EducationProposal() {
               variants={fadeInUp}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] font-[family-name:var(--font-ubuntu)] mb-6"
             >
-              Digital Transformation{" "}
+              {t(content.hero.titleLine1, locale)}{" "}
               <span className="bg-gradient-to-r from-[#2cbbbc] to-[#4dd8d8] bg-clip-text text-transparent">
-                Masterplan
+                {t(content.hero.titleHighlight, locale)}
               </span>
               <br />
-              <span className="text-white/90">for Educational Institutions</span>
+              <span className="text-white/90">{t(content.hero.titleLine2, locale)}</span>
             </motion.h1>
 
             <motion.p
               variants={fadeInUp}
               className="text-lg md:text-xl text-slate-400 max-w-2xl mb-12 leading-relaxed"
             >
-              An Integrated Information System &amp; IT Governance Proposal
+              {t(content.hero.subtitle, locale)}
             </motion.p>
 
             <motion.div variants={fadeInUp} className="h-px w-full max-w-xl bg-gradient-to-r from-[#2cbbbc]/50 via-white/20 to-transparent mb-12" />
@@ -300,13 +303,13 @@ export default function EducationProposal() {
             {/* Executive Summary */}
             <motion.div variants={fadeInUp} className="max-w-3xl">
               <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-[#2cbbbc] mb-5">
-                1. Executive Summary
+                {t(content.hero.execSummaryLabel, locale)}
               </h2>
               <p className="text-base md:text-lg text-slate-300 leading-relaxed mb-5">
-                In education today, software is often bought in pieces: one application for grading, another for tuition, and a separate one for attendance. This fragmentation leaves the executive board blind to real-time operations.
+                {t(content.hero.execSummaryP1, locale)}
               </p>
               <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                This proposal outlines the IT Blueprint and execution roadmap to build an Integrated Digital Education Ecosystem. We utilize a modular architecture—meaning you can roll it out in phases based on your immediate priorities—that ultimately connects to a Single Sign-On (SSO) centralized database. The end result is absolute operational control for the board, immediate transparency for parents, and a lighter administrative workload for teachers.
+                {t(content.hero.execSummaryP2, locale)}
               </p>
             </motion.div>
           </motion.div>
@@ -319,7 +322,7 @@ export default function EducationProposal() {
           transition={{ delay: 1.5 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
         >
-          <span className="text-white/40 text-xs tracking-widest uppercase">Scroll</span>
+          <span className="text-white/40 text-xs tracking-widest uppercase">{t(content.hero.scroll, locale)}</span>
           <div className="w-px h-10 bg-gradient-to-b from-white/40 to-transparent" />
         </motion.div>
       </section>
@@ -329,30 +332,30 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          title="Understanding Your Needs"
-          subtitle="Based on our experience auditing modern educational operations, foundations and school boards typically struggle with three systemic bottlenecks:"
+          title={t(content.needs.title, locale)}
+          subtitle={t(content.needs.subtitle, locale)}
         />
 
         <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
               icon: Icons.database,
-              title: "Data Silos & Delayed Reporting",
-              desc: "Relying on disconnected spreadsheets and manual paperwork means consolidating financial and academic data takes weeks instead of minutes.",
+              title: t(content.needs.items[0].title, locale),
+              desc: t(content.needs.items[0].desc, locale),
               accent: "border-red-400",
               iconBg: "bg-red-50 text-red-500",
             },
             {
               icon: Icons.users,
-              title: "Parent Engagement Gaps",
-              desc: "Parents expect instant updates on their child's academic progress and tuition billing, yet most schools lack a secure, two-way communication channel.",
+              title: t(content.needs.items[1].title, locale),
+              desc: t(content.needs.items[1].desc, locale),
               accent: "border-amber-400",
               iconBg: "bg-amber-50 text-amber-600",
             },
             {
               icon: Icons.alertTriangle,
-              title: "The Risk of Stalled IT Projects",
-              desc: "Schools often invest in custom software that ultimately fails during implementation due to poor change management and a lack of proper training for the teaching staff.",
+              title: t(content.needs.items[2].title, locale),
+              desc: t(content.needs.items[2].desc, locale),
               accent: "border-slate-400",
               iconBg: "bg-slate-100 text-slate-600",
             },
@@ -379,17 +382,21 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
         <SectionHeader
-          title="Our Solution: An Integrated Digital Ecosystem"
+          title={t(content.solution.title, locale)}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           {/* Text content */}
           <motion.div variants={fadeInUp} className="lg:col-span-3 space-y-5">
             <p className="text-lg text-slate-600 leading-relaxed">
-              We do not just sell software; we deliver operational governance. PT Shifr Asia Inovasi proposes a web-based platform built on a <strong className="text-slate-900">Centralized-Modular framework</strong>.
+              {t(content.solution.p1, locale)}
+              <strong className="text-slate-900">{t(content.solution.p1Bold, locale)}</strong>
+              {t(content.solution.p1End, locale)}
             </p>
             <p className="text-lg text-slate-600 leading-relaxed">
-              Each functional module (Academic, Finance, HR) can operate independently during the initial rollout, but they automatically communicate with each other through a <strong className="text-slate-900">Single Sign-On (SSO) gateway</strong>. The backend infrastructure is built on high-performance database technology (PostgreSQL) to ensure the system remains fast and stable, even when accessed by thousands of users simultaneously.
+              {t(content.solution.p2, locale)}
+              <strong className="text-slate-900">{t(content.solution.p2Bold, locale)}</strong>
+              {t(content.solution.p2End, locale)}
             </p>
           </motion.div>
 
@@ -401,8 +408,8 @@ export default function EducationProposal() {
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#374da0] to-[#2cbbbc] flex items-center justify-center text-white shadow-lg shadow-[#374da0]/25 mb-3">
                   {Icons.network}
                 </div>
-                <span className="text-sm font-bold text-slate-900">SSO Gateway</span>
-                <span className="text-xs text-slate-500">Single Sign-On</span>
+                <span className="text-sm font-bold text-slate-900">{t(content.solution.ssoGateway, locale)}</span>
+                <span className="text-xs text-slate-500">{t(content.solution.ssoSub, locale)}</span>
               </div>
               {/* Connection lines */}
               <div className="flex items-center justify-center gap-2 mb-2">
@@ -413,9 +420,9 @@ export default function EducationProposal() {
               {/* Module nodes */}
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: "Academic", color: "bg-blue-50 border-blue-200 text-blue-700" },
-                  { label: "Finance", color: "bg-emerald-50 border-emerald-200 text-emerald-700" },
-                  { label: "HR", color: "bg-purple-50 border-purple-200 text-purple-700" },
+                  { label: tArr(content.solution.moduleLabels, locale)[0], color: "bg-blue-50 border-blue-200 text-blue-700" },
+                  { label: tArr(content.solution.moduleLabels, locale)[1], color: "bg-emerald-50 border-emerald-200 text-emerald-700" },
+                  { label: tArr(content.solution.moduleLabels, locale)[2], color: "bg-purple-50 border-purple-200 text-purple-700" },
                 ].map((m, i) => (
                   <div key={i} className={`rounded-xl border p-3 text-center ${m.color}`}>
                     <span className="text-xs font-bold">{m.label}</span>
@@ -423,7 +430,7 @@ export default function EducationProposal() {
                 ))}
               </div>
               <div className="mt-4 pt-4 border-t border-slate-200 text-center">
-                <span className="text-xs text-slate-500 font-medium">PostgreSQL High-Performance Backend</span>
+                <span className="text-xs text-slate-500 font-medium">{t(content.solution.dbLabel, locale)}</span>
               </div>
             </div>
           </motion.div>
@@ -435,119 +442,48 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          title="Modular Breakdown"
-          subtitle="The system is divided into four strategic pillars, which can be activated based on your foundation's needs:"
+          title={t(content.modules.title, locale)}
+          subtitle={t(content.modules.subtitle, locale)}
         />
 
         <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* A. Core Foundation */}
-          <motion.div variants={fadeInUp} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
-            <div className="bg-gradient-to-r from-[#374da0] to-[#374da0]/90 p-5 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-white">
-                {Icons.command}
-              </div>
-              <div>
-                <span className="text-white/70 text-xs font-bold tracking-wider uppercase">Pillar A</span>
-                <h3 className="text-white font-bold text-lg font-[family-name:var(--font-ubuntu)]">Core Foundation</h3>
-              </div>
-            </div>
-            <div className="p-6">
-              <p className="text-xs font-bold text-slate-500 tracking-wider uppercase mb-4">The Command Center</p>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-[#2cbbbc] mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700"><strong>Single Sign-On (SSO):</strong> One gateway and one password for all school applications.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#2cbbbc] mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700"><strong>Executive Dashboard:</strong> A real-time analytics dashboard for the C-Suite/Board to monitor cash flow, attendance rates, and branch performance.</span>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
-
-          {/* B. Academic & Learning */}
-          <motion.div variants={fadeInUp} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-5 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-white">
-                {Icons.bookOpen}
-              </div>
-              <div>
-                <span className="text-white/70 text-xs font-bold tracking-wider uppercase">Pillar B</span>
-                <h3 className="text-white font-bold text-lg font-[family-name:var(--font-ubuntu)]">Academic &amp; Learning</h3>
-              </div>
-            </div>
-            <div className="p-6">
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">Centralized Curriculum &amp; Scheduling Management.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">Real-time grading system for teachers.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">Learning Management System (LMS) for material and assignment distribution.</span>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
-
-          {/* C. Operational & Finance */}
-          <motion.div variants={fadeInUp} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
-            <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 p-5 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-white">
-                {Icons.briefcase}
-              </div>
-              <div>
-                <span className="text-white/70 text-xs font-bold tracking-wider uppercase">Pillar C</span>
-                <h3 className="text-white font-bold text-lg font-[family-name:var(--font-ubuntu)]">Operational &amp; Finance</h3>
-              </div>
-            </div>
-            <div className="p-6">
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-500 mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">Financial Information System (Tuition billing and payment reconciliation).</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-500 mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">HRIS (Staff management, attendance, and payroll).</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-500 mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">Integrated POS (Point of Sales) System for the school cafeteria or cooperative.</span>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
-
-          {/* D. Engagement Portal */}
-          <motion.div variants={fadeInUp} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
-            <div className="bg-gradient-to-r from-[#2cbbbc] to-teal-400 p-5 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-white">
-                {Icons.userCheck}
-              </div>
-              <div>
-                <span className="text-white/70 text-xs font-bold tracking-wider uppercase">Pillar D</span>
-                <h3 className="text-white font-bold text-lg font-[family-name:var(--font-ubuntu)]">Engagement Portal</h3>
-              </div>
-            </div>
-            <div className="p-6">
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-[#2cbbbc] mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">A dedicated <strong>Parent Portal</strong> to track bills, grades, and disciplinary records.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#2cbbbc] mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                  <span className="text-slate-700">A <strong>Student Admission Portal (PPDB)</strong> directly linked to the student and finance databases.</span>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
+          {content.modules.pillars.map((pillar, index) => {
+            const icons = [Icons.command, Icons.bookOpen, Icons.briefcase, Icons.userCheck];
+            const gradients = [
+              "from-[#374da0] to-[#374da0]/90",
+              "from-blue-600 to-blue-500",
+              "from-emerald-600 to-emerald-500",
+              "from-[#2cbbbc] to-teal-400"
+            ];
+            const textColors = ["text-[#2cbbbc]", "text-blue-500", "text-emerald-500", "text-[#2cbbbc]"];
+            
+            return (
+              <motion.div key={index} variants={fadeInUp} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+                <div className={`bg-gradient-to-r ${gradients[index]} p-5 flex items-center gap-4`}>
+                  <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-white">
+                    {icons[index]}
+                  </div>
+                  <div>
+                    <span className="text-white/70 text-xs font-bold tracking-wider uppercase">{t(pillar.label, locale)}</span>
+                    <h3 className="text-white font-bold text-lg font-[family-name:var(--font-ubuntu)]">{t(pillar.title, locale)}</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  {pillar.subtitle.en && (
+                    <p className="text-xs font-bold text-slate-500 tracking-wider uppercase mb-4">{t(pillar.subtitle, locale)}</p>
+                  )}
+                  <ul className="space-y-3">
+                    {pillar.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-3">
+                        <span className={`${textColors[index]} mt-0.5 shrink-0`}>{Icons.checkCircle}</span>
+                        <span className="text-slate-700" dangerouslySetInnerHTML={{ __html: t(item, locale) }} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </Section>
 
@@ -566,43 +502,30 @@ export default function EducationProposal() {
           className="max-w-6xl mx-auto relative z-10"
         >
           <SectionHeader
-            title="Data Security & Compliance"
-            subtitle="Protecting the data of hundreds of students and teachers is our absolute priority. We implement corporate-grade security standards:"
+            title={t(content.security.title, locale)}
+            subtitle={t(content.security.subtitle, locale)}
             light
           />
 
           <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Icons.shield,
-                title: "Role-Based Access Control (RBAC)",
-                desc: "Strict access rights. Teachers only see their classes, finance admins cannot alter grades, and the board has full visibility.",
-              },
-              {
-                icon: Icons.lock,
-                title: "Data Privacy Compliance",
-                desc: "An architecture designed in alignment with data protection regulations.",
-              },
-              {
-                icon: Icons.cloud,
-                title: "Automated Backups",
-                desc: "Routine cloud-based backups to ensure zero data loss from hardware failure or human error.",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                variants={fadeInUp}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-300"
-              >
-                <div className="w-14 h-14 rounded-xl bg-[#2cbbbc]/15 text-[#2cbbbc] flex items-center justify-center mb-6">
-                  {item.icon}
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3 font-[family-name:var(--font-ubuntu)]">
-                  {item.title}
-                </h3>
-                <p className="text-slate-400 leading-relaxed text-sm">{item.desc}</p>
-              </motion.div>
-            ))}
+            {content.security.items.map((item, i) => {
+              const icons = [Icons.shield, Icons.lock, Icons.cloud];
+              return (
+                <motion.div
+                  key={i}
+                  variants={fadeInUp}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-300"
+                >
+                  <div className="w-14 h-14 rounded-xl bg-[#2cbbbc]/15 text-[#2cbbbc] flex items-center justify-center mb-6">
+                    {icons[i]}
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-3 font-[family-name:var(--font-ubuntu)]">
+                    {t(item.title, locale)}
+                  </h3>
+                  <p className="text-slate-400 leading-relaxed text-sm">{t(item.desc, locale)}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </motion.div>
       </section>
@@ -611,54 +534,38 @@ export default function EducationProposal() {
           SECTION 6 — IMPLEMENTATION & GOVERNANCE
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
-        <SectionHeader title="Implementation & Governance" />
+        <SectionHeader title={t(content.implementation.title, locale)} />
 
         <motion.div variants={fadeInUp} className="space-y-8">
           <p className="text-lg text-slate-600 leading-relaxed max-w-4xl">
-            The success of an IT project lies in its execution, not just the code. To guarantee that teachers and staff actually adopt the new system, we do not leave the project until the system becomes the new working culture for your institution.
+            {t(content.implementation.desc, locale)}
           </p>
 
           <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              {
-                icon: Icons.settings,
-                title: "PMO Standards",
-                desc: "Strict Project Management Office discipline to control scope, timeline, and budget.",
-                gradient: "from-[#374da0] to-[#2d3f85]",
-              },
-              {
-                icon: Icons.repeat,
-                title: "Agile Framework",
-                desc: "Iterative sprints so you see progress every 2 weeks, not after 12 months.",
-                gradient: "from-[#2cbbbc] to-[#25a0a1]",
-              },
-              {
-                icon: Icons.trophy,
-                title: "4DX Methodology",
-                desc: "The 4 Disciplines of Execution integrated into change management for real adoption.",
-                gradient: "from-amber-500 to-amber-600",
-              },
-              {
-                icon: Icons.users,
-                title: "Change Management",
-                desc: "Dedicated training and cultural onboarding so the system becomes daily habit.",
-                gradient: "from-emerald-500 to-emerald-600",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                variants={fadeInUp}
-                className="relative bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow duration-300 group"
-              >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300`}>
-                  {item.icon}
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2 font-[family-name:var(--font-ubuntu)]">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
+            {content.implementation.items.map((item, i) => {
+              const icons = [Icons.settings, Icons.repeat, Icons.trophy, Icons.users];
+              const gradients = [
+                "from-[#374da0] to-[#2d3f85]",
+                "from-[#2cbbbc] to-[#25a0a1]",
+                "from-amber-500 to-amber-600",
+                "from-emerald-500 to-emerald-600"
+              ];
+              return (
+                <motion.div
+                  key={i}
+                  variants={fadeInUp}
+                  className="relative bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow duration-300 group"
+                >
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradients[i]} flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                    {icons[i]}
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-2 font-[family-name:var(--font-ubuntu)]">
+                    {t(item.title, locale)}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{t(item.desc, locale)}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </motion.div>
       </Section>
@@ -668,8 +575,8 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          title="Timeline & Modular Roadmap"
-          subtitle='We avoid the rigid "wait a year to see results" approach. Through Agile delivery, your foundation will experience tangible operational benefits in structured phases:'
+          title={t(content.timeline.title, locale)}
+          subtitle={t(content.timeline.subtitle, locale)}
         />
 
         {/* Desktop Timeline */}
@@ -677,44 +584,56 @@ export default function EducationProposal() {
           <div className="relative">
             {/* Horizontal line */}
             <div className="absolute top-[52px] left-0 right-0 h-1 bg-slate-200 rounded-full" />
-            <div className="absolute top-[52px] left-0 w-2/3 h-1 bg-gradient-to-r from-slate-500 via-[#374da0] to-[#2cbbbc] rounded-full" />
+            <div className={`absolute top-[52px] ${dir === 'rtl' ? 'right-0' : 'left-0'} w-2/3 h-1 bg-gradient-to-r from-slate-500 via-[#374da0] to-[#2cbbbc] rounded-full`} />
 
             <div className="grid grid-cols-3 gap-8 relative">
-              {[
-                {
-                  phase: "Phase 1",
-                  label: "Foundation",
-                  color: "bg-slate-700",
-                  ringColor: "ring-slate-300",
-                  items: ["UI/UX Design", "Centralized Database Setup", "Admission Module"],
-                },
-                {
-                  phase: "Phase 2",
-                  label: "Operational",
-                  color: "bg-[#374da0]",
-                  ringColor: "ring-[#374da0]/30",
-                  items: ["HRIS", "Tuition Billing", "POS Modules"],
-                },
-                {
-                  phase: "Phase 3",
-                  label: "Academic & Go-Live",
-                  color: "bg-[#2cbbbc]",
-                  ringColor: "ring-[#2cbbbc]/30",
-                  items: ["Grading System Rollout", "LMS", "Parent Portal", "Executive Dashboard Full Activation"],
-                },
-              ].map((p, i) => (
-                <div key={i} className="flex flex-col items-center text-center">
-                  {/* Phase label */}
-                  <span className={`text-xs font-bold tracking-wider uppercase text-white px-3 py-1 rounded-full ${p.color} mb-4`}>
-                    {p.phase}
+              {content.timeline.phases.map((p, i) => {
+                const colors = ["bg-slate-700", "bg-[#374da0]", "bg-[#2cbbbc]"];
+                const rings = ["ring-slate-300", "ring-[#374da0]/30", "ring-[#2cbbbc]/30"];
+                const items = tArr(p.items, locale);
+                return (
+                  <div key={i} className="flex flex-col items-center text-center">
+                    {/* Phase label */}
+                    <span className={`text-xs font-bold tracking-wider uppercase text-white px-3 py-1 rounded-full ${colors[i]} mb-4`}>
+                      {t(p.phase, locale)}
+                    </span>
+                    {/* Node */}
+                    <div className={`w-6 h-6 rounded-full ${colors[i]} ring-4 ${rings[i]} ring-offset-2 ring-offset-slate-50 mb-8 z-10`} />
+                    {/* Content Card */}
+                    <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 w-full">
+                      <h4 className="text-lg font-bold text-slate-900 mb-4 font-[family-name:var(--font-ubuntu)]">{t(p.label, locale)}</h4>
+                      <ul className={`space-y-2 ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
+                        {items.map((item, j) => (
+                          <li key={j} className="flex items-start gap-2 text-sm text-slate-600">
+                            <span className="text-[#2cbbbc] mt-0.5 shrink-0">{Icons.checkCircle}</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Mobile Timeline (Vertical) */}
+        <motion.div variants={fadeInUp} className="md:hidden">
+          <div className={`relative ${dir === 'rtl' ? 'pr-8 border-r-2' : 'pl-8 border-l-2'} border-slate-200 space-y-10`}>
+            {content.timeline.phases.map((p, i) => {
+              const colors = ["bg-slate-700", "bg-[#374da0]", "bg-[#2cbbbc]"];
+              const items = tArr(p.items, locale);
+              return (
+                <div key={i} className="relative">
+                  <div className={`absolute ${dir === 'rtl' ? '-right-[calc(2rem+5px)]' : '-left-[calc(2rem+5px)]'} w-3 h-3 rounded-full ${colors[i]} ring-4 ring-white`} />
+                  <span className={`inline-block text-xs font-bold tracking-wider uppercase text-white px-3 py-1 rounded-full ${colors[i]} mb-3`}>
+                    {t(p.phase, locale)}
                   </span>
-                  {/* Node */}
-                  <div className={`w-6 h-6 rounded-full ${p.color} ring-4 ${p.ringColor} ring-offset-2 ring-offset-slate-50 mb-8 z-10`} />
-                  {/* Content Card */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 w-full">
-                    <h4 className="text-lg font-bold text-slate-900 mb-4 font-[family-name:var(--font-ubuntu)]">{p.label}</h4>
-                    <ul className="space-y-2 text-left">
-                      {p.items.map((item, j) => (
+                  <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+                    <h4 className="text-lg font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">{t(p.label, locale)}</h4>
+                    <ul className="space-y-2">
+                      {items.map((item, j) => (
                         <li key={j} className="flex items-start gap-2 text-sm text-slate-600">
                           <span className="text-[#2cbbbc] mt-0.5 shrink-0">{Icons.checkCircle}</span>
                           {item}
@@ -723,52 +642,8 @@ export default function EducationProposal() {
                     </ul>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Mobile Timeline (Vertical) */}
-        <motion.div variants={fadeInUp} className="md:hidden">
-          <div className="relative pl-8 border-l-2 border-slate-200 space-y-10">
-            {[
-              {
-                phase: "Phase 1",
-                label: "Foundation",
-                color: "bg-slate-700",
-                items: ["UI/UX Design", "Centralized Database Setup", "Admission Module"],
-              },
-              {
-                phase: "Phase 2",
-                label: "Operational",
-                color: "bg-[#374da0]",
-                items: ["HRIS", "Tuition Billing", "POS Modules"],
-              },
-              {
-                phase: "Phase 3",
-                label: "Academic & Go-Live",
-                color: "bg-[#2cbbbc]",
-                items: ["Grading System Rollout", "LMS", "Parent Portal", "Executive Dashboard Full Activation"],
-              },
-            ].map((p, i) => (
-              <div key={i} className="relative">
-                <div className={`absolute -left-[calc(2rem+5px)] w-3 h-3 rounded-full ${p.color} ring-4 ring-white`} />
-                <span className={`inline-block text-xs font-bold tracking-wider uppercase text-white px-3 py-1 rounded-full ${p.color} mb-3`}>
-                  {p.phase}
-                </span>
-                <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
-                  <h4 className="text-lg font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">{p.label}</h4>
-                  <ul className="space-y-2">
-                    {p.items.map((item, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm text-slate-600">
-                        <span className="text-[#2cbbbc] mt-0.5 shrink-0">{Icons.checkCircle}</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </motion.div>
       </Section>
@@ -778,48 +653,31 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
         <SectionHeader
-          title="Training, SLA & Managed Service"
-          subtitle="PT Shifr Asia Inovasi is committed to being a long-term strategic partner:"
+          title={t(content.training.title, locale)}
+          subtitle={t(content.training.subtitle, locale)}
         />
 
         <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Icons.graduationCap,
-              title: "Capacity Building",
-              desc: "Comprehensive training for Super Users (admins) and daily users (teachers/staff).",
-              accent: "border-[#374da0]",
-              iconBg: "bg-[#374da0]/10 text-[#374da0]",
-            },
-            {
-              icon: Icons.wrench,
-              title: "SLA & Bug Fixing",
-              desc: "Guaranteed system repairs to ensure optimal operational uptime.",
-              accent: "border-[#2cbbbc]",
-              iconBg: "bg-[#2cbbbc]/10 text-[#2cbbbc]",
-            },
-            {
-              icon: Icons.server,
-              title: "Managed Service (Optional)",
-              desc: "Ongoing server maintenance, cloud management, and a technical helpdesk so your team can focus on education, not IT troubleshooting.",
-              accent: "border-emerald-500",
-              iconBg: "bg-emerald-50 text-emerald-600",
-            },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              variants={fadeInUp}
-              className={`bg-slate-50 rounded-2xl p-8 border-l-4 ${item.accent} hover:shadow-lg transition-shadow duration-300`}
-            >
-              <div className={`w-14 h-14 rounded-xl ${item.iconBg} flex items-center justify-center mb-6`}>
-                {item.icon}
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">
-                {item.title}
-              </h3>
-              <p className="text-slate-600 leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
+          {content.training.items.map((item, i) => {
+            const icons = [Icons.graduationCap, Icons.wrench, Icons.server];
+            const accents = ["border-[#374da0]", "border-[#2cbbbc]", "border-emerald-500"];
+            const iconBgs = ["bg-[#374da0]/10 text-[#374da0]", "bg-[#2cbbbc]/10 text-[#2cbbbc]", "bg-emerald-50 text-emerald-600"];
+            return (
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className={`bg-slate-50 rounded-2xl p-8 border-t-4 md:border-t-0 ${dir === 'rtl' ? 'md:border-r-4' : 'md:border-l-4'} ${accents[i]} hover:shadow-lg transition-shadow duration-300`}
+              >
+                <div className={`w-14 h-14 rounded-xl ${iconBgs[i]} flex items-center justify-center mb-6`}>
+                  {icons[i]}
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">
+                  {t(item.title, locale)}
+                </h3>
+                <p className="text-slate-600 leading-relaxed">{t(item.desc, locale)}</p>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </Section>
 
@@ -827,7 +685,7 @@ export default function EducationProposal() {
           SECTION 9 — PROVEN TRACK RECORD (HIGHLIGHT CARD)
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
-        <SectionHeader title="Proven Track Record" />
+        <SectionHeader title={t(content.trackRecord.title, locale)} />
 
         <motion.div variants={scaleIn}>
           <div className="relative">
@@ -838,30 +696,25 @@ export default function EducationProposal() {
               {/* Case Study Badge */}
               <div className="bg-gradient-to-r from-amber-500 to-amber-400 px-6 py-3 flex items-center gap-3">
                 <div className="text-white">{Icons.trophy}</div>
-                <span className="text-white font-bold tracking-wider uppercase text-sm">Case Study</span>
+                <span className="text-white font-bold tracking-wider uppercase text-sm">{t(content.trackRecord.badge, locale)}</span>
               </div>
 
               <div className="p-8 md:p-12">
                 <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6 font-[family-name:var(--font-ubuntu)]">
-                  Al-Fatih Pilar Peradaban
+                  {t(content.trackRecord.caseTitle, locale)}
                 </h3>
                 <p className="text-lg text-slate-600 leading-relaxed mb-8">
-                  PT Shifr was brought in to rescue a stalled IT project that had been stuck in development for four years. We restructured their IT Blueprint and successfully pushed the system to go live during the peak of the pandemic. Today, the digital ecosystem we built is actively used by over 8,000 users (parents, teachers, and management) across 36 locations nationwide. This became the official technology roadmap for the central foundation, 34 primary education branches, and 2 secondary school campuses.
+                  {t(content.trackRecord.caseDesc, locale)}
                 </p>
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                    { value: "8,000+", label: "Active Users" },
-                    { value: "36", label: "Locations" },
-                    { value: "34", label: "Primary Education Branches" },
-                    { value: "2", label: "Secondary School Campuses" },
-                  ].map((stat, i) => (
+                  {content.trackRecord.stats.map((stat, i) => (
                     <div key={i} className="bg-amber-50/70 rounded-xl p-4 text-center border border-amber-200/50">
                       <div className="text-2xl md:text-3xl font-bold text-[#374da0] font-[family-name:var(--font-ubuntu)]">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-slate-600 font-medium mt-1">{stat.label}</div>
+                      <div className="text-xs text-slate-600 font-medium mt-1">{t(stat.label, locale)}</div>
                     </div>
                   ))}
                 </div>
@@ -876,8 +729,8 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
         <SectionHeader
-          title="Investment & Commercials"
-          subtitle="To ensure transparency and accommodate your foundation's cash flow, our pricing structure is divided into two parts:"
+          title={t(content.investment.title, locale)}
+          subtitle={t(content.investment.subtitle, locale)}
         />
 
         <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -886,10 +739,10 @@ export default function EducationProposal() {
               {Icons.dollarSign}
             </div>
             <h3 className="text-xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">
-              Capital Expenditure (CAPEX)
+              {t(content.investment.capex.title, locale)}
             </h3>
             <p className="text-slate-600 leading-relaxed">
-              The cost of architectural development and software modules (billed according to phase milestones).
+              {t(content.investment.capex.desc, locale)}
             </p>
           </motion.div>
           <motion.div variants={fadeInUp} className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
@@ -897,16 +750,16 @@ export default function EducationProposal() {
               {Icons.repeat}
             </div>
             <h3 className="text-xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">
-              Operational Expenditure (OPEX)
+              {t(content.investment.opex.title, locale)}
             </h3>
             <p className="text-slate-600 leading-relaxed">
-              The post-launch monthly subscription for cloud hosting infrastructure and Managed Services.
+              {t(content.investment.opex.desc, locale)}
             </p>
           </motion.div>
         </motion.div>
 
         <motion.p variants={fadeIn} className="text-slate-500 italic text-center">
-          (A detailed commercial breakdown will be provided in a separate document once the final scope is agreed upon).
+          {t(content.investment.note, locale)}
         </motion.p>
       </Section>
 
@@ -915,43 +768,27 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          title="Next Steps"
-          subtitle="To initiate this operational transformation, we propose the following steps:"
+          title={t(content.nextSteps.title, locale)}
+          subtitle={t(content.nextSteps.subtitle, locale)}
         />
 
         <motion.div variants={stagger} className="max-w-3xl mx-auto">
-          {[
-            {
-              step: "01",
-              title: "Alignment Kick-Off",
-              desc: "A brief meeting to identify the most urgent module priorities for this academic year.",
-            },
-            {
-              step: "02",
-              title: "Contract Signing (NDA/PKS)",
-              desc: "Formalizing the scope of work and execution timeline.",
-            },
-            {
-              step: "03",
-              title: "IT Blueprint Audit",
-              desc: "Our team will begin mapping out your actual day-to-day business processes.",
-            },
-          ].map((item, i) => (
+          {content.nextSteps.steps.map((item, i) => (
             <motion.div
               key={i}
               variants={fadeInUp}
-              className="flex items-start gap-6 mb-8 last:mb-0"
+              className="flex items-start gap-6 mb-8 last:mb-0 relative"
             >
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#374da0] to-[#2cbbbc] flex items-center justify-center text-white font-bold text-lg shrink-0 shadow-lg shadow-[#374da0]/20 font-[family-name:var(--font-ubuntu)]">
-                {item.step}
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#374da0] to-[#2cbbbc] flex items-center justify-center text-white font-bold text-lg shrink-0 shadow-lg shadow-[#374da0]/20 font-[family-name:var(--font-ubuntu)] z-10">
+                0{i + 1}
               </div>
               <div className="pt-1">
                 <h3 className="text-xl font-bold text-slate-900 mb-1 font-[family-name:var(--font-ubuntu)]">
-                  {item.title}
+                  {t(item.title, locale)}
                 </h3>
-                <p className="text-slate-600 leading-relaxed">{item.desc}</p>
+                <p className="text-slate-600 leading-relaxed">{t(item.desc, locale)}</p>
               </div>
-              {i < 2 && <div className="hidden md:block absolute left-[calc(50%-1px)] mt-16 w-px h-8 bg-slate-200" />}
+              {i < 2 && <div className={`hidden md:block absolute ${dir === 'rtl' ? 'right-[calc(1.75rem-1px)]' : 'left-[calc(1.75rem-1px)]'} mt-16 w-px h-8 bg-slate-200 z-0`} />}
             </motion.div>
           ))}
         </motion.div>
@@ -974,15 +811,13 @@ export default function EducationProposal() {
         >
           <motion.h2
             variants={fadeInUp}
-            className="text-3xl md:text-5xl font-bold text-white mb-6 font-[family-name:var(--font-ubuntu)] leading-tight"
+            className="text-3xl md:text-5xl font-bold text-white mb-6 font-[family-name:var(--font-ubuntu)] leading-tight whitespace-pre-line"
           >
-            Let&apos;s Build Your
-            <br />
-            Digital Ecosystem
+            {t(content.cta.title, locale)}
           </motion.h2>
 
           <motion.p variants={fadeInUp} className="text-lg text-white/80 mb-12">
-            Please reach out to schedule your Alignment Kick-Off:
+            {t(content.cta.subtitle, locale)}
           </motion.p>
 
           <motion.div
@@ -990,27 +825,27 @@ export default function EducationProposal() {
             className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 md:p-10 max-w-lg mx-auto"
           >
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-white font-[family-name:var(--font-ubuntu)]">Dian</h3>
-              <p className="text-white/70 text-sm mt-1">Partnership Engagement Specialist - Education</p>
-              <p className="text-white/60 text-sm">PT Shifr Asia Inovasi</p>
+              <h3 className="text-2xl font-bold text-white font-[family-name:var(--font-ubuntu)]">{content.cta.contactName}</h3>
+              <p className="text-white/70 text-sm mt-1">{t(content.cta.contactRole, locale)}</p>
+              <p className="text-white/60 text-sm">{content.cta.contactCompany}</p>
             </div>
 
             <div className="space-y-4">
               <a
-                href="mailto:marketing@shifr.asia"
+                href={`mailto:${content.cta.email}`}
                 className="flex items-center justify-center gap-3 w-full bg-white text-[#374da0] font-bold py-4 px-6 rounded-xl hover:bg-white/90 transition-colors"
               >
                 {Icons.mail}
-                marketing@shifr.asia
+                {content.cta.email}
               </a>
               <a
-                href="https://wa.me/62811935083"
+                href={content.cta.phoneLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 w-full bg-white/10 border border-white/30 text-white font-semibold py-4 px-6 rounded-xl hover:bg-white/20 transition-colors"
               >
                 {Icons.phone}
-                +62 811 935 083
+                {content.cta.phone}
               </a>
             </div>
           </motion.div>
@@ -1026,13 +861,13 @@ export default function EducationProposal() {
             <Image src="/logo.png" alt="Shifr Asia" width={100} height={32} className="h-7 w-auto brightness-0 invert opacity-60" />
           </div>
           <p className="text-slate-500 text-sm">
-            &copy; {new Date().getFullYear()} PT Shifr Asia Inovasi. All rights reserved.
+            {t(content.footer.copyright, locale)}
           </p>
           <Link
             href="/"
             className="text-slate-500 hover:text-white text-sm transition-colors flex items-center gap-1"
           >
-            Visit shifr.asia {Icons.arrowRight}
+            {t(content.footer.visitSite, locale)} {Icons.arrowRight}
           </Link>
         </div>
       </footer>
