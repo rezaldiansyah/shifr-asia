@@ -202,27 +202,16 @@ function Section({
 
 // ─── Section Header ──────────────────────────────────────────────
 function SectionHeader({
-  number,
   title,
   subtitle,
   light = false,
 }: {
-  number: string;
   title: string;
   subtitle?: string;
   light?: boolean;
 }) {
   return (
     <motion.div variants={fadeInUp} className="mb-14">
-      <div
-        className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-5 ${
-          light
-            ? "bg-white/10 text-white/80 border border-white/20"
-            : "bg-[var(--color-main)]/10 text-[var(--color-main)] border border-[var(--color-main)]/20"
-        }`}
-      >
-        <span>Section {number}</span>
-      </div>
       <h2
         className={`text-3xl md:text-4xl lg:text-[2.75rem] font-bold leading-tight font-[family-name:var(--font-ubuntu)] ${
           light ? "text-white" : "text-slate-900"
@@ -340,7 +329,6 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          number="02"
           title="Understanding Your Needs"
           subtitle="Based on our experience auditing modern educational operations, foundations and school boards typically struggle with three systemic bottlenecks:"
         />
@@ -391,7 +379,6 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
         <SectionHeader
-          number="03"
           title="Our Solution: An Integrated Digital Ecosystem"
         />
 
@@ -448,7 +435,6 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          number="04"
           title="Modular Breakdown"
           subtitle="The system is divided into four strategic pillars, which can be activated based on your foundation's needs:"
         />
@@ -580,7 +566,6 @@ export default function EducationProposal() {
           className="max-w-6xl mx-auto relative z-10"
         >
           <SectionHeader
-            number="05"
             title="Data Security & Compliance"
             subtitle="Protecting the data of hundreds of students and teachers is our absolute priority. We implement corporate-grade security standards:"
             light
@@ -626,26 +611,55 @@ export default function EducationProposal() {
           SECTION 6 — IMPLEMENTATION & GOVERNANCE
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
-        <SectionHeader number="06" title="Implementation & Governance" />
+        <SectionHeader title="Implementation & Governance" />
 
-        <motion.div variants={fadeInUp} className="max-w-4xl">
-          <div className="flex items-start gap-6">
-            <div className="hidden md:flex w-16 h-16 rounded-2xl bg-[var(--color-main)]/10 text-[var(--color-main)] items-center justify-center shrink-0">
-              {Icons.settings}
-            </div>
-            <div className="space-y-5">
-              <p className="text-lg text-slate-600 leading-relaxed">
-                The success of an IT project lies in its execution, not just the code. We apply strict <strong className="text-slate-900">PMO (Project Management Office) standards</strong> combined with <strong className="text-slate-900">Agile frameworks</strong>.
-              </p>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                To guarantee that teachers and staff actually adopt the new system, we integrate the{" "}
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#374da0]/10 text-[#374da0] rounded-lg font-bold text-base">
-                  4 Disciplines of Execution (4DX)
-                </span>{" "}
-                into our change management process. We do not leave the project until the system becomes the new working culture for your institution.
-              </p>
-            </div>
-          </div>
+        <motion.div variants={fadeInUp} className="space-y-8">
+          <p className="text-lg text-slate-600 leading-relaxed max-w-4xl">
+            The success of an IT project lies in its execution, not just the code. To guarantee that teachers and staff actually adopt the new system, we do not leave the project until the system becomes the new working culture for your institution.
+          </p>
+
+          <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              {
+                icon: Icons.settings,
+                title: "PMO Standards",
+                desc: "Strict Project Management Office discipline to control scope, timeline, and budget.",
+                gradient: "from-[#374da0] to-[#2d3f85]",
+              },
+              {
+                icon: Icons.repeat,
+                title: "Agile Framework",
+                desc: "Iterative sprints so you see progress every 2 weeks, not after 12 months.",
+                gradient: "from-[#2cbbbc] to-[#25a0a1]",
+              },
+              {
+                icon: Icons.trophy,
+                title: "4DX Methodology",
+                desc: "The 4 Disciplines of Execution integrated into change management for real adoption.",
+                gradient: "from-amber-500 to-amber-600",
+              },
+              {
+                icon: Icons.users,
+                title: "Change Management",
+                desc: "Dedicated training and cultural onboarding so the system becomes daily habit.",
+                gradient: "from-emerald-500 to-emerald-600",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className="relative bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow duration-300 group"
+              >
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                  {item.icon}
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2 font-[family-name:var(--font-ubuntu)]">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
       </Section>
 
@@ -654,7 +668,6 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          number="07"
           title="Timeline & Modular Roadmap"
           subtitle='We avoid the rigid "wait a year to see results" approach. Through Agile delivery, your foundation will experience tangible operational benefits in structured phases:'
         />
@@ -765,7 +778,6 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
         <SectionHeader
-          number="08"
           title="Training, SLA & Managed Service"
           subtitle="PT Shifr Asia Inovasi is committed to being a long-term strategic partner:"
         />
@@ -815,7 +827,7 @@ export default function EducationProposal() {
           SECTION 9 — PROVEN TRACK RECORD (HIGHLIGHT CARD)
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
-        <SectionHeader number="09" title="Proven Track Record" />
+        <SectionHeader title="Proven Track Record" />
 
         <motion.div variants={scaleIn}>
           <div className="relative">
@@ -831,10 +843,10 @@ export default function EducationProposal() {
 
               <div className="p-8 md:p-12">
                 <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6 font-[family-name:var(--font-ubuntu)]">
-                  Yayasan Al-Fatih Pilar Peradaban
+                  Al-Fatih Pilar Peradaban
                 </h3>
                 <p className="text-lg text-slate-600 leading-relaxed mb-8">
-                  PT Shifr was brought in to rescue a stalled IT project that had been stuck in development for four years. We restructured their IT Blueprint and successfully pushed the system to go live during the peak of the pandemic. Today, the digital ecosystem we built is actively used by over 8,000 users (parents, teachers, and management) across 36 locations nationwide. This became the official technology roadmap for the central foundation, 34 Kuttab (primary education) branches, and 2 Madrasah (secondary education) campuses.
+                  PT Shifr was brought in to rescue a stalled IT project that had been stuck in development for four years. We restructured their IT Blueprint and successfully pushed the system to go live during the peak of the pandemic. Today, the digital ecosystem we built is actively used by over 8,000 users (parents, teachers, and management) across 36 locations nationwide. This became the official technology roadmap for the central foundation, 34 primary education branches, and 2 secondary school campuses.
                 </p>
 
                 {/* Stats */}
@@ -842,8 +854,8 @@ export default function EducationProposal() {
                   {[
                     { value: "8,000+", label: "Active Users" },
                     { value: "36", label: "Locations" },
-                    { value: "34", label: "Kuttab Branches" },
-                    { value: "2", label: "Madrasah Campuses" },
+                    { value: "34", label: "Primary Education Branches" },
+                    { value: "2", label: "Secondary School Campuses" },
                   ].map((stat, i) => (
                     <div key={i} className="bg-amber-50/70 rounded-xl p-4 text-center border border-amber-200/50">
                       <div className="text-2xl md:text-3xl font-bold text-[#374da0] font-[family-name:var(--font-ubuntu)]">
@@ -864,7 +876,6 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-white">
         <SectionHeader
-          number="10"
           title="Investment & Commercials"
           subtitle="To ensure transparency and accommodate your foundation's cash flow, our pricing structure is divided into two parts:"
         />
@@ -904,7 +915,6 @@ export default function EducationProposal() {
        ═══════════════════════════════════════════════════════════ */}
       <Section className="bg-slate-50">
         <SectionHeader
-          number="11"
           title="Next Steps"
           subtitle="To initiate this operational transformation, we propose the following steps:"
         />
