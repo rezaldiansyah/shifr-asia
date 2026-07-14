@@ -687,40 +687,54 @@ export default function EducationProposal({ locale = "en" }: { locale?: Locale }
       <Section className="bg-slate-50">
         <SectionHeader title={t(content.trackRecord.title, locale)} />
 
-        <motion.div variants={scaleIn}>
-          <div className="relative">
-            {/* Glow effect behind card */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/20 via-amber-300/10 to-amber-400/20 rounded-[2rem] blur-sm" />
+        <motion.div variants={stagger} className="space-y-12">
+          {content.trackRecord.cases.map((caseStudy, index) => (
+            <motion.div key={index} variants={scaleIn} className="relative">
+              {/* Glow effect behind card */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/20 via-amber-300/10 to-amber-400/20 rounded-[2rem] blur-sm" />
 
-            <div className="relative bg-white rounded-3xl shadow-2xl ring-2 ring-amber-400/40 overflow-hidden">
-              {/* Case Study Badge */}
-              <div className="bg-gradient-to-r from-amber-500 to-amber-400 px-6 py-3 flex items-center gap-3">
-                <div className="text-white">{Icons.trophy}</div>
-                <span className="text-white font-bold tracking-wider uppercase text-sm">{t(content.trackRecord.badge, locale)}</span>
-              </div>
+              <div className="relative bg-white rounded-3xl shadow-2xl ring-2 ring-amber-400/40 overflow-hidden">
+                {/* Case Study Badge */}
+                <div className="bg-gradient-to-r from-amber-500 to-amber-400 px-6 py-3 flex items-center gap-3">
+                  <div className="text-white">{Icons.trophy}</div>
+                  <span className="text-white font-bold tracking-wider uppercase text-sm">{t(content.trackRecord.badge, locale)}</span>
+                </div>
 
-              <div className="p-8 md:p-12">
-                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6 font-[family-name:var(--font-ubuntu)]">
-                  {t(content.trackRecord.caseTitle, locale)}
-                </h3>
-                <p className="text-lg text-slate-600 leading-relaxed mb-8">
-                  {t(content.trackRecord.caseDesc, locale)}
-                </p>
+                <div className="p-8 md:p-12">
+                  <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 font-[family-name:var(--font-ubuntu)]">
+                    {t(caseStudy.title, locale)}
+                  </h3>
+                  
+                  {caseStudy.subtitle ? (
+                    <h4 className="text-lg font-bold text-amber-500 mb-6 font-[family-name:var(--font-ubuntu)]">
+                      {t(caseStudy.subtitle, locale)}
+                    </h4>
+                  ) : (
+                    <div className="mb-6"></div>
+                  )}
 
-                {/* Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {content.trackRecord.stats.map((stat, i) => (
-                    <div key={i} className="bg-amber-50/70 rounded-xl p-4 text-center border border-amber-200/50">
-                      <div className="text-2xl md:text-3xl font-bold text-[#374da0] font-[family-name:var(--font-ubuntu)]">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs text-slate-600 font-medium mt-1">{t(stat.label, locale)}</div>
+                  <div 
+                    className="text-lg text-slate-600 leading-relaxed mb-8 space-y-2"
+                    dangerouslySetInnerHTML={{ __html: t(caseStudy.desc, locale) }} 
+                  />
+
+                  {/* Stats */}
+                  {caseStudy.stats && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {caseStudy.stats.map((stat, i) => (
+                        <div key={i} className="bg-amber-50/70 rounded-xl p-4 text-center border border-amber-200/50">
+                          <div className="text-2xl md:text-3xl font-bold text-[#374da0] font-[family-name:var(--font-ubuntu)]">
+                            {stat.value}
+                          </div>
+                          <div className="text-xs text-slate-600 font-medium mt-1">{t(stat.label, locale)}</div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </motion.div>
       </Section>
 

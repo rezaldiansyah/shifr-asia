@@ -506,38 +506,59 @@ export const content = {
       ar: "سجل حافل بالنجاح",
     },
     badge: { en: "Case Study", id: "Studi Kasus", ar: "دراسة حالة" },
-    caseTitle: {
-      en: "Al-Fatih Pilar Peradaban",
-      id: "Al-Fatih Pilar Peradaban",
-      ar: "Al-Fatih Pilar Peradaban",
-    },
-    caseDesc: {
-      en: "PT Shifr was brought in to rescue a stalled IT project that had been stuck in development for four years. We restructured their IT Blueprint and successfully pushed the system to go live during the peak of the pandemic. Today, the digital ecosystem we built is actively used by over 8,000 users (parents, teachers, and management) across 36 locations nationwide. This became the official technology roadmap for the central foundation, 34 primary education branches, and 2 secondary school campuses.",
-      id: "PT Shifr didatangkan untuk menyelamatkan proyek TI yang mandek selama empat tahun pengembangan. Kami merestrukturisasi Cetak Biru TI mereka dan berhasil mendorong sistem untuk go live pada puncak pandemi. Saat ini, ekosistem digital yang kami bangun secara aktif digunakan oleh lebih dari 8.000 pengguna (orang tua, guru, dan manajemen) di 36 lokasi se-Indonesia. Ini menjadi peta jalan teknologi resmi untuk yayasan pusat, 34 cabang pendidikan dasar, dan 2 kampus sekolah menengah.",
-      ar: "تم الاستعانة بـ PT Shifr لإنقاذ مشروع تكنولوجيا معلومات متوقف كان عالقًا في التطوير لمدة أربع سنوات. قمنا بإعادة هيكلة مخطط تكنولوجيا المعلومات الخاص بهم ودفعنا النظام بنجاح إلى البث المباشر خلال ذروة الوباء. اليوم، يتم استخدام النظام البيئي الرقمي الذي قمنا ببنائه بنشاط من قبل أكثر من 8000 مستخدم (أولياء الأمور والمعلمين والإدارة) في 36 موقعًا على الصعيد الوطني. أصبح هذا هو خارطة طريق التكنولوجيا الرسمية للمؤسسة المركزية، و 34 فرعًا للتعليم الابتدائي، وحرمين مدرسيين ثانويين.",
-    },
-    stats: [
+    cases: [
       {
-        value: "8,000+",
-        label: { en: "Active Users", id: "Pengguna Aktif", ar: "مستخدمين نشطين" },
-      },
-      { value: "36", label: { en: "Locations", id: "Lokasi", ar: "موقعًا" } },
-      {
-        value: "34",
-        label: {
-          en: "Primary Education Branches",
-          id: "Cabang Pendidikan Dasar",
-          ar: "فرع للتعليم الابتدائي",
+        title: {
+          en: "Al-Fatih Pilar Peradaban",
+          id: "Al-Fatih Pilar Peradaban",
+          ar: "Al-Fatih Pilar Peradaban",
         },
+        desc: {
+          en: "PT Shifr was brought in to rescue a stalled IT project that had been stuck in development for four years. We restructured their IT Blueprint and successfully pushed the system to go live during the peak of the pandemic. Today, the digital ecosystem we built is actively used by over 8,000 users (parents, teachers, and management) across 36 locations nationwide. This became the official technology roadmap for the central foundation, 34 primary education branches, and 2 secondary school campuses.",
+          id: "PT Shifr didatangkan untuk menyelamatkan proyek TI yang mandek selama empat tahun pengembangan. Kami merestrukturisasi Cetak Biru TI mereka dan berhasil mendorong sistem untuk go live pada puncak pandemi. Saat ini, ekosistem digital yang kami bangun secara aktif digunakan oleh lebih dari 8.000 pengguna (orang tua, guru, dan manajemen) di 36 lokasi se-Indonesia. Ini menjadi peta jalan teknologi resmi untuk yayasan pusat, 34 cabang pendidikan dasar, dan 2 kampus sekolah menengah.",
+          ar: "تم الاستعانة بـ PT Shifr لإنقاذ مشروع تكنولوجيا معلومات متوقف كان عالقًا في التطوير لمدة أربع سنوات. قمنا بإعادة هيكلة مخطط تكنولوجيا المعلومات الخاص بهم ودفعنا النظام بنجاح إلى البث المباشر خلال ذروة الوباء. اليوم، يتم استخدام النظام البيئي الرقمي الذي قمنا ببنائه بنشاط من قبل أكثر من 8000 مستخدم (أولياء الأمور والمعلمين والإدارة) في 36 موقعًا على الصعيد الوطني. أصبح هذا هو خارطة طريق التكنولوجيا الرسمية للمؤسسة المركزية، و 34 فرعًا للتعليم الابتدائي، وحرمين مدرسيين ثانويين.",
+        },
+        stats: [
+          {
+            value: "8,000+",
+            label: { en: "Active Users", id: "Pengguna Aktif", ar: "مستخدمين نشطين" },
+          },
+          { value: "36", label: { en: "Locations", id: "Lokasi", ar: "موقعًا" } },
+          {
+            value: "34",
+            label: {
+              en: "Primary Education Branches",
+              id: "Cabang Pendidikan Dasar",
+              ar: "فرع للتعليم الابتدائي",
+            },
+          },
+          {
+            value: "2",
+            label: {
+              en: "Secondary School Campuses",
+              id: "Kampus Sekolah Menengah",
+              ar: "حرم مدرسة ثانوية",
+            },
+          },
+        ],
       },
       {
-        value: "2",
-        label: {
-          en: "Secondary School Campuses",
-          id: "Kampus Sekolah Menengah",
-          ar: "حرم مدرسة ثانوية",
+        title: {
+          en: "Asy-Syuuraa Batam",
+          id: "Asy-Syuuraa Batam",
+          ar: "Asy-Syuuraa Batam",
         },
-      },
+        subtitle: {
+          en: "Holistic Institutional Transformation",
+          id: "Transformasi Institusional Holistik",
+          ar: "تحول مؤسسي شامل",
+        },
+        desc: {
+          en: "For Asy Syuuraa Batam, we led a complete organizational turnaround that bridged technology, human resources, and commercial viability. Our strategic interventions included:<br/><br/><b>Commercial & Welfare Optimization:</b> Restructured the foundation's business units into measurable, profit-generating ventures, which directly improved the financial welfare of the teaching staff.<br/><br/><b>Digital Branding & Engagement:</b> Revamped the institution's social media management and digital presence to strengthen public trust and brand positioning.<br/><br/><b>Resources Upgrading:</b> Elevated the overall quality of human resources and foundation staff through targeted management restructuring and regular training.<br/><br/><b>System Integration:</b> Designed and deployed a fully integrated information system to serve as the secure backbone for this newly optimized management structure.",
+          id: "Untuk Asy Syuuraa Batam, kami memimpin transformasi organisasi menyeluruh yang menjembatani teknologi, sumber daya manusia, dan kelayakan komersial. Intervensi strategis kami meliputi:<br/><br/><b>Optimalisasi Komersial & Kesejahteraan:</b> Merestrukturisasi unit bisnis yayasan menjadi usaha terukur yang menghasilkan keuntungan, yang secara langsung meningkatkan kesejahteraan finansial tenaga pengajar.<br/><br/><b>Branding & Keterlibatan Digital:</b> Memperbarui manajemen media sosial dan kehadiran digital institusi untuk memperkuat kepercayaan publik dan posisi merek.<br/><br/><b>Peningkatan Sumber Daya:</b> Meningkatkan kualitas sumber daya manusia dan staf yayasan secara keseluruhan melalui restrukturisasi manajemen yang ditargetkan dan pelatihan rutin.<br/><br/><b>Integrasi Sistem:</b> Merancang dan menerapkan sistem informasi yang terintegrasi penuh sebagai tulang punggung yang aman untuk struktur manajemen yang baru dioptimalkan ini.",
+          ar: "بالنسبة لأسى الشورى باتام، قمنا بقيادة تحول تنظيمي كامل يربط بين التكنولوجيا والموارد البشرية والجدوى التجارية. شملت تدخلاتنا الاستراتيجية:<br/><br/><b>التحسين التجاري والرفاهية:</b> إعادة هيكلة وحدات أعمال المؤسسة إلى مشاريع قابلة للقياس ومدرة للربح، مما أدى بشكل مباشر إلى تحسين الرفاهية المالية لهيئة التدريس.<br/><br/><b>العلامة التجارية الرقمية والمشاركة:</b> تجديد إدارة وسائل التواصل الاجتماعي والحضور الرقمي للمؤسسة لتعزيز ثقة الجمهور ومكانة العلامة التجارية.<br/><br/><b>الارتقاء بالموارد:</b> رفع مستوى الجودة الشاملة للموارد البشرية وموظفي المؤسسة من خلال إعادة الهيكلة الإدارية المستهدفة والتدريب المنتظم.<br/><br/><b>تكامل النظام:</b> تصميم ونشر نظام معلومات متكامل تمامًا ليكون بمثابة العمود الفقري الآمن لهيكل الإدارة المحسن حديثًا.",
+        },
+      }
     ],
   },
 
