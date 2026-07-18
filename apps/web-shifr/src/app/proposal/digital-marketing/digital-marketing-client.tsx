@@ -536,15 +536,65 @@ export default function DigitalMarketingProposal() {
           subtitle="Our content strategies have successfully elevated brands across specialized industries:"
         />
 
-        <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* ── Hero Case Study: Akademi Al-Fatih ── */}
+        <motion.div variants={scaleIn} className="mb-10">
+          <div className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/20 via-[#2cbbbc]/15 to-emerald-400/20 rounded-[2rem] blur-sm" />
+            <div className="relative bg-white rounded-3xl shadow-xl ring-1 ring-emerald-200/60 overflow-hidden">
+              {/* Header bar */}
+              <div className="bg-gradient-to-r from-emerald-600 to-[#2cbbbc] px-6 md:px-10 py-4 flex items-center gap-3">
+                <div className="text-white">{Icons.award}</div>
+                <span className="text-white font-bold tracking-wider uppercase text-sm">Featured Case Study</span>
+              </div>
+
+              <div className="p-6 md:p-10">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                  {/* Left: Content */}
+                  <div className="lg:col-span-2">
+                    <span className="inline-block text-xs font-bold tracking-wider uppercase text-emerald-600 mb-2">Islamic Education & E-Learning</span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 font-[family-name:var(--font-ubuntu)]">
+                      Akademi Al-Fatih
+                    </h3>
+                    <p className="text-sm text-slate-500 font-medium mb-5">Akademi Quran · Akademi Siroh · Akademi Keluarga</p>
+                    <p className="text-lg text-slate-600 leading-relaxed">
+                      Managed the complete social media team operations for three distinct academy brands under the Al-Fatih umbrella. Through strategic content planning and consistent visual branding, we successfully grew a combined audience across all three accounts — establishing each academy as a recognized authority in its respective educational niche.
+                    </p>
+                  </div>
+
+                  {/* Right: Stat */}
+                  <div className="lg:col-span-1 flex justify-center">
+                    <div className="bg-gradient-to-br from-emerald-50 to-[#2cbbbc]/10 rounded-2xl p-8 text-center border border-emerald-200/50 w-full max-w-[220px]">
+                      <div className="text-4xl md:text-5xl font-bold text-emerald-600 font-[family-name:var(--font-ubuntu)] leading-none mb-2">
+                        27K+
+                      </div>
+                      <div className="text-sm text-slate-600 font-medium">
+                        Combined Followers
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1">across 3 accounts</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── Supporting Grid: 4 Case Studies ── */}
+        <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {[
+            {
+              icon: Icons.target,
+              industry: "K-12 Education",
+              client: "SIT Asy-Syuuraa Batam",
+              desc: "Directed the institution's social media team to build a credible digital presence, strengthening parent trust and driving enrollment awareness.",
+              accent: "from-purple-600 to-purple-500",
+            },
             {
               icon: Icons.heart,
               industry: "Medical & Healthcare",
               client: "Medicamp",
               desc: "Managed exclusive educational content, resulting in increased engagement among accredited medical professionals.",
               accent: "from-rose-500 to-rose-600",
-              bgAccent: "bg-rose-50 text-rose-600",
             },
             {
               icon: Icons.briefcase,
@@ -552,7 +602,6 @@ export default function DigitalMarketingProposal() {
               client: "Chiro Board Review",
               desc: "Translated complex medical materials into an engaging format, driving significant audience retention.",
               accent: "from-[#374da0] to-[#2d3f85]",
-              bgAccent: "bg-blue-50 text-[#374da0]",
             },
             {
               icon: Icons.car,
@@ -560,7 +609,6 @@ export default function DigitalMarketingProposal() {
               client: "Jarretts Driving School",
               desc: "Established a strong, reliable brand positioning that directly boosted local inquiries.",
               accent: "from-[#2cbbbc] to-teal-500",
-              bgAccent: "bg-teal-50 text-[#2cbbbc]",
             },
           ].map((item, i) => (
             <motion.div
@@ -568,17 +616,17 @@ export default function DigitalMarketingProposal() {
               variants={fadeInUp}
               className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
             >
-              <div className={`bg-gradient-to-r ${item.accent} p-5 flex items-center gap-4`}>
-                <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-white">
+              <div className={`bg-gradient-to-r ${item.accent} p-4 flex items-center gap-3`}>
+                <div className="w-9 h-9 rounded-lg bg-white/15 flex items-center justify-center text-white">
                   {item.icon}
                 </div>
-                <span className="text-white/80 text-xs font-bold tracking-wider uppercase">{item.industry}</span>
+                <span className="text-white/80 text-[11px] font-bold tracking-wider uppercase">{item.industry}</span>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-ubuntu)]">
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 font-[family-name:var(--font-ubuntu)]">
                   {item.client}
                 </h3>
-                <p className="text-slate-600 leading-relaxed">{item.desc}</p>
+                <p className="text-slate-600 leading-relaxed text-sm">{item.desc}</p>
               </div>
             </motion.div>
           ))}
