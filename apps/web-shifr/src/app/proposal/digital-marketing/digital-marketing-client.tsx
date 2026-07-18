@@ -828,20 +828,20 @@ export default function DigitalMarketingProposal() {
             <p className="text-white/70 text-sm">Principal Consultant | PT Shifr Asia Inovasi</p>
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-white/70 text-sm">
               <span className="flex items-center gap-2">
-                {Icons.globe}
-                <Link href="https://shifr.asia" target="_blank" className="hover:text-white transition-colors">
+                <span className="flex-shrink-0">{Icons.globe}</span>
+                <Link href="https://shifr.asia" target="_blank" className="hover:text-white transition-colors leading-none pt-[3px]">
                   shifr.asia
                 </Link>
               </span>
               <span className="flex items-center gap-2">
-                {Icons.mail}
-                <Link href="mailto:partner@shifr.asia" className="hover:text-white transition-colors">
+                <span className="flex-shrink-0">{Icons.mail}</span>
+                <Link href="mailto:partner@shifr.asia" className="hover:text-white transition-colors leading-none pt-[3px]">
                   partner@shifr.asia
                 </Link>
               </span>
               <span className="flex items-center gap-2">
-                {Icons.phone}
-                <Link href="https://wa.me/62811935083" target="_blank" className="hover:text-white transition-colors">
+                <span className="flex-shrink-0">{Icons.phone}</span>
+                <Link href="https://wa.me/62811935083" target="_blank" className="hover:text-white transition-colors leading-none pt-[3px]">
                   +62 811 935 083
                 </Link>
               </span>
