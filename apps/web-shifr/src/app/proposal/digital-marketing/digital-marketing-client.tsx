@@ -826,7 +826,7 @@ export default function DigitalMarketingProposal() {
             <div className="w-20 h-px bg-white/30 mx-auto mb-6" />
             <p className="text-xl font-bold text-white font-[family-name:var(--font-ubuntu)]">Aldi</p>
             <p className="text-white/70 text-sm">Principal Consultant | PT Shifr Asia Inovasi</p>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-white/70 text-sm">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-white/70 text-sm">
               <span className="flex items-center gap-2">
                 {Icons.globe}
                 <Link href="https://shifr.asia" target="_blank" className="hover:text-white transition-colors">
